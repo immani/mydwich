@@ -13,7 +13,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver
 import org.apache.catalina.security.SecurityUtil
 
 class AuthController {
-
+    //Test commit
     def shiroSecurityManager
 
 
