@@ -6,6 +6,9 @@ class CompanyController {
     def geocoderService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def index = {
+        render(view: "index")
+    }
     /**
      * @return returns the current user
      */

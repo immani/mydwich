@@ -40,6 +40,18 @@ class RestaurantController {
         }
     }
 
+    def getbyname = {
+        //TODO: replaceall pas suffisant, prévoir espace, accent? etc...
+        Restaurant restaurantInstance = Restaurant.findByName(params.name.replaceAll('_',' '))
+        if (!restaurantInstance) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), params.id])}"
+            redirect(action: "list")
+        }
+        else {
+            render(view: "show", model: [restaurantInstance: restaurantInstance])
+        }
+    }
+
     def show = {
         def restaurantInstance = Restaurant.get(params.id)
         if (!restaurantInstance) {
@@ -47,7 +59,9 @@ class RestaurantController {
             redirect(action: "list")
         }
         else {
-            [restaurantInstance: restaurantInstance]
+            //TODO: One step to remome (redirect alors que le model est déjà OK
+            params.name = restaurantInstance.name.encodeAsURL()
+            redirect(action: "getbyname", params: params )
         }
     }
 
@@ -112,8 +126,6 @@ class RestaurantController {
      * Display the list of restaurants as JSON
      */
     def listasjson = {
-        //TODO: Limit info Returned
-
         def result = Restaurant.list()
         render result as JSON
     }

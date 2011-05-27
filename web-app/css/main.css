@@ -304,7 +304,7 @@ a.header-main:link, a.header-main:visited {
 }
 
 
-
+/*This comes from the index.gsp*/
 #nav {
     margin-top:20px;
     margin-left:30px;
@@ -349,4 +349,14 @@ h2 {
 #pageBody {
     margin-left:280px;
     margin-right:20px;
+}
+
+.firstHeading {
+    color: #48802c;
+    font-weight: normal;
+    font-size: 16px;
+    margin-top: 0em;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 0em;
 }

@@ -35,6 +35,7 @@ class BootStrap {
 
         JSON.registerObjectMarshaller(Restaurant) {
             def returnArray = [:]
+            returnArray['url'] = it.name.encodeAsURL()
             returnArray['name'] = it.name
             returnArray['address'] = it.address
             returnArray['zip'] = it.zip
@@ -42,7 +43,33 @@ class BootStrap {
             returnArray['country'] = it.country
             returnArray['lat'] = it.lat
             returnArray['lng'] = it.lng
-            return returnArray
+            returnArray
+        }
+
+        JSON.registerObjectMarshaller(Company) {
+            def returnArray = [:]
+            returnArray['url'] = it.name.encodeAsURL()
+            returnArray['name'] = it.name
+            returnArray['address'] = it.address
+            returnArray['zip'] = it.zip
+            returnArray['city'] = it.city
+            returnArray['country'] = it.country
+            returnArray['lat'] = it.lat
+            returnArray['lng'] = it.lng
+            returnArray
+        }
+
+        JSON.registerObjectMarshaller(DeliveryAddress) {
+            def returnArray = [:]
+            returnArray['url'] = it.name.encodeAsURL()
+            returnArray['name'] = it.name
+            returnArray['address'] = it.address
+            returnArray['zip'] = it.zip
+            returnArray['city'] = it.city
+            returnArray['country'] = it.country
+            returnArray['lat'] = it.lat
+            returnArray['lng'] = it.lng
+            returnArray
         }
 
         Role companyAdminRole = new Role(name:"companyadmin")
@@ -71,11 +98,14 @@ class BootStrap {
 
         DeliveryAddress immanibxl = new DeliveryAddress(
                 name: "Immani Bruxelles",
-                address: "328 Av couronne",
+                address: "314 Av couronne",
                 zip: "1050",
                 city: "Bruxelles",
                 country: "Belgium"
         )
+        results = geocoderService.geocode(immanibxl.address, immanibxl.zip, immanibxl.city, immanibxl.country )
+        immanibxl.lat = results.lat
+        immanibxl.lng = results.lng
 
         //Companies
         Company immani = new Company(

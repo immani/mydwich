@@ -135,45 +135,5 @@ class ProductController {
         }
     }
 
-    def showrestaurantcatalogold = {
-        Restaurant restaurantInstance = Restaurant.get(params.id)
-        def products
-        if (!restaurantInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), params.id])}"
-            redirect(action: "list")
-        }
-        else {
-
-            if (params.productcategory == null){
-                //    products = Product.findAllByRestaurant(restaurantInstance)
-                products = Product.findAllByRestaurant(restaurantInstance, [sort:"name_fr"])
-            }
-            else{
-                def user = session.user.merge()
-                def company = user.company
-                def companyusers = company.users
-                Basket basketlist = companyusers.baskets
-                def today = new Date()
-                def queryMap = [ company: user.company, dateCreated: today ]
-                def query = {
-                    // go through the query map
-                    queryMap.each { key, value ->
-                        // if we have a list assume a between query
-                        if(value instanceof List) {
-                            // use the spread operator to invoke
-                            between(key, *value)
-                        } else {
-                            like(key,value)
-                        }
-                    }
-                }
-
-                def prodcategory = []
-                prodcategory << ProductCategory.get(params.productcategory)
-                products = Product.findAllByProductCategories(prodcategory)
-            }
-            render(view: "catalog", model: [productInstanceList: products, restaurantInstance: restaurantInstance, productInstanceTotal: products.size()])
-        }
-    }
 
 }

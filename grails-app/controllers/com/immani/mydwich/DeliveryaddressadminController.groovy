@@ -127,4 +127,5 @@ class DeliveryaddressadminController {
             render(view: "list", model: [deliveryAddressInstanceList: deliveryAddressList, deliveryAddressInstanceTotal: deliveryAddressList.size()])
         }
     }
+
 }

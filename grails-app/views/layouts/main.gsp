@@ -7,6 +7,7 @@
         <g:layoutHead />
         <g:javascript library="jquery" plugin="jquery" />
         <jqui:resources/>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <g:javascript src="application.js" />
         <g:javascript>var apppath="${resource(dir:'')}/"; </g:javascript>
     </head>
@@ -17,7 +18,6 @@
         <div id="grailsLogo">
             <img src="${resource(dir:'images',file:'mydwich_logo.png')}" alt="Have a nice dwich!" border="0" />
         </div>
-        <g:set var="lg" scope="request" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}" />
         <div id="info" class="message" style="display:none">default message</div>
         <g:render template="/layouts/header" />
         <g:layoutBody />

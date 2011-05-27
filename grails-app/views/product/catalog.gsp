@@ -1,4 +1,3 @@
-
 <%@ page import="com.immani.mydwich.Product" %>
 <html>
     <head>
@@ -9,7 +8,7 @@
     </head>
     <body>
         <div id="nav">
-            Empty basket
+            &nbsp;
         </div>
         <div id="pageBody">
 

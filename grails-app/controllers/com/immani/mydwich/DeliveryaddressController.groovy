@@ -1,25 +1,28 @@
 package com.immani.mydwich
+import grails.converters.JSON
 
 class DeliveryaddressController {
+     def geocoderService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
         redirect(action: "list", params: params)
     }
 
-    def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [deliveryAddressInstanceList: DeliveryAddress.list(params), deliveryAddressInstanceTotal: DeliveryAddress.count()]
-    }
-
-    def create = {
-        def deliveryAddressInstance = new DeliveryAddress()
-        deliveryAddressInstance.properties = params
-        return [deliveryAddressInstance: deliveryAddressInstance]
-    }
-
     def save = {
-        def deliveryAddressInstance = new DeliveryAddress(params)
+        //TODO: check dans la GSP que l'erreur est renvoyée (Même chose company/Restaurant)
+
+        try {
+            daresults = geocoderService.geocode(params.address, params.zip, params.city, params.country )
+        }
+        catch (Exception exception){
+            deliveryAddressInstance.validate()
+            flash.error = exception.getMessage()
+            return error()
+        }
+
+        def deliveryAddressInstance = new DeliveryAddress(params + daresults)
+
         if (deliveryAddressInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'deliveryAddress.label', default: 'DeliveryAddress'), deliveryAddressInstance.id])}"
             redirect(action: "show", id: deliveryAddressInstance.id)
@@ -57,13 +60,28 @@ class DeliveryaddressController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (deliveryAddressInstance.version > version) {
-                    
+
                     deliveryAddressInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'deliveryAddress.label', default: 'DeliveryAddress')] as Object[], "Another user has updated this DeliveryAddress while you were editing")
                     render(view: "edit", model: [deliveryAddressInstance: deliveryAddressInstance])
                     return
                 }
             }
             deliveryAddressInstance.properties = params
+            if (deliveryAddressInstance.isDirty('address') || deliveryAddressInstance.isDirty('zip') || deliveryAddressInstance.isDirty('city') || deliveryAddressInstance.isDirty('country') ){
+                def daresults
+                try {
+                    daresults = geocoderService.geocode(params.address, params.zip, params.city, params.country )
+                    deliveryAddressInstance.properties = params + daresults
+                }
+                catch (Exception exception){
+                    deliveryAddressInstance.validate()
+                    flash.error = exception.getMessage()
+                    return
+                }
+            }
+
+
+
             if (!deliveryAddressInstance.hasErrors() && deliveryAddressInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'deliveryAddress.label', default: 'DeliveryAddress'), deliveryAddressInstance.id])}"
                 redirect(action: "show", id: deliveryAddressInstance.id)
@@ -98,8 +116,8 @@ class DeliveryaddressController {
     }
 
 /**
-     * Create a delivery address for the current user's company
-     */
+ * Create a delivery address for the current user's company
+ */
     def createdeliveryaddress = {
         User user = session.user.merge()
         if (user.company == null){
@@ -126,5 +144,15 @@ class DeliveryaddressController {
             def deliveryAddressList = user.company.deliveryAddresses
             render(view: "list", model: [deliveryAddressInstanceList: deliveryAddressList, deliveryAddressInstanceTotal: deliveryAddressList.size()])
         }
+    }
+
+
+    /**
+    * Display the list of restaurants as JSON
+    */
+    def listasjson = {
+        User user = session.user.merge()
+        def deliveryAddressList = user.company.deliveryAddresses
+        render deliveryAddressList as JSON
     }
 }

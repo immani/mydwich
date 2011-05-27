@@ -111,39 +111,7 @@
                                     <g:textField name="fax" value="${companyInstance?.fax}" />
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="deliveryAddresses"><g:message code="company.deliveryAddresses.label" default="Delivery Addresses" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: companyInstance, field: 'deliveryAddresses', 'errors')}">
-                                    
-<ul>
-<g:each in="${companyInstance?.deliveryAddresses?}" var="d">
-    <li><g:link controller="deliveryaddress" action="show" id="${d.id}">${d?.encodeAsHTML()}</g:link></li>
-</g:each>
-</ul>
-<g:link controller="deliveryaddress" action="create" params="['company.id': companyInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'deliveryAddress.label', default: 'DeliveryAddress')])}</g:link>
 
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="users"><g:message code="company.users.label" default="Users" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: companyInstance, field: 'users', 'errors')}">
-                                    
-<ul>
-<g:each in="${companyInstance?.users?}" var="u">
-    <li><g:link controller="user" action="show" id="${u.id}">${u?.encodeAsHTML()}</g:link></li>
-</g:each>
-</ul>
-<g:link controller="user" action="create" params="['company.id': companyInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'user.label', default: 'User')])}</g:link>
-
-                                </td>
-                            </tr>
-                        
                         </tbody>
                     </table>
                 </div>

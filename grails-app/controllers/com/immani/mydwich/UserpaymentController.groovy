@@ -3,22 +3,21 @@ package com.immani.mydwich
 class UserpaymentController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-    /*
+
     def index = {
         redirect(action: "list", params: params)
     }
+
+
+    def create = {
+        redirect(action: "createuserpayment", params: params)
+    }
+
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [userpaymentInstanceList: Userpayment.list(params), userpaymentInstanceTotal: Userpayment.count()]
     }
-
-    def create = {
-        def userpaymentInstance = new Userpayment()
-        userpaymentInstance.properties = params
-        return [userpaymentInstance: userpaymentInstance]
-    }
-    */
 
     def save = {
         def userpaymentInstance = new Userpayment(params)
@@ -116,6 +115,17 @@ class UserpaymentController {
         User user = session.user.merge()
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userpaymentlist = Userpayment.findAllByUser(user, params)
+        render(view: "list", model: [userpaymentInstanceList: userpaymentlist, userpaymentInstanceTotal: userpaymentlist.size()])
+    }
+
+     /**
+     * List of the payments of the current user
+     */
+    def listcompanyuserpayment = {
+        User user = session.user.merge()
+        Company company = user.company
+        def users = company.users
+        def userpaymentlist = users.userpayments
         render(view: "list", model: [userpaymentInstanceList: userpaymentlist, userpaymentInstanceTotal: userpaymentlist.size()])
     }
 }

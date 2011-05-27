@@ -84,9 +84,7 @@ class RegistrationController {
             on("cancel").to "cancel"
         }
         review {
-            on("confirm") {
-
-            }.to "persist"
+            on("confirm").to "persist"
 
             on("success").to "end"
         }

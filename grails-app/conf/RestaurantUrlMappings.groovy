@@ -10,6 +10,16 @@ class RestaurantUrlMappings {
             action = $action
         }
 
+        "/showrestaurant/$name"{
+            constraints {
+                // apply constraints here
+            }
+            controller="restaurant"
+            action = "getbyname"
+        }
+
+
+
         "/restaurant/user/$action?/$id?"{
             constraints {
                 // apply constraints here

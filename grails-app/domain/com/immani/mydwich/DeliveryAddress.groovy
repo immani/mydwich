@@ -7,6 +7,8 @@ class DeliveryAddress implements Serializable{
 	String zip
 	String city
 	String country
+    Float lat
+    Float lng
 
    static belongsTo = [company:Company]
 
@@ -16,6 +18,8 @@ class DeliveryAddress implements Serializable{
 		zip(nullable: false, blank: false)
 		city(nullable: false, blank: false)
 		country(nullable: false, blank: false)
+        lat(nullable: true)
+        lng(nullable: true)
     }
 
     String toString(){

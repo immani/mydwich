@@ -36,14 +36,19 @@ function closeproductbuydialog(response){
         refreshbasket()
     }
 }
-function displaymap(lat, lng, title, contentString){
+/*
+ Displays a map for a specific company / restaurant / Delivery Address
+ */
+function displaymap(mapid, lat, lng, title, contentString, options){
+    options = options || {};
+    options.icon = options.icon || '/images/company.png';
     var latlng = new google.maps.LatLng(lat, lng);
     var myOptions = {
         zoom: 14,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var map = new google.maps.Map(document.getElementById(mapid), myOptions);
 
     var infowindow = new google.maps.InfoWindow({
                 content: contentString
@@ -53,7 +58,7 @@ function displaymap(lat, lng, title, contentString){
                 position: latlng,
                 map: map,
                 title:title,
-                icon: apppath + '/images/beachflag.png',
+                icon: apppath + options.icon,
                 animation: google.maps.Animation.DROP
             });
 
@@ -62,19 +67,22 @@ function displaymap(lat, lng, title, contentString){
     })
     return map
 }
-function displayrestaurantsonmap(){
-    $.getJSON(apppath + 'restaurant/listasjson', function(data) {
-        var latlng = new google.maps.LatLng(50.82440, 4.38560 );
+
+function displaydeliveryaddressonmap(lat, lng, options){
+    options = options || {};
+    options.mapid = options.mapid || 'map_canvas'
+    options.zoom = options.zoom || 10
+    $.getJSON(apppath + 'deliveryaddress/listasjson', function(data) {
+        var latlng = new google.maps.LatLng(lat, lng );
         var myOptions = {
             zoom: 10,
             center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var map = new google.maps.Map(document.getElementById(options.mapid), myOptions);
 
         $.each(data, function(i) {
-            var contentString = '<div><h1 class="firstHeading">' + data[i].name + '</h1><p>' + data[i].address +', ' + data[i].zip + '</p>' + data[i].city + ', ' + data[i].country + '</div>'
-
+            var contentString = '<h1 class="firstHeading">' + data[i].name + '</h1><p>' + data[i].address +', ' + data[i].zip + '</p>' + data[i].city + ', ' + data[i].country;
             var infowindow = new google.maps.InfoWindow({
                         content: contentString
                     });
@@ -84,7 +92,8 @@ function displayrestaurantsonmap(){
             var marker = new google.maps.Marker({
                         position: latlng,
                         map: map,
-                        title: data[i].name
+                        title: data[i].name,
+                        icon: apppath + '/images/deliveryaddress.png'
                     });
 
             google.maps.event.addListener(marker, 'click', function() {
@@ -95,13 +104,21 @@ function displayrestaurantsonmap(){
     })
 }
 
-function displayrestaurantsnearcompany(map){
-    if (map == undefined){
-        var map = new google.maps.Map(document.getElementById("map_canvas"));
-    }
-    $.getJSON(apppath + 'company/retrieverestaurantswithinrange', function(data) {
+function displayrestaurantsonmap(lat, lng, options){
+    options = options || {};
+    options.mapid = options.mapid || 'map_canvas'
+    options.zoom = options.zoom || 10
+    $.getJSON(apppath + 'restaurant/listasjson', function(data) {
+        var latlng = new google.maps.LatLng(lat, lng );
+        var myOptions = {
+            zoom: options.zoom,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById(options.mapid), myOptions);
+
         $.each(data, function(i) {
-            var contentString = '<div><h1 class="firstHeading">' + data[i].name + '</h1><p>' + data[i].address +', ' + data[i].zip + '</p>' + data[i].city + ', ' + data[i].country + '</div>'
+            var contentString = '<div><h1 class="firstHeading"><a href="' + apppath + 'showrestaurant/' + data[i].url +'">' + data[i].name + '</a></h1><p>' + data[i].address +', ' + data[i].zip + '</p>' + data[i].city + ', ' + data[i].country + '</div>'
 
             var infowindow = new google.maps.InfoWindow({
                         content: contentString
@@ -112,7 +129,44 @@ function displayrestaurantsnearcompany(map){
             var marker = new google.maps.Marker({
                         position: latlng,
                         map: map,
-                        title: data[i].name
+                        title: data[i].name,
+                        icon: apppath + '/images/restaurant.png'
+                    });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+            })
+        });
+
+    })
+}
+
+function displayrestaurantsnear(lat, lng, map, options){
+    options = options || {};
+    options.mapid = options.mapid || 'map_canvas'
+    options.zoom = options.zoom || 10
+    if (map == undefined){
+        var myOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById(options.mapid), myOptions);
+    }
+    $.getJSON(apppath + 'company/retrieverestaurantswithinrange', function(data) {
+        $.each(data, function(i) {
+            var contentString = '<h1 class="firstHeading"><a href="' + apppath + 'showrestaurant/' + data[i].url +'">' + data[i].name + '</a></h1><p>' + data[i].address +', ' + data[i].zip + '</p>' + data[i].city + ', ' + data[i].country;
+            var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+
+            var latlng = new google.maps.LatLng(data[i].lat , data[i].lng );
+
+            var marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                        title: data[i].name,
+                        icon: apppath + '/images/restaurant.png'
                     });
 
             google.maps.event.addListener(marker, 'click', function() {

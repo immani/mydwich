@@ -91,7 +91,7 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                       <g:message code="company.phone.label" default="Phone" />
+                        <g:message code="company.phone.label" default="Phone" />
                     </td>
                     <td valign="top" class="value">
                         ${companyInstance?.phone}"
@@ -99,16 +99,96 @@
                 </tr>
 
                 <tr class="prop">
-                    <td valign="top" class="name">
-                        <g:message code="company.fax.label" default="Fax" />
-                    </td>
-                    <td valign="top" class="value">
-                        ${companyInstance?.fax}"
-                    </td>
+                    <td valign="top" class="name"><g:message code="company.fax.label" default="Fax" /></td>
+                    <td valign="top" class="value">${companyInstance?.fax}"</td>
                 </tr>
-
                 </tbody>
             </table>
+            <div id="map_canvas" style="width:300px; height:200px"></div>
+            <script type="text/javascript">
+                var contentString = '<div><h1 class="firstHeading">${fieldValue(bean: companyInstance, field: "name")}</h1><br />' +
+                        '${fieldValue(bean: companyInstance, field: "address")}, ${fieldValue(bean: companyInstance, field: "zip")} ${fieldValue(bean: companyInstance, field: "city")}, ${fieldValue(bean: companyInstance, field: "country")}</div>';
+
+                var map = displaymap('map_canvas', ${fieldValue(bean: companyInstance, field: "lat")}, ${fieldValue(bean: companyInstance, field: "lng")}, '${fieldValue(bean: companyInstance, field: "name")}', contentString);
+            </script>
+
+            <table>
+                <tbody>
+                <!--User Instance review-->
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="user.username.label" default="Username" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "username")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="user.title.label" default="Title" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "title")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="user.firstname.label" default="Firstname" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "firstname")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="user.lastname.label" default="Lastname" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "lastname")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="user.mobile.label" default="Mobile" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "mobile")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="user.language.label" default="Language" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "language")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="user.permissions.label" default="Permissions" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "permissions")}</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <table>
+                <tbody>
+                <!--Delivery Address Review-->
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="deliveryAddress.name.label" default="Name" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: deliveryAddressInstance, field: "name")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="deliveryAddress.address.label" default="Address" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: deliveryAddressInstance, field: "address")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="deliveryAddress.zip.label" default="Zip" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: deliveryAddressInstance, field: "zip")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="deliveryAddress.city.label" default="City" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: deliveryAddressInstance, field: "city")}</td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="deliveryAddress.country.label" default="Country" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: deliveryAddressInstance, field: "country")}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="damap_canvas" style="width:300px; height:200px"></div>
+            <script type="text/javascript">
+                var contentString = '<div><h1 class="firstHeading">${fieldValue(bean: deliveryAddressInstance, field: "name")}</h1><br />' +
+                        '${fieldValue(bean: deliveryAddressInstance, field: "address")}, ${fieldValue(bean: deliveryAddressInstance, field: "zip")} ${fieldValue(bean: deliveryAddressInstance, field: "city")}, ${fieldValue(bean: deliveryAddressInstance, field: "country")}</div>';
+
+                var map = displaymap('damap_canvas', ${fieldValue(bean: deliveryAddressInstance, field: "lat")}, ${fieldValue(bean: deliveryAddressInstance, field: "lng")}, '${fieldValue(bean: deliveryAddressInstance, field: "name")}', contentString);
+            </script>
         </div>
         <div class="buttons">
             <span class="button"><g:submitButton name="back" class="back" value="${message(code: 'default.button.back.label', default: 'Back')}" /></span>
