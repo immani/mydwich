@@ -42,7 +42,7 @@ class RestaurantController {
 
     def getbyname = {
         //TODO: replaceall pas suffisant, prévoir espace, accent? etc...
-        Restaurant restaurantInstance = Restaurant.findByName(params.name.replaceAll('_',' '))
+        Restaurant restaurantInstance = Restaurant.findByName(params.name.decodeURL())
         if (!restaurantInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), params.id])}"
             redirect(action: "list")
@@ -59,9 +59,11 @@ class RestaurantController {
             redirect(action: "list")
         }
         else {
-            //TODO: One step to remome (redirect alors que le model est déjà OK
+            //TODO: One step to remove (redirect alors que le model est déjà OK
+            //TODO: check encodeURL Vs replaceAll
             params.name = restaurantInstance.name.encodeAsURL()
-            redirect(action: "getbyname", params: params )
+            params.remove("id")
+            redirect(action: "getbyname", params: params.name )
         }
     }
 
@@ -82,7 +84,7 @@ class RestaurantController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (restaurantInstance.version > version) {
-                    
+
                     restaurantInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'restaurant.label', default: 'Restaurant')] as Object[], "Another user has updated this Restaurant while you were editing")
                     render(view: "edit", model: [restaurantInstance: restaurantInstance])
                     return
@@ -160,4 +162,27 @@ class RestaurantController {
         }
     }
 
+    def search = {
+        def q = params.q ?: null
+        def searchResults
+        if(q) {
+            if(q.toString().length()>2){
+                searchResults = [
+                        restaurantResults: trySearch { Restaurant.search(q, [max:10]) },
+                        //  artistResults: trySearch { Artist.search(q, [max:10]) },
+                        //  songResults: trySearch { Song.search(q, [max:10]) },
+                        q: q.encodeAsHTML()
+                ]
+            }
+        }
+        render(template:"searchResults", model: searchResults)
+    }
+    def trySearch(Closure callable) {
+        try {
+            return callable.call()
+        } catch(Exception e) {
+            log.debug "Search Error: ${e.message}", e
+            return []
+        }
+    }
 }

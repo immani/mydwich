@@ -12,13 +12,16 @@
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+
+            <div id="searchBox"> Instant Search: <g:remoteField name="searchBox" update="restaurantlist" paramName="q" url="[controller:'restaurant', action:'search']" before="checksearchquery(this.value)" /></div>
+
         </div>
         <div class="body">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <div class="list">
+            <div class="list" id="restaurantlist">
                 <table>
                     <thead>
                         <tr>

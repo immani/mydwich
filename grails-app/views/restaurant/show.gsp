@@ -95,7 +95,7 @@
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="restaurant.lng.label" default="Longitude" /></td>
 
-                <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "lng")}<div id="map_canvas" style="width:300px; height:300px"></div></td>
+                <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "lng")}</td>
 
             </tr>
 
@@ -127,6 +127,7 @@
 
             </tbody>
         </table>
+        <div id="map_canvas" style="width:600px; height:400px"></div>
     </div>
     <div class="buttons">
         <g:form>
@@ -137,10 +138,8 @@
     </div>
 </div>
 <script type="text/javascript">
-    var contentString = '<div><h1 class="firstHeading">${fieldValue(bean: restaurantInstance, field: "name")}</h1><br />' +
-            '${fieldValue(bean: restaurantInstance, field: "address")}, ${fieldValue(bean: restaurantInstance, field: "zip")} ${fieldValue(bean: restaurantInstance, field: "city")}, ${fieldValue(bean: restaurantInstance, field: "country")}</div>';
-
-    displaymap('map_canvas', ${fieldValue(bean: restaurantInstance, field: "lat")}, ${fieldValue(bean: restaurantInstance, field: "lng")}, '${fieldValue(bean: restaurantInstance, field: "name")}', contentString, {icon: '/images/restaurant.png'})
+    var contentString = '<h1 class="firstHeading">${restaurantInstance.name}</h1><br /> ${restaurantInstance.address}, ${restaurantInstance.zip} ${restaurantInstance.city}, ${restaurantInstance.country}';
+    displaymap(${restaurantInstance.lat}, ${restaurantInstance.lng}, '${restaurantInstance.name}', contentString, {icon: '/images/restaurant.png'})
 
 </script>
 

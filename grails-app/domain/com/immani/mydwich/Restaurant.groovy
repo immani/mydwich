@@ -10,6 +10,9 @@ class Restaurant implements Serializable{
 	String vat
 	String phone
 	String fax
+	String desc_fr
+	String desc_nl
+	String desc_en
     Float lat
     Float lng
 
@@ -33,7 +36,12 @@ class Restaurant implements Serializable{
         fax(nullable: true, blank: true)
         lat(nullable: true)
         lng(nullable: true)
+        desc_fr(nullable: false, blank: true)
+        desc_nl(nullable: false, blank: true)
+        desc_en(nullable: false, blank: true)
     }
+
+    static searchable = [only: ['name', 'desc_fr', 'desc_nl', 'desc_en']]
 
 	String toString(){ 
 		return name
