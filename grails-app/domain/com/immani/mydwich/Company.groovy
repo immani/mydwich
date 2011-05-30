@@ -16,7 +16,8 @@ class Company implements Serializable{
     Boolean isvalidated = false
 
     static hasMany = [users:User,
-                      deliveryAddresses:DeliveryAddress]
+                      deliveryAddresses:DeliveryAddress,
+                      partnerships:Partnership]
 
     static constraints = {
 		name(nullable: false,blank: false)
@@ -33,6 +34,20 @@ class Company implements Serializable{
         lat(nullable: true)
         lng(nullable: true)
     }
+
+    List listPartnershipsRestaurants() {
+		return partnerships.collect{it.restaurant}
+	}
+
+    Partnership addPartnershipToRestaurant(Restaurant restaurant) {
+		Partnership partnership = Partnership.link(this, restaurant)
+		return partnership
+	}
+
+	List removePartnershipFromRestaurant(Restaurant restaurant) {
+		Partnership.unlink(this, restaurant)
+		return this.listPartnershipsRestaurants()
+	}
 
     String toString(){
 		return name

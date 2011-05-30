@@ -24,16 +24,10 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'product.id.label', default: 'Id')}" />
                         
-                            <g:sortableColumn property="name_fr" title="${message(code: 'product.name_fr.label', default: 'Namefr')}" />
-                        
-                            <g:sortableColumn property="name_nl" title="${message(code: 'product.name_nl.label', default: 'Namenl')}" />
-                        
-                            <g:sortableColumn property="name_en" title="${message(code: 'product.name_en.label', default: 'Nameen')}" />
-                        
-                            <g:sortableColumn property="desc_fr" title="${message(code: 'product.desc_fr.label', default: 'Descfr')}" />
-                        
-                            <g:sortableColumn property="desc_nl" title="${message(code: 'product.desc_nl.label', default: 'Descnl')}" />
-                        
+                            <mydwich:sortloccol property="name" title="${message(code: 'product.name.label', default: 'Name')}" />
+
+                            <mydwich:sortloccol property="desc" title="${message(code: 'product.desc.label', default: 'Description')}" />
+
                         </tr>
                     </thead>
                     <tbody>
@@ -42,16 +36,10 @@
                         
                             <td><g:link action="show" id="${productInstance.id}">${fieldValue(bean: productInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: productInstance, field: "name_fr")}</td>
-                        
-                            <td>${fieldValue(bean: productInstance, field: "name_nl")}</td>
-                        
-                            <td>${fieldValue(bean: productInstance, field: "name_en")}</td>
-                        
-                            <td>${fieldValue(bean: productInstance, field: "desc_fr")}</td>
-                        
-                            <td>${fieldValue(bean: productInstance, field: "desc_nl")}</td>
-                        
+                            <td> <mydwich:disploc instanceValue="${productInstance}" property="name"/>  </td>
+
+                            <td> <mydwich:disploc instanceValue="${productInstance}" property="desc"/>  </td>
+
                         </tr>
                     </g:each>
                     </tbody>

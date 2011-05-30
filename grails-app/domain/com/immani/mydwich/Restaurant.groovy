@@ -22,7 +22,8 @@ class Restaurant implements Serializable{
                       products:Product,
                       restaurantcategories:RestaurantCategory,
                       productsCategories: ProductCategory,
-                      prodOptionCategories: ProdOptionCategory]
+                      prodOptionCategories: ProdOptionCategory,
+                      partnerships:Partnership]
 
 
     static constraints = {
@@ -42,7 +43,21 @@ class Restaurant implements Serializable{
     }
 
     static searchable = [only: ['name', 'desc_fr', 'desc_nl', 'desc_en']]
+    
+    List listPatnershipsCompanies() {
+		return partnerships.collect{it.company}
+	}
 
+    Partnership addPartnershipToCompany(Company company) {
+		Partnership partnership = Partnership.link(company, this)
+		return partnership
+	}
+
+	List removePartnershipFromCompany(Company company) {
+		Partnership.unlink(company, this)
+		return this.listPatnershipsCompanies()
+	}
+                                 
 	String toString(){ 
 		return name
 	}
