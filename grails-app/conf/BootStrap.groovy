@@ -103,7 +103,7 @@ class BootStrap {
                 city: "Bruxelles",
                 country: "Belgium"
         )
-        results = geocoderService.geocode(immanibxl.address, immanibxl.zip, immanibxl.city, immanibxl.country )
+        def results = geocoderService.geocode(immanibxl.address, immanibxl.zip, immanibxl.city, immanibxl.country )
         immanibxl.lat = results.lat
         immanibxl.lng = results.lng
 
@@ -120,7 +120,7 @@ class BootStrap {
                 fax: "0123456789",
         )
         immani.addToDeliveryAddresses(immanibxl)
-        def results = geocoderService.geocode(immani.address, immani.zip, immani.city, immani.country )
+        results = geocoderService.geocode(immani.address, immani.zip, immani.city, immani.country )
         immani.lat = results.lat
         immani.lng = results.lng
         immani.save();

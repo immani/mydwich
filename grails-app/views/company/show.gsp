@@ -125,12 +125,10 @@
 </div>
 
 <script type="text/javascript">
-    var contentString = '<h1 class="firstHeading">${companyInstance.name}</h1><br />' +
-            '${companyInstance.address}, ${companyInstance.zip} ${companyInstance.city}, ${companyInstance.country}';
-
-    var map = displaymap('map_canvas', ${companyInstance.lat}, ${companyInstance.lng}, '${companyInstance.name}', contentString, {icon: '/images/company.png'});
-    displayrestaurantsnear('map_canvas', map, ${companyInstance.lat}, ${companyInstance.lng});
-    displaydeliveryaddressonmap('map_canvas', map, ${companyInstance.lat}, ${companyInstance.lng});
+    var contentString = '<h1 class="firstHeading">${companyInstance.name}</h1><br /> ${companyInstance.address}, ${companyInstance.zip} ${companyInstance.city}, ${companyInstance.country}';
+    var map = displaymap(${companyInstance.lat}, ${companyInstance.lng}, '${companyInstance.name}', contentString, {icon: '/images/company.png'});
+    displayrestaurantsnear(${companyInstance.lat}, ${companyInstance.lng}, {map: map});
+    displaydeliveryaddressonmap(${companyInstance.lat}, ${companyInstance.lng}, {map: map});
 </script>
 </body>
 </html>

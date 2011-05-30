@@ -39,8 +39,9 @@ function closeproductbuydialog(response){
 /*
  Displays a map for a specific company / restaurant / Delivery Address
  */
-function displaymap(mapid, lat, lng, title, contentString, options){
+function displaymap(lat, lng, title, contentString, options){
     options = options || {};
+    options.mapid = options.mapid || 'map_canvas'
     options.icon = options.icon || '/images/company.png';
     var latlng = new google.maps.LatLng(lat, lng);
     var myOptions = {
@@ -48,7 +49,7 @@ function displaymap(mapid, lat, lng, title, contentString, options){
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById(mapid), myOptions);
+    var map = new google.maps.Map(document.getElementById(options.mapid), myOptions);
 
     var infowindow = new google.maps.InfoWindow({
                 content: contentString
@@ -70,17 +71,19 @@ function displaymap(mapid, lat, lng, title, contentString, options){
 
 function displaydeliveryaddressonmap(lat, lng, options){
     options = options || {};
+    options.map = options.map || undefined;
     options.mapid = options.mapid || 'map_canvas'
     options.zoom = options.zoom || 10
     $.getJSON(apppath + 'deliveryaddress/listasjson', function(data) {
         var latlng = new google.maps.LatLng(lat, lng );
-        var myOptions = {
-            zoom: 10,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById(options.mapid), myOptions);
-
+        if (options.map == undefined){
+            var myOptions = {
+                zoom: 10,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById(options.mapid), myOptions);
+        }
         $.each(data, function(i) {
             var contentString = '<h1 class="firstHeading">' + data[i].name + '</h1><p>' + data[i].address +', ' + data[i].zip + '</p>' + data[i].city + ', ' + data[i].country;
             var infowindow = new google.maps.InfoWindow({
@@ -91,7 +94,7 @@ function displaydeliveryaddressonmap(lat, lng, options){
 
             var marker = new google.maps.Marker({
                         position: latlng,
-                        map: map,
+                        map: options.map,
                         title: data[i].name,
                         icon: apppath + '/images/deliveryaddress.png'
                     });
@@ -100,8 +103,8 @@ function displaydeliveryaddressonmap(lat, lng, options){
                 infowindow.open(map,marker);
             })
         });
-
     })
+    return map;
 }
 
 function displayrestaurantsonmap(lat, lng, options){
@@ -137,15 +140,16 @@ function displayrestaurantsonmap(lat, lng, options){
                 infowindow.open(map,marker);
             })
         });
-
     })
 }
 
-function displayrestaurantsnear(lat, lng, map, options){
+function displayrestaurantsnear(lat, lng, options){
     options = options || {};
+    options.map = options.map || undefined;
     options.mapid = options.mapid || 'map_canvas'
     options.zoom = options.zoom || 10
-    if (map == undefined){
+    if (options.map == undefined){
+        var latlng = new google.maps.LatLng(lat, lng )
         var myOptions = {
             zoom: 14,
             center: latlng,
@@ -164,7 +168,7 @@ function displayrestaurantsnear(lat, lng, map, options){
 
             var marker = new google.maps.Marker({
                         position: latlng,
-                        map: map,
+                        map: options.map,
                         title: data[i].name,
                         icon: apppath + '/images/restaurant.png'
                     });
@@ -174,5 +178,6 @@ function displayrestaurantsnear(lat, lng, map, options){
             })
         });
     })
+    return map;
 }
 

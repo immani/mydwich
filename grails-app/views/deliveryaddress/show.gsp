@@ -73,8 +73,8 @@
     var contentString = '<div><h1 class="firstHeading">${fieldValue(bean: deliveryAddressInstance, field: "name")}</h1><br />' +
             '${fieldValue(bean: deliveryAddressInstance, field: "address")}, ${fieldValue(bean: deliveryAddressInstance, field: "zip")} ${fieldValue(bean: deliveryAddressInstance, field: "city")}, ${fieldValue(bean: deliveryAddressInstance, field: "country")}</div>';
 
-    var map = displaymap('map_canvas', ${fieldValue(bean: deliveryAddressInstance, field: "lat")}, ${fieldValue(bean: deliveryAddressInstance, field: "lng")}, '${fieldValue(bean: deliveryAddressInstance, field: "name")}', contentString, {icon: '/images/deliveryaddress.png'});
-    displayrestaurantsnear('map_canvas', map);
+    var map = displaymap(${deliveryAddressInstance.lat}, ${deliveryAddressInstance.lng}, '${deliveryAddressInstance.name}', contentString, {icon: '/images/deliveryaddress.png'});
+    displayrestaurantsnear(${deliveryAddressInstance.lat}, ${deliveryAddressInstance.lng}, {map: map});
 </script>
 </body>
 </html>
