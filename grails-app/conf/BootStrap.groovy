@@ -182,6 +182,7 @@ class BootStrap {
                 vat: "878.317.974",
                 phone: "0123456789",
                 fax: "0123456789",
+                deliveryrange:5.8,
         )
         results = geocoderService.geocode(aduepassi.address, aduepassi.zip, aduepassi.city, aduepassi.country )
         aduepassi.lat = results.lat
@@ -201,6 +202,7 @@ class BootStrap {
                 vat: "888888888",
                 phone: "010231781",
                 fax: "010231788",
+                deliveryrange:1.12,
         )
         def results2 = geocoderService.geocode(lepaindesoleil.address, lepaindesoleil.zip, lepaindesoleil.city, lepaindesoleil.country )
         lepaindesoleil.lat = results2.lat
@@ -210,7 +212,7 @@ class BootStrap {
             println lepaindesoleil.errors
         }
 
-        def rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Kmie", address: "Avenue Adolphe Buyl 16", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788")
+        def rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Kmie", address: "Avenue Adolphe Buyl 16", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788",deliveryrange:4.4,)
         results = geocoderService.geocode(rest.address, rest.zip, rest.city, rest.country )
         rest.lat = results.lat
         rest.lng = results.lng
@@ -219,7 +221,7 @@ class BootStrap {
             println rest.errors
         }
 
-        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Le Zest", address: "Fernand Cocqplein 22", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788")
+        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Le Zest", address: "Fernand Cocqplein 22", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788",deliveryrange:3.2,)
         results = geocoderService.geocode(rest.address, rest.zip, rest.city, rest.country )
         rest.lat = results.lat
         rest.lng = results.lng
@@ -228,7 +230,7 @@ class BootStrap {
             println rest.errors
         }
 
-        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Chez Marie", address: "Rue Alphonse De Witte 40", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788")
+        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Chez Marie", address: "Rue Alphonse De Witte 40", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788",deliveryrange:5,)
         results = geocoderService.geocode(rest.address, rest.zip, rest.city, rest.country )
         rest.lat = results.lat
         rest.lng = results.lng
@@ -237,7 +239,7 @@ class BootStrap {
             println rest.errors
         }
 
-        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Rouge Tomate", address: "Avenue Louise 190", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788")
+        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Rouge Tomate", address: "Avenue Louise 190", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788",deliveryrange:6.1,)
         results = geocoderService.geocode(rest.address, rest.zip, rest.city, rest.country )
         rest.lat = results.lat
         rest.lng = results.lng
@@ -246,7 +248,7 @@ class BootStrap {
             println rest.errors
         }
 
-        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Le Grain de Sel", address: "Chaussée de Vleurgat 9", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788")
+        rest = new Restaurant(restaurantcategories: [sandwicherie], name: "Le Grain de Sel", address: "Chaussée de Vleurgat 9", zip: "1050", city: "Ixelles", country: "Belgium", vat: "888888888",phone: "010231781",fax: "010231788",deliveryrange:40.7,)
         results = geocoderService.geocode(rest.address, rest.zip, rest.city, rest.country )
         rest.lat = results.lat
         rest.lng = results.lng

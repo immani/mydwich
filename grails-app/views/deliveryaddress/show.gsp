@@ -70,7 +70,7 @@
     <div id="map_canvas" style="width:600px; height:400px"></div>
 </div>
 <script type="text/javascript">
-    var contentString = '<div><h1 class="firstHeading">${fieldValue(bean: deliveryAddressInstance, field: "name")}</h1><br />' +
+    var contentString = '<div><h1 class="firstHeading">${deliveryAddressInstance.name}</h1><br />' +
             '${fieldValue(bean: deliveryAddressInstance, field: "address")}, ${fieldValue(bean: deliveryAddressInstance, field: "zip")} ${fieldValue(bean: deliveryAddressInstance, field: "city")}, ${fieldValue(bean: deliveryAddressInstance, field: "country")}</div>';
 
     var map = displaymap(${deliveryAddressInstance.lat}, ${deliveryAddressInstance.lng}, '${deliveryAddressInstance.name}', contentString, {icon: '/images/deliveryaddress.png'});

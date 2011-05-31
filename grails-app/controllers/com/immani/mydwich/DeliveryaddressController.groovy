@@ -11,7 +11,7 @@ class DeliveryaddressController {
 
     def save = {
         //TODO: check dans la GSP que l'erreur est renvoyée (Même chose company/Restaurant)
-
+        def daresults
         try {
             daresults = geocoderService.geocode(params.address, params.zip, params.city, params.country )
         }
