@@ -26,6 +26,8 @@ class Product implements Serializable {
 		price(nullable:false, min:0.0, max:100.0)
     }
 
+     static searchable = [only: ['name', 'namer_fr', 'name_nl', 'name_en', 'desc_fr', 'desc_nl', 'desc_en']]
+
     String toString(){
 		return name_fr
 

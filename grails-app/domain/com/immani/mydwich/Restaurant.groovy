@@ -10,6 +10,9 @@ class Restaurant implements Serializable{
 	String vat
 	String phone
 	String fax
+	String desc_fr
+	String desc_nl
+	String desc_en
     Float lat
     Float lng
     Float deliveryrange
@@ -35,7 +38,6 @@ class Restaurant implements Serializable{
         fax(nullable: true, blank: true)
         lat(nullable: true)
         lng(nullable: true)
-        deliveryrange(nullable:true)
     }
 
     List listPatnershipsCompanies() {

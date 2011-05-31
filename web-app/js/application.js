@@ -36,6 +36,16 @@ function closeproductbuydialog(response){
         refreshbasket()
     }
 }
+
+function checksearchquery(val){
+    if(val.length>3){
+      return true
+    }
+    else{
+        return false;
+    }
+}
+
 /*
  Displays a map for a specific company / restaurant / Delivery Address
  */
@@ -62,6 +72,7 @@ function displaymap(lat, lng, title, contentString, options){
                 icon: apppath + options.icon,
                 animation: google.maps.Animation.DROP
             });
+    infowindow.open(map,marker);
 
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map,marker);
@@ -100,7 +111,7 @@ function displaydeliveryaddressonmap(lat, lng, options){
                     });
 
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                infowindow.open(options.map,marker);
             })
         });
     })
@@ -174,7 +185,7 @@ function displayrestaurantsnear(lat, lng, options){
                     });
 
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                infowindow.open(options.map,marker);
             })
         });
     })

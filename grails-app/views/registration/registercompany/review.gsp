@@ -104,12 +104,12 @@
                 </tr>
                 </tbody>
             </table>
-            <div id="map_canvas" style="width:300px; height:200px"></div>
+            <div id="comap_canvas" style="width:600px; height:300px"></div>
             <script type="text/javascript">
                 var contentString = '<div><h1 class="firstHeading">${fieldValue(bean: companyInstance, field: "name")}</h1><br />' +
                         '${fieldValue(bean: companyInstance, field: "address")}, ${fieldValue(bean: companyInstance, field: "zip")} ${fieldValue(bean: companyInstance, field: "city")}, ${fieldValue(bean: companyInstance, field: "country")}</div>';
 
-                var map = displaymap('map_canvas', ${fieldValue(bean: companyInstance, field: "lat")}, ${fieldValue(bean: companyInstance, field: "lng")}, '${fieldValue(bean: companyInstance, field: "name")}', contentString);
+                var map = displaymap(${fieldValue(bean: companyInstance, field: "lat")}, ${fieldValue(bean: companyInstance, field: "lng")}, '${fieldValue(bean: companyInstance, field: "name")}', contentString, {mapid:'comap_canvas'});
             </script>
 
             <table>
@@ -182,12 +182,12 @@
                 </tr>
                 </tbody>
             </table>
-            <div id="damap_canvas" style="width:300px; height:200px"></div>
+            <div id="damap_canvas" style="width:600px; height:300px"></div>
             <script type="text/javascript">
                 var contentString = '<div><h1 class="firstHeading">${fieldValue(bean: deliveryAddressInstance, field: "name")}</h1><br />' +
                         '${fieldValue(bean: deliveryAddressInstance, field: "address")}, ${fieldValue(bean: deliveryAddressInstance, field: "zip")} ${fieldValue(bean: deliveryAddressInstance, field: "city")}, ${fieldValue(bean: deliveryAddressInstance, field: "country")}</div>';
 
-                var map = displaymap('damap_canvas', ${fieldValue(bean: deliveryAddressInstance, field: "lat")}, ${fieldValue(bean: deliveryAddressInstance, field: "lng")}, '${fieldValue(bean: deliveryAddressInstance, field: "name")}', contentString);
+                var map = displaymap(${fieldValue(bean: deliveryAddressInstance, field: "lat")}, ${fieldValue(bean: deliveryAddressInstance, field: "lng")}, '${fieldValue(bean: deliveryAddressInstance, field: "name")}', contentString,{mapid:'damap_canvas', icon: 'images/deliveryaddress.png'});
             </script>
         </div>
         <div class="buttons">
