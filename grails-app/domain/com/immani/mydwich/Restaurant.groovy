@@ -15,6 +15,7 @@ class Restaurant implements Serializable{
 	String desc_en
     Float lat
     Float lng
+    Float deliveryrange
 
 
 
@@ -37,13 +38,8 @@ class Restaurant implements Serializable{
         fax(nullable: true, blank: true)
         lat(nullable: true)
         lng(nullable: true)
-        desc_fr(nullable: false, blank: true)
-        desc_nl(nullable: false, blank: true)
-        desc_en(nullable: false, blank: true)
     }
 
-    static searchable = [only: ['name', 'desc_fr', 'desc_nl', 'desc_en']]
-    
     List listPatnershipsCompanies() {
 		return partnerships.collect{it.company}
 	}
@@ -57,7 +53,7 @@ class Restaurant implements Serializable{
 		Partnership.unlink(company, this)
 		return this.listPatnershipsCompanies()
 	}
-                                 
+
 	String toString(){ 
 		return name
 	}

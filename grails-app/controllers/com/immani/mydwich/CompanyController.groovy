@@ -1,9 +1,11 @@
 package com.immani.mydwich
 import grails.converters.JSON
 import org.apache.shiro.authz.AuthorizationException
+import org.hibernate.collection.PersistentSet
 
 class CompanyController {
     def geocoderService
+    def companyService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -93,7 +95,7 @@ class CompanyController {
     }
 
 
-    def retrieverestaurantswithinrange = {
+   /* def retrieverestaurantswithinrange = {
         //TODO: Limit info Returned
         User user = session.user.merge()
         Company companyInstance = user.company
@@ -109,6 +111,18 @@ class CompanyController {
             //            between("lng", CompanyLng + Delta, CompanyLng - Delta  )
         }
         render restaurantlist as JSON
+    }  */
+
+      def retrieverestaurantswithinrange = {
+        User user = session.user.merge()
+        Company companyInstance = user.company
+        List deliveryAddresses= companyInstance.deliveryAddresses.asList()
+        def restaurantList = companyService.searchdeliveryrestaurant(deliveryAddresses)
+        render restaurantList as JSON
     }
+
+     def searchdeliveryrestaurant = {
+        companyService.searchdeliveryrestaurant(1)
+     }
 
 }
