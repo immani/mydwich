@@ -1,4 +1,5 @@
 <div id="header">
+    <%--TODO: Check to improve language select--%>
     <p><a class="header-main" href="${resource(dir:'')}">Mydwich</a></p>
     <p class="header-sub">When's your next dwich?</p>
     <g:link controller="${controllerName}" action="${actionName}" params="[lang:'fr']">fr</g:link>

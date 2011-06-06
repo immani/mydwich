@@ -14,18 +14,21 @@
 
     <div class="body">
         <h1><g:message code="default.list.label" args="[entityName]" /> for restaurant ${fieldValue(bean: restaurantInstance, field: "name")}</h1>
-        <div id="searchBox"> Instant Search: <g:remoteField name="searchBox" update="restaurantlist" paramName="q" url="[controller:'restaurant', action:'search']" before="checksearchquery(this.value)" /></div>
+        <div id="searchBox"> Instant Search: <g:remoteField name="searchBox" update="productlist" paramName="q" url="[controller:'product', action:'search']" /></div>
 
         <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
         </g:if>
-        <h1><g:select name="productcategory" from="${restaurantInstance.productsCategories}" value="${productcategory?.id}" optionKey="id" noSelection="${['null':'']}" onchange="location.href=location.pathname + '?productcategory=' + this.value;"></g:select></h1>
-                <div class="list">
+
+        <g:select name="productcategory" from="${productcategoriesInstanceList}" value="${productcategory?.id}" optionKey="id" noSelection="${['null':'']}"
+                  onchange="${remoteFunction(action:'showproductlist', id:restaurantInstance.id, params:'\'productcategory=\' + this.value', update:'productlist')}"></g:select>
+
+        <div id="productlist" class="list">
             <table>
                 <thead>
                 <tr>
-                    <g:sortableColumn property="name_${lg}" title="${message(code: 'product.name.label', default: 'Name')}" />
-                    <g:sortableColumn property="desc_${lg}" title="${message(code: 'product.desc.label', default: 'Descen')}" />
+                    <mydwich:sortloccol property="name" title="${message(code: 'product.name.label', default: 'Name')}" />
+                    <mydwich:sortloccol property="desc" title="${message(code: 'product.desc.label', default: 'Descen')}" />
                     <g:sortableColumn property="price" title="${message(code: 'product.price.label', default: 'Price')}" />
                     <td>&nbsp</td>
                 </tr>
@@ -38,8 +41,8 @@
                         </tr>
                         <g:each in="${productcategoryInstance.products}" status="i" var="productInstance">
                             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                                <td><g:link action="show" id="${productInstance.id}">${fieldValue(bean: productInstance, field: "name_" + lg)}</g:link></td>
-                                <td>${fieldValue(bean: productInstance, field: "desc_" + lg)}</td>
+                                <td><g:link action="show" id="${productInstance.id}"><mydwich:disploc instanceValue="${productInstance}" property="name" /></g:link></td>
+                                <td><mydwich:disploc instanceValue="${productInstance}" property="desc" /></td>
                                 <td>${fieldValue(bean: productInstance, field: "price")} €</td>
                                 <td><g:link controller="basket" action="selectproductpptions" id="${productInstance.id}" onclick="displayproductbuydialog(this.href.toString()); return false;">Add</g:link></td>
                             </tr>
@@ -51,6 +54,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">refreshbasket()</script>
 <div id="proddialog">&nbsp;</div>
 </body>

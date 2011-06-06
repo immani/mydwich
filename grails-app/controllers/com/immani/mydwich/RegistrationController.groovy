@@ -1,9 +1,13 @@
 package com.immani.mydwich
-import com.megatome.grails.RecaptchaService
+//import com.megatome.grails.RecaptchaService
+import org.apache.shiro.crypto.hash.Sha256Hash
 
 class RegistrationController {
+    def index = {
+        redirect(controller: registeruser)
+    }
     def geocoderService
-
+    /*
     RecaptchaService recaptchaService
     def index = {
         render(view:'/recaptcha')
@@ -19,6 +23,7 @@ class RegistrationController {
         }
         render(view:'/recaptcha',model:[recaptcha:recaptchaOK])
     }
+    */
 
     /**
      * Creates a new Company, User and Delivery Address
@@ -33,10 +38,10 @@ class RegistrationController {
                     coresults = geocoderService.geocode(params.address, params.zip, params.city, params.country )
                 }
                 catch (Exception exception){
-                   flow.companyInstance = new Company(params)
-                   flow.companyInstance.validate()
-                   flash.error = exception.getMessage()
-                   return error()
+                    flow.companyInstance = new Company(params)
+                    flow.companyInstance.validate()
+                    flash.error = exception.getMessage()
+                    return error()
                 }
 
                 flow.companyInstance = new Company(params + coresults)
@@ -52,6 +57,7 @@ class RegistrationController {
                 flow.usernameleft = params.usernameleft
                 params.username = params.usernameleft + "@" + flow.companyInstance.domain
                 flow.userInstance = new User(params)
+                flow.userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
                 Role companyRole = Role.findByName("companyadmin")
                 flow.userInstance.addToRoles(companyRole)
                 flow.deliveryAddressInstance = new DeliveryAddress(flow.companyInstance.properties)
@@ -70,9 +76,9 @@ class RegistrationController {
                     daresults = geocoderService.geocode(params.address, params.zip, params.city, params.country )
                 }
                 catch (Exception exception){
-                   flow.deliveryAddressInstance.validate()
-                   flash.error = exception.getMessage()
-                   return error()
+                    flow.deliveryAddressInstance.validate()
+                    flash.error = exception.getMessage()
+                    return error()
                 }
 
                 flow.deliveryAddressInstance = new DeliveryAddress(params + daresults)
@@ -119,9 +125,9 @@ class RegistrationController {
                     restresults = geocoderService.geocode(params.address, params.zip, params.city, params.country )
                 }
                 catch (Exception exception){
-                   flow.companyInstance = new Restaurant(params)
-                   flash.message = exception.getMessage()
-                   return error()
+                    flow.companyInstance = new Restaurant(params)
+                    flash.error = exception.getMessage()
+                    return error()
                 }
                 flow.restaurantInstance = new Restaurant(params + restresults)
                 flow.restaurantInstance.validate() ? success() : error()
@@ -133,6 +139,7 @@ class RegistrationController {
         userinfo {
             on("next") {
                 flow.userInstance = new User(params)
+                flow.userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
                 Role restaurantRole = Role.findByName("restaurant")
                 flow.userInstance.addToRoles(restaurantRole)
                 flow.userInstance.validate() ? success() : error()
@@ -144,24 +151,16 @@ class RegistrationController {
 
         persist {
             action {
+                emailConfirmationService.sendConfirmation(flow.userInstance.username, "Please confirm your email address", [from:"mydwich@immani.com"])
                 flow.restaurantInstance.addToUsers(flow.userInstance)
                 flow.restaurantInstance.save()
-
-                sendMail {
-                    from "admin@mydwich.com"
-                    to flow.userInstance.username
-                    subject "Welcome to mydwich ${flow.userInstance.firstname} ${flow.userInstance.lastname}"
-                    html "<b>Hello</b> ${flow.userInstance.firstname} ${flow.userInstance.lastname} <br />" +
-                            "Welcome to myDwich application, to start using the application: <br />" +
-                            "http://mydwich.immani.com:8080/"
-                }
             }
 
             on("success").to "end"
         }
 
         end {
-            redirect(controller: "restaurant", action:"list")
+            redirect(controller: "restaurant", action:"showprofilerestaurant")
         }
 
         cancel {
@@ -180,13 +179,22 @@ class RegistrationController {
                 if (matchingcompanies.size() == 1){
                     flow.companyInstance = matchingcompanies[0]
                     flow.userInstance = new User(params)
-                    success()
+                    flow.userInstance.validate()
+                    if(flow.userInstance.hasErrors()) {
+                        if(flow.userInstance.errors.hasFieldErrors("username")){
+                            error()
+                        }
+                        else{
+                            flow.userInstance.clearErrors()
+                            success()
+                        }
+                    }
                 }
                 else if (matchingcompanies.size() == 0){
                     flash.message = ${message(code: "flow.company.not.found", args: [domain])}
                     //    flash.message = "flow.company.not.found"
                     //    flash.args = ["domain"]
-                    error()
+                    return error()
                 }
             }.to "userinfo"
 
@@ -196,6 +204,7 @@ class RegistrationController {
         userinfo {
             on("next") {
                 flow.userInstance.properties = params
+                flow.userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
                 Role companyRole = Role.findByName("company")
                 flow.userInstance.addToRoles(companyRole)
                 flow.userInstance.validate() ? success() : error()
@@ -209,6 +218,7 @@ class RegistrationController {
 
         persist {
             action {
+                emailConfirmationService.sendConfirmation(flow.userInstance.username, "Please confirm your email address", [from:"mydwich@immani.com"])
                 flow.companyInstance.addToUsers(flow.userInstance)
                 flow.userInstance.save()
             }

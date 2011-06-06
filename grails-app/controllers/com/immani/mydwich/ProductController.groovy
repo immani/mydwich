@@ -116,7 +116,6 @@ class ProductController {
 
     def showrestaurantcatalog = {
         Restaurant restaurantInstance = Restaurant.get(params.id)
-        def products
         def productscategories
         if (!restaurantInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), params.id])}"
@@ -124,16 +123,54 @@ class ProductController {
         }
         else {
             if (params.productcategory == null){
-                productscategories = restaurantInstance.productsCategories
+                productscategories = restaurantInstance.productsCategories.sort({a,b-> a.catorder.compareTo(b.catorder)})
                 render(view: "catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
             }
             else{
-                productscategories = ProductCategory.get(params.productcategory)
+                productscategories = ProductCategory.get(params.productcategory).sort({a,b-> a.catorder.compareTo(b.catorder)})
                 render(view: "catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance])
             }
 
         }
     }
+    def showproductlist ={
+        Restaurant restaurantInstance = Restaurant.get(params.id)
+        if (!restaurantInstance) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), params.id])}"
+            redirect(action: "list")
+        }
+        else {
+            def productscategories
+            if (params.productcategory == null){
+                productscategories = restaurantInstance.productsCategories.sort({a,b-> a.catorder.compareTo(b.catorder)})
+                render(view: "productlistajax", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
+            }
+            else{
+                productscategories = ProductCategory.get(params.productcategory).sort({a,b-> a.catorder.compareTo(b.catorder)})
+                render(view: "productlistajax", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance])
+            }
+        }
+    }
 
-
+    def search = {
+        def q = params.q ?: null
+        def searchResults
+        if(q) {
+            if(q.toString().length()>2){
+                searchResults = [
+                        productsResults: trySearch { Product.search(q +"*", [max:10]) },
+                        q: q.encodeAsHTML()
+                ]
+            }
+        }
+        render(template:"searchResults", model: searchResults)
+    }
+    def trySearch(Closure callable) {
+        try {
+            return callable.call()
+        } catch(Exception e) {
+            log.debug "Search Error: ${e.message}", e
+            return []
+        }
+    }
 }

@@ -297,7 +297,7 @@ class BootStrap {
 
         //Product Category
         def sandwich = new ProductCategory(
-                restaurant: lepaindesoleil, name_fr: "Sandwichs", name_en: "Sandwichs", name_nl: "Sandwichs"
+                restaurant: lepaindesoleil, name_fr: "Sandwichs", name_en: "Sandwichs", name_nl: "Sandwichs",catorder:1
         )
         sandwich.save()
         if(sandwich.hasErrors()){
@@ -305,7 +305,7 @@ class BootStrap {
         }
 
         def saladecat = new ProductCategory(
-                restaurant: lepaindesoleil, name_fr: "Salade", name_en: "Salad", name_nl: "Salad"
+                restaurant: lepaindesoleil, name_fr: "Salade", name_en: "Salad", name_nl: "Salad",catorder:3
         )
         saladecat.save()
         if(saladecat.hasErrors()){
@@ -313,7 +313,7 @@ class BootStrap {
         }
 
         def boisson = new ProductCategory(
-                restaurant: lepaindesoleil, name_fr: "Boissons", name_en: "Drinks", name_nl: "Drinken"
+                restaurant: lepaindesoleil, name_fr: "Boissons", name_en: "Drinks", name_nl: "Drinken",catorder:2
         )
         boisson.save()
         if(boisson.hasErrors()){
@@ -321,7 +321,7 @@ class BootStrap {
         }
 
         def pizza = new ProductCategory(
-                restaurant: aduepassi, name_fr: "Pizza", name_en: "Pizza", name_nl: "Pizza"
+                restaurant: aduepassi, name_fr: "Pizza", name_en: "Pizza", name_nl: "Pizza",catorder:1
         )
         pizza.save()
         if(pizza.hasErrors()){
@@ -329,7 +329,7 @@ class BootStrap {
         }
 
         def dessert = new ProductCategory(
-                restaurant: aduepassi, name_fr: "Dessert", name_en: "Dessert", name_nl: "Desserten"
+                restaurant: aduepassi, name_fr: "Dessert", name_en: "Dessert", name_nl: "Desserten",catorder:2
         )
         dessert.save()
         if(dessert.hasErrors()){

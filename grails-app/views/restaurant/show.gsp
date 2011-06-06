@@ -86,6 +86,28 @@
             </tr>
 
             <tr class="prop">
+                <td valign="top" class="name"><g:message code="restaurant.desc_fr.label" default="Description" /></td>
+
+                <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "desc_fr")}</td>
+
+            </tr>
+
+            <tr class="prop">
+                <td valign="top" class="name"><g:message code="restaurant.desc_nl.label" default="Description" /></td>
+
+                <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "desc_nl")}</td>
+
+            </tr>
+
+            <tr class="prop">
+                <td valign="top" class="name"><g:message code="restaurant.desc_en.label" default="Description" /></td>
+
+                <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "desc_en")}</td>
+
+            </tr>
+
+
+            <tr class="prop">
                 <td valign="top" class="name"><g:message code="restaurant.lat.label" default="Latitude" /></td>
 
                 <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "lat")}</td>

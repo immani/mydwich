@@ -21,12 +21,23 @@ function displayproductbuydialog(url){
 
 function refreshbasket(){
     $.ajax({
-                url: apppath + "basket/renderbasketajax",
-                cache: false,
-                success: function(html){
-                    $("#nav").html(html)
-                }
-            })
+        url: apppath + "basket/renderbasketajax",
+        cache: false,
+        success: function(html){
+            $("#nav").html(html)
+        }
+    })
+}
+
+function loadcatalog(restaurantid, options){
+    options = options || {};
+    $.ajax({
+        url: apppath + "basket/renderbasketajax",
+        cache: false,
+        success: function(html){
+            $("#nav").html(html)
+        }
+    })
 }
 
 function closeproductbuydialog(response){
@@ -39,7 +50,7 @@ function closeproductbuydialog(response){
 
 function checksearchquery(val){
     if(val.length>3){
-      return true
+        return true
     }
     else{
         return false;
