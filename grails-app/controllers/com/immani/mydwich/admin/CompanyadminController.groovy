@@ -1,5 +1,5 @@
-package com.immani.mydwich
-
+package com.immani.mydwich.admin
+import com.immani.mydwich.*
 import grails.converters.JSON
 
 class CompanyadminController {

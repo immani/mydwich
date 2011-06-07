@@ -31,9 +31,8 @@
                             <g:sortableColumn property="name_en" title="${message(code: 'prodOptionCategory.name_en.label', default: 'Nameen')}" />
                         
                             <g:sortableColumn property="type" title="${message(code: 'prodOptionCategory.type.label', default: 'Type')}" />
-                        
-                            <th><g:message code="prodOptionCategory.restaurant.label" default="Restaurant" /></th>
-                        
+                            <td>Options</td>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -49,9 +48,9 @@
                             <td>${fieldValue(bean: prodOptionCategoryInstance, field: "name_en")}</td>
                         
                             <td>${fieldValue(bean: prodOptionCategoryInstance, field: "type")}</td>
-                        
-                            <td>${fieldValue(bean: prodOptionCategoryInstance, field: "restaurant")}</td>
-                        
+
+                            <td><g:link controller="prodoption" action="listforprodoptioncategory" params="[prodoptcatid: prodOptionCategoryInstance.id]">View Options</g:link></td>
+
                         </tr>
                     </g:each>
                     </tbody>

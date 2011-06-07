@@ -21,23 +21,23 @@ function displayproductbuydialog(url){
 
 function refreshbasket(){
     $.ajax({
-        url: apppath + "basket/renderbasketajax",
-        cache: false,
-        success: function(html){
-            $("#nav").html(html)
-        }
-    })
+                url: apppath + "basket/renderbasketajax",
+                cache: false,
+                success: function(html){
+                    $("#nav").html(html)
+                }
+            })
 }
 
 function loadcatalog(restaurantid, options){
     options = options || {};
     $.ajax({
-        url: apppath + "basket/renderbasketajax",
-        cache: false,
-        success: function(html){
-            $("#nav").html(html)
-        }
-    })
+                url: apppath + "basket/renderbasketajax",
+                cache: false,
+                success: function(html){
+                    $("#nav").html(html)
+                }
+            })
 }
 
 function closeproductbuydialog(response){
@@ -203,3 +203,10 @@ function displayrestaurantsnear(lat, lng, options){
     return map;
 }
 
+$(document).ready(function() {
+    $("#spinner").bind("ajaxSend", function() {
+        $(this).fadeIn();
+    }).bind("ajaxComplete", function() {
+        $(this).fadeOut();
+    }
+)})

@@ -1,5 +1,5 @@
-package com.immani.mydwich
-
+package com.immani.mydwich.admin
+import com.immani.mydwich.*
 class UserpaymentadminController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]

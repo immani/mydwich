@@ -6,6 +6,7 @@ import org.hibernate.collection.PersistentSet
 class CompanyController {
     def geocoderService
     def companyService
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {

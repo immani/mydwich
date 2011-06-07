@@ -21,7 +21,7 @@
             <g:renderErrors bean="${restaurantInstance}" as="list" />
         </div>
     </g:hasErrors>
-    <g:form action="save" >
+    <g:uploadForm name="myUpload" action="save">
         <div class="dialog">
             <table>
                 <tbody>
@@ -134,13 +134,22 @@
                     </td>
                 </tr>
 
+                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="restaurantcategories"><g:message code="restaurant.photo.label" default="Restaurant Picture" /></label>
+                    </td>
+                    <td valign="top">
+                        <input type="file" name="picture1">
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
         </div>
         <div class="buttons">
             <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
         </div>
-    </g:form>
+    </g:uploadForm>
 </div>
 </body>
 </html>

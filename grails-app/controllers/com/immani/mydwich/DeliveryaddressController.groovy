@@ -118,7 +118,7 @@ class DeliveryaddressController {
 /**
  * Create a delivery address for the current user's company
  */
-    def createdeliveryaddress = {
+    def create = {
         User user = session.user.merge()
         if (user.company == null){
             flash.message = "The current user doesn't belong to a company "
@@ -133,7 +133,7 @@ class DeliveryaddressController {
     /**
      * List of all delivery addresses belonging to the current user's company
      */
-    def listdeliveryaddress = {
+    def list = {
         User user = session.user.merge()
         if (user.company == null){
             flash.message = "The current user doesn't belong to a company"

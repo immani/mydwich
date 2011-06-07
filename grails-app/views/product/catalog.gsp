@@ -21,7 +21,7 @@
         </g:if>
 
         <g:select name="productcategory" from="${productcategoriesInstanceList}" value="${productcategory?.id}" optionKey="id" noSelection="${['null':'']}"
-                  onchange="${remoteFunction(action:'showproductlist', id:restaurantInstance.id, params:'\'productcategory=\' + this.value', update:'productlist')}"></g:select>
+                  onchange="${remoteFunction(controller:'product', action:'showproductlist', id:restaurantInstance.id, params:'\'productcategory=\' + this.value', update:'productlist')}"></g:select>
 
         <div id="productlist" class="list">
             <table>
@@ -44,7 +44,7 @@
                                 <td><g:link action="show" id="${productInstance.id}"><mydwich:disploc instanceValue="${productInstance}" property="name" /></g:link></td>
                                 <td><mydwich:disploc instanceValue="${productInstance}" property="desc" /></td>
                                 <td>${fieldValue(bean: productInstance, field: "price")} €</td>
-                                <td><g:link controller="basket" action="selectproductpptions" id="${productInstance.id}" onclick="displayproductbuydialog(this.href.toString()); return false;">Add</g:link></td>
+                                <td><g:link controller="basket" action="selectproductoptions" id="${productInstance.id}" onclick="displayproductbuydialog(this.href.toString()); return false;">Add</g:link></td>
                             </tr>
                         </g:each>
                     </g:if>

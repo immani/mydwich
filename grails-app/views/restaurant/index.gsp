@@ -20,39 +20,34 @@
     </div>
 </div>
 <div id="pageBody">
-    <h1>Company Admin Actions</h1>
+    <h1>Restaurant Admin Actions</h1>
 
     <div id="controllerList" class="dialog">
-        <h2>Company Action:</h2>
+        <h2>Restaurant Action:</h2>
         <fieldset>
-            <legend>Company Profile</legend>
-            <g:link controller="company" action="show">Show Profile</g:link>
+            <legend>Restaurant Profile</legend>
+            <g:link controller="restaurant" action="showprofilerestaurant">Show Profile</g:link>
         </fieldset>
         <br />
-
         <fieldset>
             <legend>Users</legend>
             <g:link controller="user" action="list">List Users</g:link><br/>
-            <g:link controller="user" action="create">New User</g:link><br/>
-            <g:link controller="userpayment" action="listcompanyuserpayment">List Payments</g:link>
-        </fieldset>
-        <br />
-
-        <fieldset>
-            <legend>Delivery Addresses</legend>
-            <g:link controller="deliveryaddress" action="list">List Delivery Address</g:link><br/>
-            <g:link controller="deliveryaddress" action="create">New Delivery Address</g:link>
-        </fieldset>
-        <br />
-
-        <fieldset>
-            <legend>Orders</legend>
-            <g:link controller="basket" action="listbycompany">List Orders</g:link>
+            <g:link controller="user" action="create">New User</g:link>
         </fieldset>
         <br />
         <fieldset>
-            <legend>Restaurants</legend>
-            <g:link controller="restaurant" action="">List Partner Restaurants</g:link>
+            <legend>Product Categories</legend>
+            <g:link controller="productcategory" action="list">List Product Categories</g:link><br/>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Product Options Categories</legend>
+            <g:link controller="prodoptioncategory" action="list">List Product Option Categories</g:link>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Product Options</legend>
+            <g:link controller="prodoption" action="list">List Product Options</g:link>
         </fieldset>
     </div>
 </div>

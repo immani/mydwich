@@ -266,15 +266,30 @@ class BootStrap {
         //User creation
 
         // Creating a company user
-        def companyuser = new User(
+        def companyadminuser = new User(
                 username: "nicolas@immani.com",
                 firstname: "Nicolas",
                 lastname: "Germeau",
                 title: "Mr",
                 passwordHash: new Sha256Hash("nicolas").toHex(),
                 company: immani,
-                roles: [companyRole],
+                roles: [companyAdminRole],
                 language: 'nl');
+        companyadminuser.addToPermissions("*:*")
+        companyadminuser.save()
+        if(companyadminuser.hasErrors()){
+            println companyadminuser.errors
+        }
+
+        def companyuser = new User(
+                username: "marie@immani.com",
+                firstname: "Marie",
+                lastname: "Deronchène",
+                title: "Mrs",
+                passwordHash: new Sha256Hash("marie").toHex(),
+                company: immani,
+                roles: [companyRole],
+                language: 'fr');
         companyuser.addToPermissions("*:*")
         companyuser.save()
         if(companyuser.hasErrors()){
@@ -282,12 +297,28 @@ class BootStrap {
         }
 
         // Creating a restaurant user
-        def restaurantuser = new User(
+        def restaurantadminuser = new User(
                 username: "thierry@immani.com",
                 firstname: "Thierry",
                 lastname: "Soubestre",
                 title: "Mr",
                 passwordHash: new Sha256Hash("thierry").toHex(),
+                restaurant: lepaindesoleil,
+                roles: [restaurantAdminRole],
+                language: 'fr');
+        restaurantadminuser.addToPermissions("*:*")
+        restaurantadminuser.save()
+        if(restaurantadminuser.hasErrors()){
+            println restaurantadminuser.errors
+        }
+
+         // Creating a restaurant user
+        def restaurantuser = new User(
+                username: "olivier@immani.com",
+                firstname: "Olivier",
+                lastname: "Soubestre",
+                title: "Mr",
+                passwordHash: new Sha256Hash("olivier").toHex(),
                 restaurant: lepaindesoleil,
                 roles: [restaurantRole],
                 language: 'fr');

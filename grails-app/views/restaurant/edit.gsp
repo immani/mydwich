@@ -24,7 +24,7 @@
             <g:renderErrors bean="${restaurantInstance}" as="list" />
         </div>
     </g:hasErrors>
-    <g:form method="post" >
+    <g:uploadForm method="post" >
         <g:hiddenField name="id" value="${restaurantInstance?.id}" />
         <g:hiddenField name="version" value="${restaurantInstance?.version}" />
         <div class="dialog">
@@ -138,6 +138,14 @@
                         <g:select name="restaurantcategories" from="${com.immani.mydwich.RestaurantCategory.list()}" multiple="yes" optionKey="id" />
                     </td>
                 </tr>
+                                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="restaurantcategories"><g:message code="restaurant.photo.label" default="Restaurant Picture" /></label>
+                    </td>
+                    <td valign="top">
+                        <input type="file" name="picture1">
+                    </td>
+                </tr>
 
                 <tr class="prop">
                     <td valign="top" class="name">
@@ -169,7 +177,7 @@
             <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
             <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
         </div>
-    </g:form>
+    </g:uploadForm>
 </div>
 </body>
 </html>

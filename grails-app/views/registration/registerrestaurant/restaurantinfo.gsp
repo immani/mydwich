@@ -73,6 +73,15 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
+                        <label for="deliveryrange"><g:message code="restaurant.deliveryrange.label" default="Delivery Range" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'deliveryrange', 'errors')}">
+                        <g:textField name="deliveryrange" value="${restaurantInstance?.deliveryrange}" />
+                    </td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name">
                         <label for="vat"><g:message code="restaurant.vat.label" default="Vat" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'vat', 'errors')}">

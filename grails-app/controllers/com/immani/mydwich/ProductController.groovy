@@ -127,7 +127,7 @@ class ProductController {
                 render(view: "catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
             }
             else{
-                productscategories = ProductCategory.get(params.productcategory).sort({a,b-> a.catorder.compareTo(b.catorder)})
+                productscategories = ProductCategory.get(params.productcategory)
                 render(view: "catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance])
             }
 
@@ -146,7 +146,7 @@ class ProductController {
                 render(view: "productlistajax", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
             }
             else{
-                productscategories = ProductCategory.get(params.productcategory).sort({a,b-> a.catorder.compareTo(b.catorder)})
+                productscategories = ProductCategory.get(params.productcategory)
                 render(view: "productlistajax", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance])
             }
         }
