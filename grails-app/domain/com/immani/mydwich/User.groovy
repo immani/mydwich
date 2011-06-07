@@ -34,6 +34,7 @@ class User implements Serializable {
         company(nullable: true)
         restaurant(nullable:true)
         isvalidated(nullable: false, blank: false)
+        passwordHash(nullable: false, password: true)
     }
 
     String toString(){

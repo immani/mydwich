@@ -21,7 +21,7 @@
             <g:renderErrors bean="${userInstance}" as="list" />
         </div>
     </g:hasErrors>
-      <g:form url="[controller:'registration', action:'registercompanyadminuser']">
+      <g:form url="[controller:'registration', action:'registeruser']">
         <div class="dialog">
             <table>
                 <tbody>

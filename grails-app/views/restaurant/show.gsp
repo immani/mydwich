@@ -6,12 +6,11 @@
     <meta name="layout" content="main" />
     <g:set var="entityName" value="${message(code: 'restaurant.label', default: 'Restaurant')}" />
     <title><g:message code="default.show.label" args="[entityName]" /></title>
+    <g:javascript src="jquery.galleriffic.js" />
 </head>
 <body>
 <div class="nav">
     <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-    <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-    <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
 </div>
 <div class="body">
     <h1><g:message code="default.show.label" args="[entityName]" /></h1>
@@ -21,13 +20,7 @@
     <div class="dialog">
         <table>
             <tbody>
-
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="restaurant.id.label" default="Id" /></td>
-
-                <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "id")}</td>
-
-            </tr>
+            <img class="Photo" src="${createLink(controller:'restaurant', action:'viewImage', id:restaurantInstance.id)}" />
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="restaurant.name.label" default="Name" /></td>
@@ -84,6 +77,14 @@
                 <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "fax")}</td>
 
             </tr>
+
+            <tr class="prop">
+                <td valign="top" class="name"><g:message code="restaurant.desc.label" default="Description" /></td>
+
+                <td valign="top" class="value"><mydwich:disploc instanceValue="${restaurantInstance}" property="desc" /></td>
+
+            </tr>
+
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="restaurant.lat.label" default="Latitude" /></td>

@@ -21,61 +21,19 @@
             <div class="dialog">
                 <table>
                     <tbody>
-                    
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "id")}</td>
-                            
+                            <td valign="top" class="name"><g:message code="product.name.label" default="Name" /></td>
+                            <td valign="top" class="value"><mydwich:disploc instanceValue="${productInstance}" property="name" /></td>
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.name_fr.label" default="Namefr" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "name_fr")}</td>
-                            
+                            <td valign="top" class="name"><g:message code="product.desc.label" default="Description" /></td>
+                            <td valign="top" class="value"><mydwich:disploc instanceValue="${productInstance}" property="desc" /></td>
                         </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.name_nl.label" default="Namenl" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "name_nl")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.name_en.label" default="Nameen" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "name_en")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.desc_fr.label" default="Descfr" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "desc_fr")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.desc_nl.label" default="Descnl" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "desc_nl")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.desc_en.label" default="Descen" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "desc_en")}</td>
-                            
-                        </tr>
-                    
+
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.price.label" default="Price" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "price")}</td>
-                            
                         </tr>
                     
                         <tr class="prop">
@@ -106,9 +64,7 @@
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.restaurant.label" default="Restaurant" /></td>
-                            
                             <td valign="top" class="value"><g:link controller="restaurant" action="show" id="${productInstance?.restaurant?.id}">${productInstance?.restaurant?.encodeAsHTML()}</g:link></td>
-                            
                         </tr>
                     
                     </tbody>

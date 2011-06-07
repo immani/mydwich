@@ -8,17 +8,6 @@ class ProductcategoryController {
         redirect(action: "list", params: params)
     }
 
-    def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [productCategoryInstanceList: ProductCategory.list(params), productCategoryInstanceTotal: ProductCategory.count()]
-    }
-
-    def create = {
-        def productCategoryInstance = new ProductCategory()
-        productCategoryInstance.properties = params
-        return [productCategoryInstance: productCategoryInstance]
-    }
-
     def save = {
         def productCategoryInstance = new ProductCategory(params)
         if (productCategoryInstance.save(flush: true)) {
@@ -58,7 +47,7 @@ class ProductcategoryController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (productCategoryInstance.version > version) {
-                    
+
                     productCategoryInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'productCategory.label', default: 'ProductCategory')] as Object[], "Another user has updated this ProductCategory while you were editing")
                     render(view: "edit", model: [productCategoryInstance: productCategoryInstance])
                     return
@@ -99,9 +88,23 @@ class ProductcategoryController {
     }
 
 
-    def createproductcategoryrestaurant = {
+    def create = {
         User user = session.user.merge()
         ProductCategory productCategoryInstance= new ProductCategory(restaurant: user.restaurant)
         render(view: "create", model:[productCategoryInstance: productCategoryInstance])
+    }
+
+    def List = {
+        User user = session.user.merge()
+        if (user.restaurant == null){
+            flash.message = "The current user doesn't belong to a restaurant"
+            render(view: "/info")
+        }
+        else{
+            params.max = Math.min(params.max ? params.int('max') : 10, 100)
+            def prodcatlist = ProductCategory.findAllByRestaurant(user.restaurant, params)
+
+            render(view:"list", model:[productCategoryInstanceList: prodcatlist, productCategoryInstanceTotal: prodcatlist.size()])
+        }
     }
 }

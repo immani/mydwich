@@ -8,7 +8,10 @@ class UrlMappings {
         }
 
 	     "500"(view:'/error')
-	    "/"(view:"/index")
+
+	    "/"{
+            controller="home"
+        }
 
         "/registration/company"{
             controller="registration"

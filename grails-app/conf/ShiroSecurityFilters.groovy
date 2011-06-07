@@ -15,8 +15,10 @@ class ShiroSecurityFilters {
             before = {
                 // Ignore direct views (e.g. the default main index page).
                 if (!controllerName) return true
+                if(controllerName == "home") return true
                 if(controllerName == "registration") return true
-
+                if(controllerName == "emailConfirmation") return true  //Used by plugin Email Confirmation
+                //TODO: Check if we can merge the 2 URL mapping
                 // Access control by convention.
                 accessControl()
             }

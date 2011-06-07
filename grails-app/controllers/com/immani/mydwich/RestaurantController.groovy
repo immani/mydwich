@@ -8,13 +8,9 @@ class RestaurantController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
-        redirect(action: "list", params: params)
+        render(view: "index")
     }
 
-    def geocode = {
-        def result = geocoderService.geocode(params.address, params.zip, params.city, params.country)
-        render result as JSON
-    }
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -48,7 +44,23 @@ class RestaurantController {
             redirect(action: "list")
         }
         else {
-            render(view: "show", model: [restaurantInstance: restaurantInstance])
+            switch(params.page){
+                case null:
+                    render(view: "show", model: [restaurantInstance: restaurantInstance])
+                    break
+                case "map":
+                    render(view: "map", model: [restaurantInstance: restaurantInstance])
+                    break
+                case "info":
+                    render(view: "info", model: [restaurantInstance: restaurantInstance])
+                    break
+                case "menu":
+                    //   params.id = restaurantInstance.id
+                    def productscategories = restaurantInstance.productsCategories?.sort({a,b-> a.catorder.compareTo(b.catorder)})
+                    render(view: "/product/catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
+                    //    redirect(controller: "product", action: "showrestaurantcatalog", id:restaurantInstance.id)
+                    break
+            }
         }
     }
 
@@ -63,7 +75,7 @@ class RestaurantController {
             //TODO: check encodeURL Vs replaceAll
             params.name = restaurantInstance.name.encodeAsURL()
             params.remove("id")
-            redirect(action: "getbyname", params: params.name )
+            redirect(action: "getbyname", params: params )
         }
     }
 
@@ -91,6 +103,7 @@ class RestaurantController {
                 }
             }
             def results = geocoderService.geocode(params.address, params.zip, params.city, params.country )
+
             restaurantInstance.properties = params + results
             if (!restaurantInstance.hasErrors() && restaurantInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), restaurantInstance.id])}"
@@ -185,4 +198,17 @@ class RestaurantController {
             return []
         }
     }
+
+    def viewImage = {
+        def restaurantInstance = Restaurant.get(params.id)
+        def photo = restaurantInstance.picture1
+        def test = photo.name
+    //    response.setHeader("Content-disposition", "attachment; filename=${photo.name}")
+    //    response.contentType = photo.getContentType() //'image/jpeg' will do too
+        response.outputStream << photo //'myphoto.jpg' will do too
+        response.outputStream.flush()
+        return;
+
+    }
+
 }

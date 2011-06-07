@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.immani.mydwich.Basket" %>
 <html>
     <head>

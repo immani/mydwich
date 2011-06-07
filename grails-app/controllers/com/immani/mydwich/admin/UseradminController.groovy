@@ -1,5 +1,5 @@
-package com.immani.mydwich
-
+package com.immani.mydwich.admin
+import com.immani.mydwich.*
 class UseradminController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -280,7 +280,7 @@ class UseradminController {
                 flow.restaurantInstance.save()
 
                 sendMail {
-                    from "admin@mydwich.com"
+                    from "com.immani.mydwich.admin@mydwich.com"
                     to flow.userInstance.username
                     subject "Welcome to mydwich ${flow.userInstance.firstname} ${flow.userInstance.lastname}"
                     html "<b>Hello</b> ${flow.userInstance.firstname} ${flow.userInstance.lastname} <br />" +

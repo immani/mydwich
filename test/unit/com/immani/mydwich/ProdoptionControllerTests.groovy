@@ -2,7 +2,7 @@ package com.immani.mydwich
 
 import grails.test.*
 
-class ProdoptionControllerTests extends ControllerUnitTestCase {
+class ProdOptionControllerTests extends ControllerUnitTestCase {
     protected void setUp() {
         super.setUp()
     }

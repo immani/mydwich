@@ -29,6 +29,17 @@ function refreshbasket(){
             })
 }
 
+function loadcatalog(restaurantid, options){
+    options = options || {};
+    $.ajax({
+                url: apppath + "basket/renderbasketajax",
+                cache: false,
+                success: function(html){
+                    $("#nav").html(html)
+                }
+            })
+}
+
 function closeproductbuydialog(response){
     if(response == "productadded"){
         $("#proddialog").dialog( "close" );
@@ -39,7 +50,7 @@ function closeproductbuydialog(response){
 
 function checksearchquery(val){
     if(val.length>3){
-      return true
+        return true
     }
     else{
         return false;
@@ -192,3 +203,10 @@ function displayrestaurantsnear(lat, lng, options){
     return map;
 }
 
+$(document).ready(function() {
+    $("#spinner").bind("ajaxSend", function() {
+        $(this).fadeIn();
+    }).bind("ajaxComplete", function() {
+        $(this).fadeOut();
+    }
+)})

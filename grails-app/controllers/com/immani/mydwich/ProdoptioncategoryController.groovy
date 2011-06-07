@@ -8,16 +8,7 @@ class ProdoptioncategoryController {
         redirect(action: "list", params: params)
     }
 
-    def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [prodOptionCategoryInstanceList: ProdOptionCategory.list(params), prodOptionCategoryInstanceTotal: ProdOptionCategory.count()]
-    }
 
-    def create = {
-        def prodOptionCategoryInstance = new ProdOptionCategory()
-        prodOptionCategoryInstance.properties = params
-        return [prodOptionCategoryInstance: prodOptionCategoryInstance]
-    }
 
     def save = {
         def prodOptionCategoryInstance = new ProdOptionCategory(params)
@@ -95,6 +86,26 @@ class ProdoptioncategoryController {
         else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'prodOptionCategory.label', default: 'ProdOptionCategory'), params.id])}"
             redirect(action: "list")
+        }
+    }
+
+    def create = {
+        User user = session.user.merge()
+        ProdOptionCategory prodOptionCategoryInstance= new ProdOptionCategory(restaurant: user.restaurant)
+        render(view: "create", model:[prodOptionCategoryInstance: prodOptionCategoryInstance])
+    }
+
+    def List = {
+        User user = session.user.merge()
+        if (user.restaurant == null){
+            flash.message = "The current user doesn't belong to a restaurant"
+            render(view: "/info")
+        }
+        else{
+            params.max = Math.min(params.max ? params.int('max') : 10, 100)
+            def prodoptcatlist = ProdOptionCategory.findAllByRestaurant(user.restaurant, params)
+
+            render(view:"list", model:[prodOptionCategoryInstanceList: prodoptcatlist, prodOptionCategoryInstanceTotal: prodoptcatlist.size()])
         }
     }
 }

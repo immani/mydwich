@@ -10,22 +10,13 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/showrestaurant/$name"{
+        "/showrestaurant/$name/$page?"{
             constraints {
                 // apply constraints here
             }
             controller="restaurant"
             action = "getbyname"
-        }
 
-
-
-        "/restaurant/user/$action?/$id?"{
-            constraints {
-                // apply constraints here
-            }
-            controller="user"
-            action = $action
         }
 
         "/product/$action?/$id?"{
@@ -36,7 +27,7 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/product_category/$action?/$id?"{
+        "/restaurant/product_category/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -44,7 +35,7 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/product_option_category/$action?/$id?"{
+        "/restaurant/product_option_category/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -52,7 +43,7 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/product_option/$action?/$id?"{
+        "/restaurant/product_option/$action?/$id?"{
             constraints {
                 // apply constraints here
             }

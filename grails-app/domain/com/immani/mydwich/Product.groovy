@@ -3,12 +3,12 @@ package com.immani.mydwich
 class Product implements Serializable {
 
     String name_fr
-	String name_nl
-	String name_en
-	String desc_fr
-	String desc_nl
-	String desc_en
-	BigDecimal price
+    String name_nl
+    String name_en
+    String desc_fr
+    String desc_nl
+    String desc_en
+    BigDecimal price
     Restaurant restaurant
     List productCategories
 
@@ -17,19 +17,19 @@ class Product implements Serializable {
     static hasMany = [productTags:ProductTag, productCategories: ProductCategory]
 
     static constraints = {
-		name_fr(nullable: false, blank: false)
-		name_nl(nullable: false, blank: false)
-		name_en(nullable: false, blank: false)
+        name_fr(nullable: false, blank: false)
+        name_nl(nullable: false, blank: false)
+        name_en(nullable: false, blank: false)
         desc_fr(nullable: true,  blank: true)
         desc_nl(nullable: true,  blank: true)
         desc_en(nullable: true,  blank: true)
-		price(nullable:false, min:0.0, max:100.0)
+        price(nullable:false, min:0.0, max:100.0)
     }
 
-     static searchable = [only: ['name', 'namer_fr', 'name_nl', 'name_en', 'desc_fr', 'desc_nl', 'desc_en']]
+    static searchable = [only: ['name_fr', 'name_nl', 'name_en', 'desc_fr', 'desc_nl', 'desc_en']]
 
     String toString(){
-		return name_fr
+        return name_fr
 
-	}
+    }
 }

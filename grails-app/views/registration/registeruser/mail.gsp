@@ -13,12 +13,14 @@
 </div>
 <div class="body">
     <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+    <h2><g:message code="registration.user.prompt" /></h2>
+
     <g:if test="${message}">
         <g:message code="${message}" />
     </g:if>
     <g:hasErrors bean="${userInstance}">
         <div class="errors">
-            <g:renderErrors bean="${userInstance}" as="list" />
+            <g:renderErrors bean="${userInstance}" as="list" field="username" />
         </div>
     </g:hasErrors>
       <g:form url="[controller:'registration', action:'registeruser']">

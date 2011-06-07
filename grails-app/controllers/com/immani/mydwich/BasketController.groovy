@@ -31,7 +31,7 @@ class BasketController {
     /**
      * This action is called from the catalog via an AJAX call and displays a dialogbox where the user selects the options to be added (salade, cornichons, sauces...)
      */
-    def selectproductpptions = {
+    def selectproductoptions = {
         Product selproduct = Product.get(params.id)
         def productCategories = selproduct.productCategories
         def productOptionCategories = productCategories.prodOptionCategories.flatten().unique().sort()
@@ -52,14 +52,11 @@ class BasketController {
      * This method receives (via AJAX) the infos for a product to be added to the basket (Qty...) and the list of options and sends back the answer to the browser "productadded"
      */
     def addproduct = {
-
-        log.debug 'addproduct method started'
         User user = currentuser() //session.user
         Basket basket = session.basket
         Product product = Product.get(params["product"].productid)
         Integer quantity = params["product"].quantity[0].toInteger()
 
-        log.debug("creating the selected options collection for product: ${params["product"].productid}")
         def options = []
         for(itemp in params["option"]) {
             if (!itemp.key.toString().startsWith("_")) {
@@ -71,9 +68,7 @@ class BasketController {
             }
         }
 
-        log.debug("calling basketService addproduct method")
         session.basket = basketService.addProduct(user,basket,product,quantity, options)
-
         render("productadded")
     }
     /* catch (Error e) {
@@ -124,7 +119,7 @@ class BasketController {
      * Displays the list of baskets for the current company
      */
     def listbycompany = {
-        //TODO: Make sure user has role admin
+        //TODO: Make sure user has role com.immani.mydwich.admin
         Company company = currentuser().company
         def basketlist = company.users.baskets
         params.max = Math.min(params.max ? params.int('max') : 10, 100)

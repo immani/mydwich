@@ -5,6 +5,7 @@ class ProductCategory {
     String name_fr
 	String name_nl
 	String name_en
+    Integer catorder
     Restaurant restaurant
 
     static belongsTo = [Restaurant, Product]
@@ -16,6 +17,11 @@ class ProductCategory {
 		name_fr(nullable: false, blank: false)
 		name_nl(nullable: false, blank: false)
 		name_en(nullable: false, blank: false)
+        catorder(nullable: false, size:1..100)
+    }
+
+    static mapping = {
+        sort "catorder"
     }
 
     String toString(){

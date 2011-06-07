@@ -26,14 +26,13 @@
             <table>
                 <tbody>
 
-                <shiro:hasRole name="company">
+                <shiro:hasAnyRole in="['companyadmin','company']">
                     <g:render template="companyinfo"/>
-                </shiro:hasRole>
+                </shiro:hasAnyRole>
 
-                <shiro:hasRole name="restaurant">
+                <shiro:hasAnyRole in="['restaurantadmin','restaurant']">
                     <g:render template="restaurantinfo"/>
-                </shiro:hasRole>
-
+                </shiro:hasAnyRole>
 
                 <tr class="prop">
                     <td valign="top" class="name">
@@ -90,13 +89,13 @@
                 </tr>
 
                 <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="passwordHash"><g:message code="user.passwordHash.label" default="Password Hash" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordHash', 'errors')}">
-                                    <g:textField name="passwordHash" value="${userInstance?.passwordHash}" />
-                                </td>
-                            </tr>
+                    <td valign="top" class="name">
+                        <label for="passwordHash"><g:message code="user.passwordHash.label" default="Password Hash" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordHash', 'errors')}">
+                        <g:textField name="passwordHash" value="${userInstance?.passwordHash}" />
+                    </td>
+                </tr>
 
 
                 </tbody>

@@ -18,14 +18,6 @@ class CompanyUrlMappings {
             action = $action
         }
 
-        "/company/user/$action?/$id?"{
-            constraints {
-                // apply constraints here
-            }
-            controller="user"
-            action = $action
-        }
-
         "/company/partnership/$action?/$id?"{
             constraints {
                 // apply constraints here

@@ -266,15 +266,30 @@ class BootStrap {
         //User creation
 
         // Creating a company user
-        def companyuser = new User(
+        def companyadminuser = new User(
                 username: "nicolas@immani.com",
                 firstname: "Nicolas",
                 lastname: "Germeau",
                 title: "Mr",
                 passwordHash: new Sha256Hash("nicolas").toHex(),
                 company: immani,
-                roles: [companyRole],
+                roles: [companyAdminRole],
                 language: 'nl');
+        companyadminuser.addToPermissions("*:*")
+        companyadminuser.save()
+        if(companyadminuser.hasErrors()){
+            println companyadminuser.errors
+        }
+
+        def companyuser = new User(
+                username: "marie@immani.com",
+                firstname: "Marie",
+                lastname: "Deronchène",
+                title: "Mrs",
+                passwordHash: new Sha256Hash("marie").toHex(),
+                company: immani,
+                roles: [companyRole],
+                language: 'fr');
         companyuser.addToPermissions("*:*")
         companyuser.save()
         if(companyuser.hasErrors()){
@@ -282,12 +297,28 @@ class BootStrap {
         }
 
         // Creating a restaurant user
-        def restaurantuser = new User(
+        def restaurantadminuser = new User(
                 username: "thierry@immani.com",
                 firstname: "Thierry",
                 lastname: "Soubestre",
                 title: "Mr",
                 passwordHash: new Sha256Hash("thierry").toHex(),
+                restaurant: lepaindesoleil,
+                roles: [restaurantAdminRole],
+                language: 'fr');
+        restaurantadminuser.addToPermissions("*:*")
+        restaurantadminuser.save()
+        if(restaurantadminuser.hasErrors()){
+            println restaurantadminuser.errors
+        }
+
+         // Creating a restaurant user
+        def restaurantuser = new User(
+                username: "olivier@immani.com",
+                firstname: "Olivier",
+                lastname: "Soubestre",
+                title: "Mr",
+                passwordHash: new Sha256Hash("olivier").toHex(),
                 restaurant: lepaindesoleil,
                 roles: [restaurantRole],
                 language: 'fr');
@@ -299,7 +330,7 @@ class BootStrap {
 
         //Product Category
         def sandwich = new ProductCategory(
-                restaurant: lepaindesoleil, name_fr: "Sandwichs", name_en: "Sandwichs", name_nl: "Sandwichs"
+                restaurant: lepaindesoleil, name_fr: "Sandwichs", name_en: "Sandwichs", name_nl: "Sandwichs",catorder:1
         )
         sandwich.save()
         if(sandwich.hasErrors()){
@@ -307,7 +338,7 @@ class BootStrap {
         }
 
         def saladecat = new ProductCategory(
-                restaurant: lepaindesoleil, name_fr: "Salade", name_en: "Salad", name_nl: "Salad"
+                restaurant: lepaindesoleil, name_fr: "Salade", name_en: "Salad", name_nl: "Salad",catorder:3
         )
         saladecat.save()
         if(saladecat.hasErrors()){
@@ -315,7 +346,7 @@ class BootStrap {
         }
 
         def boisson = new ProductCategory(
-                restaurant: lepaindesoleil, name_fr: "Boissons", name_en: "Drinks", name_nl: "Drinken"
+                restaurant: lepaindesoleil, name_fr: "Boissons", name_en: "Drinks", name_nl: "Drinken",catorder:2
         )
         boisson.save()
         if(boisson.hasErrors()){
@@ -323,7 +354,7 @@ class BootStrap {
         }
 
         def pizza = new ProductCategory(
-                restaurant: aduepassi, name_fr: "Pizza", name_en: "Pizza", name_nl: "Pizza"
+                restaurant: aduepassi, name_fr: "Pizza", name_en: "Pizza", name_nl: "Pizza",catorder:1
         )
         pizza.save()
         if(pizza.hasErrors()){
@@ -331,7 +362,7 @@ class BootStrap {
         }
 
         def dessert = new ProductCategory(
-                restaurant: aduepassi, name_fr: "Dessert", name_en: "Dessert", name_nl: "Desserten"
+                restaurant: aduepassi, name_fr: "Dessert", name_en: "Dessert", name_nl: "Desserten",catorder:2
         )
         dessert.save()
         if(dessert.hasErrors()){

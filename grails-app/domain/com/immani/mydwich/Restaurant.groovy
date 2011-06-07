@@ -18,14 +18,13 @@ class Restaurant implements Serializable{
     Float deliveryrange
 
 
-
     static hasMany = [users:User,
                       products:Product,
                       restaurantcategories:RestaurantCategory,
                       productsCategories: ProductCategory,
                       prodOptionCategories: ProdOptionCategory,
-                      partnerships:Partnership]
-
+                      partnerships:Partnership,
+                      pictures: Picture]
 
     static constraints = {
 		name(nullable: false, blank: false)
@@ -38,7 +37,7 @@ class Restaurant implements Serializable{
         fax(nullable: true, blank: true)
         lat(nullable: true)
         lng(nullable: true)
-    }
+   }
 
     List listPatnershipsCompanies() {
 		return partnerships.collect{it.company}
