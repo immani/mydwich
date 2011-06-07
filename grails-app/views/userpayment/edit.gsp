@@ -42,15 +42,6 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="date"><g:message code="userpayment.date.label" default="Date" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'date', 'errors')}">
-                                    <g:datePicker name="date" precision="day" value="${userpaymentInstance?.date}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                   <label for="remark"><g:message code="userpayment.remark.label" default="Remark" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'remark', 'errors')}">
@@ -64,15 +55,6 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'amount', 'errors')}">
                                     <g:textField name="amount" value="${fieldValue(bean: userpaymentInstance, field: 'amount')}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="type"><g:message code="userpayment.type.label" default="Type" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'type', 'errors')}">
-                                    <g:select name="type" from="${userpaymentInstance.constraints.type.inList}" value="${userpaymentInstance?.type}" valueMessagePrefix="userpayment.type"  />
                                 </td>
                             </tr>
                         

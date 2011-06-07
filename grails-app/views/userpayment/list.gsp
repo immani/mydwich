@@ -26,13 +26,9 @@
                         
                             <th><g:message code="userpayment.user.label" default="User" /></th>
                         
-                            <g:sortableColumn property="date" title="${message(code: 'userpayment.date.label', default: 'Date')}" />
-                        
                             <g:sortableColumn property="remark" title="${message(code: 'userpayment.remark.label', default: 'Remark')}" />
                         
                             <g:sortableColumn property="amount" title="${message(code: 'userpayment.amount.label', default: 'Amount')}" />
-                        
-                            <g:sortableColumn property="type" title="${message(code: 'userpayment.type.label', default: 'Type')}" />
                         
                         </tr>
                     </thead>
@@ -44,13 +40,9 @@
                         
                             <td>${fieldValue(bean: userpaymentInstance, field: "user")}</td>
                         
-                            <td><g:formatDate date="${userpaymentInstance.date}" /></td>
-                        
                             <td>${fieldValue(bean: userpaymentInstance, field: "remark")}</td>
                         
                             <td>${fieldValue(bean: userpaymentInstance, field: "amount")}</td>
-                        
-                            <td>${fieldValue(bean: userpaymentInstance, field: "type")}</td>
                         
                         </tr>
                     </g:each>
