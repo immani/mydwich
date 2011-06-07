@@ -1,22 +1,42 @@
 package com.immani.mydwich
 
-class ProdOptionController {
+class ProdoptionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
-        redirect(action: "list", params: params)
+        redirect(action: "listprodoptionrestaurant", params: params)
     }
 
     def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [prodOptionInstanceList: ProdOption.list(params), prodOptionInstanceTotal: ProdOption.count()]
+        User user = session.user.merge()
+        if (user.restaurant == null){
+            flash.message = "The current user doesn't belong to a restaurant"
+            render(view: "/info")
+        }
+        else{
+            params.max = Math.min(params.max ? params.int('max') : 10, 100)
+            def productCategories = user.restaurant.productsCategories
+            def prodOptionCategories = productCategories.prodOptionCategories.flatten().unique().sort()
+            def prodoptlist = prodOptionCategories.productCategories
+            render(view:"list", model:[prodOptionInstanceList: prodoptlist, prodOptionInstanceTotal: prodoptlist.size()])
+        }
     }
 
+    def listforprodoptioncategory = {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        ProdOptionCategory prodoptioncategory =ProdOptionCategory.get(params.prodoptcatid)
+     //   def prodOptionCategories = productCategories.prodOptionCategories.flatten().unique().sort()
+        def prodoptlist = prodoptioncategory.options
+        render(view:"list", model:[prodoptioncategoryInstance: prodoptioncategory, prodOptionInstanceList: prodoptlist, prodOptionInstanceTotal: prodoptlist.size()])
+
+    }
+
+
     def create = {
-        def prodOptionInstance = new ProdOption()
-        prodOptionInstance.properties = params
-        return [prodOptionInstance: prodOptionInstance]
+        User user = session.user.merge()
+        ProdOption prodOptionInstance = new ProdOption(restaurant: user.restaurant)
+        render(view: "create", model: [prodOptionInstance: prodOptionInstance])
     }
 
     def save = {
@@ -58,7 +78,7 @@ class ProdOptionController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (prodOptionInstance.version > version) {
-                    
+
                     prodOptionInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'prodOption.label', default: 'ProdOption')] as Object[], "Another user has updated this ProdOption while you were editing")
                     render(view: "edit", model: [prodOptionInstance: prodOptionInstance])
                     return
