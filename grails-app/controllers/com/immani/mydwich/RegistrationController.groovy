@@ -54,6 +54,11 @@ class RegistrationController {
 
         userinfo {
             on("next") {
+                if (params.passwordHash != params.confirmpassword){
+                    flash.error = "Password do not match"
+                    flow.userInstance = new User(params)
+                    return error()
+                }
                 flow.usernameleft = params.usernameleft
                 params.username = params.usernameleft + "@" + flow.companyInstance.domain
                 flow.userInstance = new User(params)
@@ -138,6 +143,10 @@ class RegistrationController {
 
         userinfo {
             on("next") {
+                if (params.passwordHash != params.confirmpassword){
+                    flash.error = "Password do not match"
+                    return error()
+                }
                 flow.userInstance = new User(params)
                 flow.userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
                 Role restaurantRole = Role.findByName("restaurant")
@@ -203,6 +212,10 @@ class RegistrationController {
 
         userinfo {
             on("next") {
+                if (params.passwordHash != params.confirmpassword){
+                    flash.error = "Password do not match"
+                    return error()
+                }
                 flow.userInstance.properties = params
                 flow.userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
                 Role companyRole = Role.findByName("company")
@@ -227,7 +240,7 @@ class RegistrationController {
         }
 
         end {
-            redirect(url: "/")
+            redirect(url: "/user")
         }
 
         cancel {

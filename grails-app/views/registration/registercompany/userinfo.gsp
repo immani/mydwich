@@ -36,19 +36,10 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="title"><g:message code="user.title.label" default="Title" /></label>
-                    </td>
-                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'title', 'errors')}">
-                        <g:textField name="title" value="${userInstance?.title}" />
-                    </td>
-                </tr>
-
-                <tr class="prop">
-                    <td valign="top" class="name">
                         <label for="username"><g:message code="user.username.label" default="User Name" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'usernameleft', 'errors')}">
-                        <g:textField name="usernameleft" value="${usernameleft}" /> <b>@${companyInstance?.domain}</b>
+                        <g:textField name="usernameleft" value="${userInstance.username}" /> <b>@${companyInstance?.domain}</b>
                     </td>
                 </tr>
 
@@ -72,6 +63,15 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
+                        <label for="title"><g:message code="user.sex.label" default="Sex" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'sex', 'errors')}">
+                        <g:select name="sex" from="${['Male','Female']}" valueMessagePrefix="user.sex" value="${userInstance?.sex}" />
+                    </td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name">
                         <label for="mobile"><g:message code="user.mobile.label" default="Mobile" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'mobile', 'errors')}">
@@ -84,16 +84,24 @@
                         <label for="language"><g:message code="user.language.label" default="Language" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'language', 'errors')}">
-                        <g:textField name="language" value="${userInstance?.language}" />
+                        <g:select name="language" from="${['fr', 'nl', 'en']}" value="${userInstance?.language}" />
                     </td>
                 </tr>
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="passwordHash"><g:message code="user.passwordHash.label" default="Password Hash" /></label>
+                        <label for="passwordHash"><g:message code="user.password.label" default="Password" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordHash', 'errors')}">
-                        <g:textField name="passwordHash" value="${userInstance?.passwordHash}" />
+                        <g:passwordField name="passwordHash" value="" />
+                    </td>
+                </tr>
+                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="passwordHash"><g:message code="user.confirmpassword.label" default="Confirm Password" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'confirmpassword', 'errors')}">
+                        <g:passwordField  name="confirmpassword" value="" />
                     </td>
                 </tr>
 

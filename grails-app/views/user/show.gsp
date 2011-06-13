@@ -37,20 +37,6 @@
             </tr>
 
             <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.security.label" default="Security" /></td>
-
-                <td valign="top" class="value"><g:link controller="user" action="changepasswordinit"><g:message code="user.changepassword.label" default="Change Password" /></g:link> </td>
-
-            </tr>
-
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.title.label" default="Title" /></td>
-
-                <td valign="top" class="value">${fieldValue(bean: userInstance, field: "title")}</td>
-
-            </tr>
-
-            <tr class="prop">
                 <td valign="top" class="name"><g:message code="user.firstname.label" default="Firstname" /></td>
 
                 <td valign="top" class="value">${fieldValue(bean: userInstance, field: "firstname")}</td>
@@ -61,6 +47,19 @@
                 <td valign="top" class="name"><g:message code="user.lastname.label" default="Lastname" /></td>
 
                 <td valign="top" class="value">${fieldValue(bean: userInstance, field: "lastname")}</td>
+
+            </tr>
+
+            <tr class="prop">
+                <td valign="top" class="name"><g:message code="user.sex.label" default="Sex" /></td>
+
+                <td valign="top" class="value"><g:message code="user.sex.${userInstance.sex}"/></td>
+
+            </tr>
+            <tr class="prop">
+                <td valign="top" class="name"><g:message code="user.security.label" default="Security" /></td>
+
+                <td valign="top" class="value"><g:link controller="user" action="changepasswordinit"><g:message code="user.changepassword.label" default="Change Password" /></g:link> </td>
 
             </tr>
 

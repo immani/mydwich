@@ -41,10 +41,10 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="title"><g:message code="user.title.label" default="Title" /></label>
+                        <label for="title"><g:message code="user.sex.label" default="Sex" /></label>
                     </td>
-                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'title', 'errors')}">
-                        <g:textField name="title" value="${userInstance?.title}" />
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'sex', 'errors')}">
+                        <g:select name="sex" from="${['Male','Female']}" valueMessagePrefix="user.sex" value="${userInstance?.sex}" />
                     </td>
                 </tr>
                 <tr class="prop">
@@ -88,7 +88,7 @@
                         <label for="language"><g:message code="user.language.label" default="Language" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'language', 'errors')}">
-                        <g:textField name="language" value="${userInstance?.language}" />
+                        <g:select name="language" from="${['fr', 'nl', 'en']}" value="${userInstance?.language}" />
                     </td>
                 </tr>
 
@@ -96,6 +96,7 @@
             </table>
         </div>
         <div class="buttons">
+            <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
             <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
         </div>
     </g:form>

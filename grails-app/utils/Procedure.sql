@@ -1,25 +1,29 @@
 
-         CREATE FUNCTION distance (companylat double,companylng double,restaurantlat double,restaurantlng double)
-             RETURNS DOUBLE DETERMINISTIC
-                BEGIN
+-- --------------------------------------------------------------------------------
+-- Routine DDL
+-- --------------------------------------------------------------------------------
+DELIMITER $$
 
-                declare philat double;
-                declare k1 double;
-                declare k2 double;
-                declare deltalat double;
-                declare deltalng double;
-                declare result double;
+CREATE DEFINER=`root`@`localhost` FUNCTION `distance`(companylat double,companylng double,restaurantlat double,restaurantlng double) RETURNS double
+    DETERMINISTIC
+BEGIN
 
-                set philat = (companylat + restaurantlat)/2;
-                set k1 = 111.13209 - (0.56605 * cos(2*philat)) + (0.00120 * cos(4*philat));
-                set k2 = (111.41513 * cos(philat)) - (0.09455 * cos(3*philat)) + (0.00012 * cos(5*philat));
-                set deltalat =  companylat - restaurantlat;
-                set deltalng = companylng - restaurantlng;
+  declare R double;
+  declare dLat double;
+  declare dLon double;
+  declare a double;
+  declare c double;
+  declare d double;
 
-                set result = sqrt(pow(k1*deltalat,2) + pow(k2*deltalng,2));
+  Set R = 6371;
+  Set dlat= Radians(companylat-restaurantlat);
+  Set dLon = Radians(companylng-restaurantlng);
+  Set a = sin(dLat/2) * sin(dLat/2) + cos(Radians(companylat)) * cos(RAdians(restaurantlat)) * sin(dLon/2) * sin(dLon/2);
+  Set c = 2 * atan2(sqrt(a), sqrt(1-a));
+  Set d = R * c;
+  return d;
 
-                return result;
-                END
+END
 
 
         CREATE PROCEDURE searchnearbyrestaurant(IN deliveryaddressid int, IN radius int)

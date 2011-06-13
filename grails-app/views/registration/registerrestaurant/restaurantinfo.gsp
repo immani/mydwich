@@ -67,7 +67,7 @@
                         <label for="country"><g:message code="restaurant.country.label" default="Country" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'country', 'errors')}">
-                        <g:textField name="country" value="${restaurantInstance?.country}" />
+                        <g:textField name="country" disabled="yes" value="${g.message(code:'country.Belgium')}" />
                     </td>
                 </tr>
 
@@ -109,7 +109,7 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="desc_fr"><g:message code="restaurant.desc_fr.label" default="Description" /></label>
+                        <label for="desc_fr"><g:message code="restaurant.desc_fr.label" default="Description Fr" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'desc_fr', 'errors')}">
                         <g:textField name="desc_fr" value="${restaurantInstance?.desc_fr}" />
@@ -118,7 +118,7 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="desc_nl"><g:message code="restaurant.desc_nl.label" default="Description" /></label>
+                        <label for="desc_nl"><g:message code="restaurant.desc_nl.label" default="Description Nl" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'desc_nl', 'errors')}">
                         <g:textField name="desc_nl" value="${restaurantInstance?.desc_nl}" />
@@ -127,7 +127,7 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="desc_en"><g:message code="restaurant.desc_en.label" default="Description" /></label>
+                        <label for="desc_en"><g:message code="restaurant.desc_en.label" default="Description En" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'desc_en', 'errors')}">
                         <g:textField name="desc_en" value="${restaurantInstance?.desc_en}" />

@@ -53,7 +53,7 @@
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="restaurant.country.label" default="Country" /></td>
 
-                <td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "country")}</td>
+                <td valign="top" class="value"><g:message code="country.${restaurantInstance.country}"/></td>
 
             </tr>
 

@@ -77,7 +77,7 @@
                         <label for="country"><g:message code="deliveryAddress.country.label" default="Country" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: deliveryAddressInstance, field: 'country', 'errors')}">
-                        <g:textField name="country" value="${deliveryAddressInstance?.country}" />
+                        <g:textField name="country" disabled="yes" value="${g.message(code:'country.'+ deliveryAddressInstance.country )}" />
                     </td>
                 </tr>
 
