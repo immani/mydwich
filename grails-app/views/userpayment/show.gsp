@@ -37,13 +37,6 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="userpayment.date.label" default="Date" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${userpaymentInstance?.date}" /></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="userpayment.remark.label" default="Remark" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "remark")}</td>
@@ -54,13 +47,6 @@
                             <td valign="top" class="name"><g:message code="userpayment.amount.label" default="Amount" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "amount")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="userpayment.type.label" default="Type" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "type")}</td>
                             
                         </tr>
                     

@@ -1,23 +1,26 @@
 package com.immani.mydwich
 
-class Userpayment {
-    String remark
-    Date date
+class Userpayment implements Serializable{
+
+
     Float amount
+    String remark
     User user
-    String type
+    String currency;
+
 
     static belongsTo = [User]
 
     static constraints = {
         user(nullable: false)
-        date(nullable: false)
         remark(nullable: true, blank: true)
         amount(nullable: false)
-        type(nullable: false, blank: false, inList:["Cash", "Visa", "Mastercard", "PingPing"])
+        currency(nullable: false,blank:true)
     }
 
     String toString(){
-        return date + " - " + remark + ": " + amount
+        return remark + ": " + amount
 	}
+
+
 }

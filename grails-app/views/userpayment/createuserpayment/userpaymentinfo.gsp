@@ -23,20 +23,21 @@
                 <g:renderErrors bean="${userpaymentInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:form url="[controller:'userpayment', action:'createuserpayment']" >
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
-                            <tr class="prop">
+
+
+                         <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="user"><g:message code="userpayment.user.label" default="User" /></label>
+                                    <label for="amount"><g:message code="userpayment.amount.label" default="Amount" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'user', 'errors')}">
-                                    <g:select name="user.id" from="${com.immani.mydwich.User.list()}" optionKey="id" value="${userpaymentInstance?.user?.id}"  />
+                                <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'amount', 'errors')}">
+                                    <g:textField name="amount" value="${fieldValue(bean: userpaymentInstance, field: 'amount')}" />
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="remark"><g:message code="userpayment.remark.label" default="Remark" /></label>
@@ -45,21 +46,13 @@
                                     <g:textField name="remark" value="${userpaymentInstance?.remark}" />
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="amount"><g:message code="userpayment.amount.label" default="Amount" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'amount', 'errors')}">
-                                    <g:textField name="amount" value="${fieldValue(bean: userpaymentInstance, field: 'amount')}" />
-                                </td>
-                            </tr>
-                        
+
                         </tbody>
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                  <span class="button"><g:submitButton name="next" class="next" value="${message(code: 'default.button.next.label', default: 'Next')}" /></span>
+                  <span class="button"><g:submitButton name="cancel" class="cancel" value="${message(code: 'default.button.cancel.label', default: 'Cancel')}" /></span>
                 </div>
             </g:form>
         </div>

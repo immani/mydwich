@@ -2,7 +2,10 @@ package com.immani.mydwich
 
 class UserpaymentController {
 
+    def UserPaymentService userPaymentService;
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
 
     def index = {
         redirect(action: "list", params: params)
@@ -101,12 +104,12 @@ class UserpaymentController {
      /**
      * Creates a new payment for the current user
      */
-    def createuserpayment = {
+    /*def createuserpayment = {
         User currentuser = session.user.merge()
         Userpayment userpaymentInstance = new Userpayment(user: currentuser)
         userpaymentInstance.properties = params
         render(view: "create", model: [userpaymentInstance: userpaymentInstance])
-    }
+    } */
 
      /**
      * List of the payments of the current user
@@ -127,5 +130,39 @@ class UserpaymentController {
         def users = company.users
         def userpaymentlist = users.userpayments
         render(view: "list", model: [userpaymentInstanceList: userpaymentlist, userpaymentInstanceTotal: userpaymentlist.size()])
+    }
+
+
+    def createuserpaymentFlow = {
+
+           userpaymentinfo {
+
+               on("next") {
+                      if (flow.userpaymentInstance){
+                          flow.userpaymentInstance.properties = params
+                      }else {
+                          flow.userpaymentInstance = new Userpayment(params)
+                      }
+                      flow.userpaymentInstance.user = session.user
+                      userPaymentService.initializeUserPayment(flow.userpaymentInstance)
+                      flow.userpaymentInstance.save(flush:true);
+                      String shaSign = userPaymentService.encodeAsSha1String(flow.userpaymentInstance)
+                      flow.userpaymentInstance.validate() ? success() : error()
+                      [psid: "immanitest",shasign: shaSign,acceptedurl:""]
+                }.to "review"
+           }
+
+           review {
+               on("back").to "userpaymentinfo"
+               on("cancel").to "confirmed"
+           }
+
+           confirmed {
+             redirect(url:"http://www.blogjava.net/BlueSUN")
+           }
+
+           cancel {
+                //flow.userPaymentInstance.delete();
+           }
     }
 }
