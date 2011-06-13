@@ -231,9 +231,11 @@ class RegistrationController {
 
         persist {
             action {
-                emailConfirmationService.sendConfirmation(flow.userInstance.username, "Please confirm your email address", [from:"mydwich@immani.com"])
                 flow.companyInstance.addToUsers(flow.userInstance)
                 flow.userInstance.save()
+                emailConfirmationService.sendConfirmation(flow.userInstance.username, "Please confirm your email address", [from:"mydwich@immani.com"],flow.userInstance.id.toString())
+
+
             }
 
             on("success").to "end"

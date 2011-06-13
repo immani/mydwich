@@ -26,7 +26,6 @@ class ProdoptionController {
     def listforprodoptioncategory = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         ProdOptionCategory prodoptioncategory =ProdOptionCategory.get(params.prodoptcatid)
-     //   def prodOptionCategories = productCategories.prodOptionCategories.flatten().unique().sort()
         def prodoptlist = prodoptioncategory.options
         render(view:"list", model:[prodoptioncategoryInstance: prodoptioncategory, prodOptionInstanceList: prodoptlist, prodOptionInstanceTotal: prodoptlist.size()])
 
@@ -34,8 +33,9 @@ class ProdoptionController {
 
 
     def create = {
+        ProdOptionCategory prodOptionCat = ProdOptionCategory.get(params.prodoptioncategory)
         User user = session.user.merge()
-        ProdOption prodOptionInstance = new ProdOption(restaurant: user.restaurant)
+        ProdOption prodOptionInstance = new ProdOption(restaurant: user.restaurant, prodOptionCategory: prodOptionCat)
         render(view: "create", model: [prodOptionInstance: prodOptionInstance])
     }
 

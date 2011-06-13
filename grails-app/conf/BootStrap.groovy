@@ -9,15 +9,18 @@ class BootStrap {
 
         emailConfirmationService.onConfirmation = { email, uid ->
             log.info("User with id $uid has confirmed their email address $email")
-            User user = User.get(uid)
+            User user = User.get($uid)
             if (user.roles.contains("companyAdminRole")){
                 Company company = user.company
                 company.isvalidated = true
                 user.isvalidated = true
+                company.save()
+                user.save()
                 return [controller:'company', action:'show']
             }
             if (user.roles.contains("companyRole")){
                 user.isvalidated = true
+                user.save()
                 return [controller:'user', action:'show']
             }
 
@@ -73,11 +76,17 @@ class BootStrap {
         }
 
         Role companyAdminRole = new Role(name:"companyadmin")
+        companyAdminRole.addToPermissions("*:*")
         companyAdminRole.save()
         Role companyRole = new Role(name: "company")
+        companyRole.addToPermissions("*:*")
+        companyRole.save()
         Role restaurantAdminRole = new Role(name:"restaurantadmin")
+        restaurantAdminRole.addToPermissions("*:*")
         restaurantAdminRole.save()
         Role restaurantRole = new Role(name: "restaurant")
+        restaurantRole.addToPermissions("*:*")
+        restaurantRole.save()
 
         //DeliveryAddresses
         DeliveryAddress pixwavre = new DeliveryAddress(
