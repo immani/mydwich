@@ -56,9 +56,9 @@ class RestaurantController {
                     break
                 case "menu":
                     //   params.id = restaurantInstance.id
-                    def productscategories = restaurantInstance.productsCategories?.sort({a,b-> a.catorder.compareTo(b.catorder)})
-                    render(view: "/product/catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
-                    //    redirect(controller: "product", action: "showrestaurantcatalog", id:restaurantInstance.id)
+                //    def productscategories = restaurantInstance.productsCategories?.sort({a,b-> a.catorder.compareTo(b.catorder)})
+                //    render(view: "/product/catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
+                    redirect(controller: "product", action: "showrestaurantcatalog", id:restaurantInstance.id)
                     break
             }
         }

@@ -43,8 +43,14 @@ class BasketController {
      */
     def renderbasketajax = {
         Basket basketInstance = session.basket
-        def basketLines = basketInstance?.basketLines
-        render(view: "basket_ajax", model: [basketInstance: basketInstance, basketLines: basketLines])
+        if (basketInstance){
+            def basketLines = basketInstance?.basketLines
+            render(view: "basket_ajax", model: [basketInstance: basketInstance, basketLines: basketLines])
+        }
+        else{
+            render("")
+        }
+
     }
 
     // TODO: Managing errors retrieved by basket service (null pointers are managed by database constraints)

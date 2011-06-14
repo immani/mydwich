@@ -10,6 +10,15 @@ class RestaurantUrlMappings {
             action = $action
         }
 
+        "/restaurant/menu/$id"{
+            constraints {
+                // apply constraints here
+            }
+            controller="product"
+            action = "showrestaurantcatalog"
+
+        }
+
         "/showrestaurant/$name/$page?"{
             constraints {
                 // apply constraints here

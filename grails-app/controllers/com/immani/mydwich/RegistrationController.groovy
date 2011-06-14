@@ -75,7 +75,12 @@ class RegistrationController {
                 flow.deliveryAddressInstance.validate() ? success() : error()
             }.to "review"
 
-            on("back").to "userinfo"
+            on("back") {
+                Integer pos = flow.userInstance.username.indexOf('@')
+                String leftusername = flow.userInstance.username.substring(0, pos)
+                flow.userInstance.username = leftusername
+            }.to "userinfo"
+
             on("cancel").to "cancel"
         }
         review {
@@ -96,7 +101,7 @@ class RegistrationController {
         }
 
         end {
-            redirect(controller: "company", action: "show")
+            redirect(controller: "company")
         }
 
         cancel {
@@ -153,7 +158,7 @@ class RegistrationController {
         }
 
         end {
-            redirect(controller: "restaurant", action:"showprofilerestaurant")
+            redirect(controller: "restaurant")
         }
 
         cancel {
@@ -225,7 +230,7 @@ class RegistrationController {
         }
 
         end {
-            redirect(url: "/user")
+            redirect(controller: "user")
         }
 
         cancel {
