@@ -8,19 +8,6 @@ class ProductController {
         redirect(action: "list", params: params)
     }
 
-    def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [productInstanceList: Product.list(params), productInstanceTotal: Product.count()]
-    }
-
-    def create = {
-        redirect(action: "createproductrestaurant", params: params)
-
-        /*def productInstance = new Product()
-        productInstance.properties = params
-        return [productInstance: productInstance]*/
-    }
-
     def save = {
         def productInstance = new Product(params)
         if (productInstance.save(flush: true)) {
@@ -100,20 +87,23 @@ class ProductController {
         }
     }
 
-    def listproductrestaurant = {
+    def list = {
         User user = session.user.merge()
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def productlist = user.restaurant.products
-        //def productlist = Product.findAllByRestaurant(user.restaurant, params)
+
         render(view: "list", model: [productInstanceList: productlist, productInstanceTotal: productlist.size()])
     }
 
-    def createproductrestaurant = {
+    def create = {
         def user = session.user.merge()
         def newproduct= new Product(restaurant: user.restaurant)
         render(view: "create", model: [productInstance: newproduct])
     }
 
+    /**
+     * Called to display the catalog and order products
+     */
     def showrestaurantcatalog = {
         Restaurant restaurantInstance = Restaurant.get(params.id)
         def productscategories
@@ -133,6 +123,9 @@ class ProductController {
 
         }
     }
+    /**
+     * Function called via AJAX and that retrieves the list of products for a specific restaurant AND category
+     */
     def showproductlist ={
         Restaurant restaurantInstance = Restaurant.get(params.id)
         if (!restaurantInstance) {

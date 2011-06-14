@@ -72,7 +72,7 @@
                         <label for="country"><g:message code="restaurant.country.label" default="Country" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'country', 'errors')}">
-                        <g:textField name="country" value="${restaurantInstance?.country}" />
+                        <g:textField name="country" disabled="yes" value="${g.message(code:'country.'+ restaurantInstance.country )}" />
                     </td>
                 </tr>
 
@@ -138,7 +138,7 @@
                         <g:select name="restaurantcategories" from="${com.immani.mydwich.RestaurantCategory.list()}" multiple="yes" optionKey="id" />
                     </td>
                 </tr>
-                                <tr class="prop">
+                <tr class="prop">
                     <td valign="top" class="name">
                         <label for="restaurantcategories"><g:message code="restaurant.photo.label" default="Restaurant Picture" /></label>
                     </td>
@@ -166,7 +166,6 @@
                                 <li><g:link controller="user" action="show" id="${u.id}">${u?.encodeAsHTML()}</g:link></li>
                             </g:each>
                         </ul>
-                        <g:link controller="user" action="createuserrestaurant" params="['restaurant.id': restaurantInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'user.label', default: 'User')])}</g:link>
                     </td>
                 </tr>
 

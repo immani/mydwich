@@ -7,23 +7,6 @@ class RegistrationController {
         redirect(controller: registeruser)
     }
     def geocoderService
-    /*
-    RecaptchaService recaptchaService
-    def index = {
-        render(view:'/recaptcha')
-    }
-
-    def save = {
-        def recaptchaOK = true
-        if (!recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)) {
-            recaptchaOK = false
-        }
-        else {
-            recaptchaOK = true
-        }
-        render(view:'/recaptcha',model:[recaptcha:recaptchaOK])
-    }
-    */
 
     /**
      * Creates a new Company, User and Delivery Address
@@ -45,6 +28,7 @@ class RegistrationController {
                 }
 
                 flow.companyInstance = new Company(params + coresults)
+                //TODO: regex pour éviter que le domain soit pourri - thierry@immani.com
                 flow.companyInstance.validate() ? success() : error()
 
             }.to "userinfo"
@@ -54,6 +38,11 @@ class RegistrationController {
 
         userinfo {
             on("next") {
+                if (params.passwordHash != params.confirmpassword){
+                    flash.error = "Password do not match"
+                    flow.userInstance = new User(params)
+                    return error()
+                }
                 flow.usernameleft = params.usernameleft
                 params.username = params.usernameleft + "@" + flow.companyInstance.domain
                 flow.userInstance = new User(params)
@@ -138,6 +127,10 @@ class RegistrationController {
 
         userinfo {
             on("next") {
+                if (params.passwordHash != params.confirmpassword){
+                    flash.error = "Password do not match"
+                    return error()
+                }
                 flow.userInstance = new User(params)
                 flow.userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
                 Role restaurantRole = Role.findByName("restaurant")
@@ -170,7 +163,6 @@ class RegistrationController {
     def registeruserFlow = {
 
         mail {
-
             on("next") {
                 String username = params.username
                 Integer pos = username.indexOf('@')
@@ -203,6 +195,10 @@ class RegistrationController {
 
         userinfo {
             on("next") {
+                if (params.passwordHash != params.confirmpassword){
+                    flash.error = "Password do not match"
+                    return error()
+                }
                 flow.userInstance.properties = params
                 flow.userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
                 Role companyRole = Role.findByName("company")
@@ -210,7 +206,7 @@ class RegistrationController {
                 flow.userInstance.validate() ? success() : error()
             }.to "persist"
 
-            on("back").to "userinfo"
+            on("back").to "mail"
             on("cancel").to "cancel"
         }
 
@@ -218,16 +214,18 @@ class RegistrationController {
 
         persist {
             action {
-                emailConfirmationService.sendConfirmation(flow.userInstance.username, "Please confirm your email address", [from:"mydwich@immani.com"])
                 flow.companyInstance.addToUsers(flow.userInstance)
                 flow.userInstance.save()
+                emailConfirmationService.sendConfirmation(flow.userInstance.username, "Please confirm your email address", [from:"mydwich@immani.com"],flow.userInstance.id.toString())
+
+
             }
 
             on("success").to "end"
         }
 
         end {
-            redirect(url: "/")
+            redirect(url: "/user")
         }
 
         cancel {
@@ -235,3 +233,21 @@ class RegistrationController {
         }
     }
 }
+
+    /*
+    RecaptchaService recaptchaService
+    def index = {
+        render(view:'/recaptcha')
+    }
+
+    def save = {
+        def recaptchaOK = true
+        if (!recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)) {
+            recaptchaOK = false
+        }
+        else {
+            recaptchaOK = true
+        }
+        render(view:'/recaptcha',model:[recaptcha:recaptchaOK])
+    }
+    */

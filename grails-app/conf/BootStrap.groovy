@@ -10,16 +10,34 @@ class BootStrap {
         emailConfirmationService.onConfirmation = { email, uid ->
             log.info("User with id $uid has confirmed their email address $email")
             User user = User.get(uid)
-            if (user.roles.contains("companyAdminRole")){
+
+            if (user.roles.toString().contains("companyadmin")){
                 Company company = user.company
                 company.isvalidated = true
                 user.isvalidated = true
+                company.save()
+                user.save()
                 return [controller:'company', action:'show']
             }
-            if (user.roles.contains("companyRole")){
+            else if (user.roles.toString().contains("company")){
                 user.isvalidated = true
+                user.save()
                 return [controller:'user', action:'show']
             }
+            else if (user.roles.toString().contains("restaurantadmin")){
+                Restaurant restaurant= user.restaurant
+                restaurant.isvalidated = true
+                user.isvalidated = true
+                restaurant.save()
+                user.save()
+                return [controller:'restaurant', action:'show']
+            }
+            else if (user.roles.toString().contains("restaurant")){
+                user.isvalidated = true
+                user.save()
+                return [controller:'restaurant', action:'show']
+            }
+
 
             // now do something…
             // Then return a map which will redirect the user to this destination
@@ -73,11 +91,17 @@ class BootStrap {
         }
 
         Role companyAdminRole = new Role(name:"companyadmin")
+        companyAdminRole.addToPermissions("*:*")
         companyAdminRole.save()
         Role companyRole = new Role(name: "company")
+        companyRole.addToPermissions("*:*")
+        companyRole.save()
         Role restaurantAdminRole = new Role(name:"restaurantadmin")
+        restaurantAdminRole.addToPermissions("*:*")
         restaurantAdminRole.save()
         Role restaurantRole = new Role(name: "restaurant")
+        restaurantRole.addToPermissions("*:*")
+        restaurantRole.save()
 
         //DeliveryAddresses
         DeliveryAddress pixwavre = new DeliveryAddress(
@@ -270,7 +294,7 @@ class BootStrap {
                 username: "nicolas@immani.com",
                 firstname: "Nicolas",
                 lastname: "Germeau",
-                title: "Mr",
+                sex:"Male",
                 passwordHash: new Sha256Hash("nicolas").toHex(),
                 company: immani,
                 roles: [companyAdminRole],
@@ -285,7 +309,7 @@ class BootStrap {
                 username: "marie@immani.com",
                 firstname: "Marie",
                 lastname: "Deronchène",
-                title: "Mrs",
+                sex:"Female",
                 passwordHash: new Sha256Hash("marie").toHex(),
                 company: immani,
                 roles: [companyRole],
@@ -301,7 +325,7 @@ class BootStrap {
                 username: "thierry@immani.com",
                 firstname: "Thierry",
                 lastname: "Soubestre",
-                title: "Mr",
+                sex:"Male",
                 passwordHash: new Sha256Hash("thierry").toHex(),
                 restaurant: lepaindesoleil,
                 roles: [restaurantAdminRole],
@@ -317,7 +341,7 @@ class BootStrap {
                 username: "olivier@immani.com",
                 firstname: "Olivier",
                 lastname: "Soubestre",
-                title: "Mr",
+                sex:"Male",
                 passwordHash: new Sha256Hash("olivier").toHex(),
                 restaurant: lepaindesoleil,
                 roles: [restaurantRole],

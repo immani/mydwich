@@ -21,7 +21,7 @@
             <g:renderErrors bean="${userInstance}" as="list" />
         </div>
     </g:hasErrors>
-      <g:form url="[controller:'registration', action:'registeruser']">
+    <g:form url="[controller:'registration', action:'registeruser']">
         <div class="dialog">
             <table>
                 <tbody>
@@ -30,7 +30,7 @@
                         <label for="company"><g:message code="user.company.label" default="Company" /></label>
                     </td>
                     <td valign="top" class="value">
-                       sqsqsqs ${companyInstance?.encodeAsHTML()}
+                        ${companyInstance?.encodeAsHTML()}
                     </td>
                 </tr>
 
@@ -40,15 +40,6 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'username', 'errors')}">
                         ${userInstance?.username}
-                    </td>
-                </tr>
-
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="title"><g:message code="user.title.label" default="Title" /></label>
-                    </td>
-                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'title', 'errors')}">
-                        <g:textField name="title" value="${userInstance?.title}" />
                     </td>
                 </tr>
 
@@ -72,6 +63,15 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
+                        <label for="title"><g:message code="user.sex.label" default="Sex" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'sex', 'errors')}">
+                        <g:select name="sex" from="${['Male','Female']}" valueMessagePrefix="user.sex" value="${userInstance?.sex}" />
+                    </td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name">
                         <label for="mobile"><g:message code="user.mobile.label" default="Mobile" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'mobile', 'errors')}">
@@ -84,18 +84,26 @@
                         <label for="language"><g:message code="user.language.label" default="Language" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'language', 'errors')}">
-                        <g:textField name="language" value="${userInstance?.language}" />
+                        <g:select name="language" from="${['fr', 'nl', 'en']}" value="${userInstance?.language}" />
                     </td>
                 </tr>
 
                 <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="passwordHash"><g:message code="user.passwordHash.label" default="Password Hash" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordHash', 'errors')}">
-                                    <g:textField name="passwordHash" value="${userInstance?.passwordHash}" />
-                                </td>
-                            </tr>
+                    <td valign="top" class="name">
+                        <label for="passwordHash"><g:message code="user.password.label" default="Password" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordHash', 'errors')}">
+                        <g:passwordField name="passwordHash" value="" />
+                    </td>
+                </tr>
+                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="passwordHash"><g:message code="user.confirmpassword.label" default="Confirm Password" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'confirmpassword', 'errors')}">
+                        <g:passwordField  name="confirmpassword" value="" />
+                    </td>
+                </tr>
 
 
                 </tbody>

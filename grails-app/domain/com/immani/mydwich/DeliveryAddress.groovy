@@ -6,7 +6,7 @@ class DeliveryAddress implements Serializable{
 	String address
 	String zip
 	String city
-	String country
+	String country = "Belgium"
     Float lat
     Float lng
 

@@ -67,7 +67,7 @@
                         <g:message code="company.city.label" default="City" />
                     </td>
                     <td valign="top" class="value">
-                        value="${companyInstance?.city}"
+                        ${companyInstance?.city}
                     </td>
                 </tr>
 
@@ -76,7 +76,7 @@
                         <g:message code="company.country.label" default="Country" />
                     </td>
                     <td valign="top" class="value">
-                        value="${companyInstance?.country}"
+                        ${companyInstance?.country}
                     </td>
                 </tr>
 
@@ -121,8 +121,8 @@
                 </tr>
 
                 <tr class="prop">
-                    <td valign="top" class="name"><g:message code="user.title.label" default="Title" /></td>
-                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "title")}</td>
+                    <td valign="top" class="name"><g:message code="user.sex.label" default="Sex" /></td>
+                    <td valign="top" class="value">${fieldValue(bean: userInstance, field: "sex")}</td>
                 </tr>
 
                 <tr class="prop">

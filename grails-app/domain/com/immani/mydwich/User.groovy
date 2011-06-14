@@ -4,7 +4,7 @@ class User implements Serializable {
 
     String username
     String passwordHash
-    String title
+    String sex
     String firstname
     String lastname
     String mobile
@@ -30,11 +30,13 @@ class User implements Serializable {
         firstname(nullable: false, blank: false)
         lastname(nullable: false, blank: false)
         mobile(nullable: true, blank: true)
-        language(nullable: false, blank: false)
+        language(nullable: false, blank: false, inList: ["fr", "nl", "en"])
+        sex(nullable: false, blank: false, inList: ["Male", "Female"])
         company(nullable: true)
         restaurant(nullable:true)
         isvalidated(nullable: false, blank: false)
         passwordHash(nullable: false, password: true)
+        //TODO: Check complexité du password en regex
     }
 
     String toString(){

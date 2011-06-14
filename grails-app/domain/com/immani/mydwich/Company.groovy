@@ -6,7 +6,7 @@ class Company implements Serializable{
 	String address
 	String zip
 	String city
-	String country
+	String country = "Belgium"
 	String vat
 	String phone
 	String fax

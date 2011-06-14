@@ -25,6 +25,8 @@ class ShiroDbRealm {
         def user = User.findByUsername(username)
         if (!user || !user.isvalidated) {
             throw new UnknownAccountException("No account found for user [${username}]")
+        }else if (!user.isvalidated){
+            throw new Exception("user.notvalidated");
         }
 
         log.info "Found user '${user.username}' in DB"
@@ -34,7 +36,7 @@ class ShiroDbRealm {
         def account = new SimpleAccount(username, user.passwordHash, "ShiroDbRealm")
         if (!credentialMatcher.doCredentialsMatch(authToken, account)) {
             log.info "Invalid password (DB realm)"
-            throw new IncorrectCredentialsException("Invalid password for user '${username}'")
+            throw new IncorrectCredentialsException("Invalid password for user: '${username}'")
         }
 
         return account

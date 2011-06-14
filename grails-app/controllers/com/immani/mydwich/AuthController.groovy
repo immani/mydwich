@@ -3,14 +3,10 @@ package com.immani.mydwich
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.AuthenticationException
 import org.apache.shiro.authc.UsernamePasswordToken
-import org.apache.shiro.web.util.SavedRequest
 import org.apache.shiro.web.util.WebUtils
-import org.apache.shiro.session.Session
-import org.apache.shiro.subject.Subject
 import org.springframework.web.servlet.LocaleResolver
 import org.springframework.web.servlet.support.RequestContextUtils
-import org.springframework.web.servlet.i18n.SessionLocaleResolver
-import org.apache.catalina.security.SecurityUtil
+
 
 class AuthController {
     //Test commit
@@ -57,11 +53,11 @@ class AuthController {
             log.info "Redirecting to '${targetUri}'."
             redirect(uri: targetUri)
         }
-        catch (AuthenticationException ex){
+        catch (Exception ex){
             // Authentication failed, so display the appropriate message
             // on the login page.
             log.info "Authentication failure for user '${params.username}'."
-            flash.message = message(code: "login.failed")
+            flash.message = message(code: ex.getCause().getMessage()) + ' ' + params.username
 
             // Keep the username and "remember me" setting so that the
             // user doesn't have to enter them again.

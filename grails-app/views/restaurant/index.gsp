@@ -41,14 +41,15 @@
         </fieldset>
         <br />
         <fieldset>
+            <legend>Products</legend>
+            <g:link controller="product" action="list">List Products</g:link><br/>
+        </fieldset>
+        <br />
+        <fieldset>
             <legend>Product Options Categories</legend>
             <g:link controller="prodoptioncategory" action="list">List Product Option Categories</g:link>
         </fieldset>
         <br />
-        <fieldset>
-            <legend>Product Options</legend>
-            <g:link controller="prodoption" action="list">List Product Options</g:link>
-        </fieldset>
     </div>
 </div>
 

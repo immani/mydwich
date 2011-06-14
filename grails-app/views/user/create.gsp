@@ -36,10 +36,10 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="title"><g:message code="user.title.label" default="Title" /></label>
+                        <label for="sex"><g:message code="user.sex.label" default="Sex" /></label>
                     </td>
-                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'title', 'errors')}">
-                        <g:textField name="title" value="${userInstance?.title}" />
+                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'sex', 'errors')}">
+                        <g:select name="sex" from="${['Male','Female']}" valueMessagePrefix="user.sex" value="${userInstance?.sex}" />
                     </td>
                 </tr>
 

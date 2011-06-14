@@ -232,14 +232,14 @@ def changepasswordinit = {
 
 def changepassword = {
     User user = session.user.merge()
-    if (new Sha256Hash(params.oldpassword).toHex() == user.passwordHash){
+    if (new Sha256Hash(params.oldpassword).toHex() == user.passwordHash){     //check old password matches
         if(params.newpassword == params.newpasswordconfirm) {
             user.passwordHash = new Sha256Hash(params.newpassword).toHex()
             session.user = user.save(flush: true)
             redirect(action: "showuserprofile")
         }
         else{
-            user.errors.reject('user.password.doesnotmatch',                                    // Error code within the grails-app/i18n/message.properties
+            user.errors.reject('user.password.doesnotmatch',                         // Error code within the grails-app/i18n/message.properties
                     ['password', 'class User'] as Object[],                          // Groovy list cast to Object[]
                     '[Property [{0}] of class [{1}] does not match confirmation]')   // Default mapping string
             user.errors.rejectValue('newpasswordconfirm',                                                 // Field in view to highlight using <g:hasErrors> tag

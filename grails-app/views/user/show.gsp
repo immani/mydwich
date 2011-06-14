@@ -37,20 +37,6 @@
             </tr>
 
             <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.security.label" default="Security" /></td>
-
-                <td valign="top" class="value"><g:link controller="user" action="changepasswordinit"><g:message code="user.changepassword.label" default="Change Password" /></g:link> </td>
-
-            </tr>
-
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.title.label" default="Title" /></td>
-
-                <td valign="top" class="value">${fieldValue(bean: userInstance, field: "title")}</td>
-
-            </tr>
-
-            <tr class="prop">
                 <td valign="top" class="name"><g:message code="user.firstname.label" default="Firstname" /></td>
 
                 <td valign="top" class="value">${fieldValue(bean: userInstance, field: "firstname")}</td>
@@ -65,6 +51,19 @@
             </tr>
 
             <tr class="prop">
+                <td valign="top" class="name"><g:message code="user.sex.label" default="Sex" /></td>
+
+                <td valign="top" class="value"><g:message code="user.sex.${userInstance.sex}"/></td>
+
+            </tr>
+            <tr class="prop">
+                <td valign="top" class="name"><g:message code="user.security.label" default="Security" /></td>
+
+                <td valign="top" class="value"><g:link controller="user" action="changepasswordinit"><g:message code="user.changepassword.label" default="Change Password" /></g:link> </td>
+
+            </tr>
+
+            <tr class="prop">
                 <td valign="top" class="name"><g:message code="user.mobile.label" default="Mobile" /></td>
 
                 <td valign="top" class="value">${fieldValue(bean: userInstance, field: "mobile")}</td>
@@ -75,26 +74,6 @@
                 <td valign="top" class="name"><g:message code="user.language.label" default="Language" /></td>
 
                 <td valign="top" class="value">${fieldValue(bean: userInstance, field: "language")}</td>
-
-            </tr>
-
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.permissions.label" default="Permissions" /></td>
-
-                <td valign="top" class="value">${fieldValue(bean: userInstance, field: "permissions")}</td>
-
-            </tr>
-
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.roles.label" default="Roles" /></td>
-
-                <td valign="top" style="text-align: left;" class="value">
-                    <ul>
-                        <g:each in="${userInstance.roles}" var="r">
-                            <li>${r?.encodeAsHTML()}</li>
-                        </g:each>
-                    </ul>
-                </td>
 
             </tr>
 
