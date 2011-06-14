@@ -82,10 +82,16 @@
         </div>
         <div id="pageBody">
             <h1>Welcome to Grails</h1>
-            <p>Congratulations, you have successfully started your first Grails application! At the moment
-            this is the default page, feel free to modify it to either redirect to a controller or display whatever
-            content you may choose. Below is a list of controllers that are currently deployed in this application,
-            click on each to execute its default action:</p>
+
+
+            <div id="registrationList" class="dialog">
+                <h2>Registration:</h2>
+                <ul>
+                    <li class="controller"><g:link controller="registration" action="registercompany">Register Company</g:link></li>
+                    <li class="controller"><g:link controller="registration" action="registerrestaurant">Register Restaurant</g:link></li>
+                    <li class="controller"><g:link controller="registration" action="registeruser">Register User</g:link></li>
+                </ul>
+            </div>
 
             <div id="controllerList" class="dialog">
                 <h2>Available Controllers:</h2>
@@ -96,7 +102,5 @@
                 </ul>
             </div>
         </div>
-         <g:link controller="user" action="registercompanyadminuser">My Cart</g:link>
-
     </body>
 </html>

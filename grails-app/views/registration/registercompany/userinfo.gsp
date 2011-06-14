@@ -39,7 +39,7 @@
                         <label for="username"><g:message code="user.username.label" default="User Name" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'usernameleft', 'errors')}">
-                        <g:textField name="usernameleft" value="${userInstance.username}" /> <b>@${companyInstance?.domain}</b>
+                        <g:textField name="usernameleft" value="${userInstance?.username}" /> <b>@${companyInstance?.domain}</b>
                     </td>
                 </tr>
 

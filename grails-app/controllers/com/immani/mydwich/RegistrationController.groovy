@@ -7,23 +7,6 @@ class RegistrationController {
         redirect(controller: registeruser)
     }
     def geocoderService
-    /*
-    RecaptchaService recaptchaService
-    def index = {
-        render(view:'/recaptcha')
-    }
-
-    def save = {
-        def recaptchaOK = true
-        if (!recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)) {
-            recaptchaOK = false
-        }
-        else {
-            recaptchaOK = true
-        }
-        render(view:'/recaptcha',model:[recaptcha:recaptchaOK])
-    }
-    */
 
     /**
      * Creates a new Company, User and Delivery Address
@@ -45,6 +28,7 @@ class RegistrationController {
                 }
 
                 flow.companyInstance = new Company(params + coresults)
+                //TODO: regex pour éviter que le domain soit pourri - thierry@immani.com
                 flow.companyInstance.validate() ? success() : error()
 
             }.to "userinfo"
@@ -179,7 +163,6 @@ class RegistrationController {
     def registeruserFlow = {
 
         mail {
-
             on("next") {
                 String username = params.username
                 Integer pos = username.indexOf('@')
@@ -223,7 +206,7 @@ class RegistrationController {
                 flow.userInstance.validate() ? success() : error()
             }.to "persist"
 
-            on("back").to "userinfo"
+            on("back").to "mail"
             on("cancel").to "cancel"
         }
 
@@ -250,3 +233,21 @@ class RegistrationController {
         }
     }
 }
+
+    /*
+    RecaptchaService recaptchaService
+    def index = {
+        render(view:'/recaptcha')
+    }
+
+    def save = {
+        def recaptchaOK = true
+        if (!recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)) {
+            recaptchaOK = false
+        }
+        else {
+            recaptchaOK = true
+        }
+        render(view:'/recaptcha',model:[recaptcha:recaptchaOK])
+    }
+    */

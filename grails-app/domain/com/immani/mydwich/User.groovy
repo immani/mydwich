@@ -36,6 +36,7 @@ class User implements Serializable {
         restaurant(nullable:true)
         isvalidated(nullable: false, blank: false)
         passwordHash(nullable: false, password: true)
+        //TODO: Check complexité du password en regex
     }
 
     String toString(){
