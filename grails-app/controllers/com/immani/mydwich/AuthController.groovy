@@ -53,11 +53,11 @@ class AuthController {
             log.info "Redirecting to '${targetUri}'."
             redirect(uri: targetUri)
         }
-        catch (AuthenticationException ex){
+        catch (Exception ex){
             // Authentication failed, so display the appropriate message
             // on the login page.
             log.info "Authentication failure for user '${params.username}'."
-            flash.message = message(code: "login.failed")
+            flash.message = message(code: ex.getCause().getMessage()) + ' ' + params.username
 
             // Keep the username and "remember me" setting so that the
             // user doesn't have to enter them again.

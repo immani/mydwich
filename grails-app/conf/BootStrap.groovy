@@ -9,8 +9,9 @@ class BootStrap {
 
         emailConfirmationService.onConfirmation = { email, uid ->
             log.info("User with id $uid has confirmed their email address $email")
-            User user = User.get($uid)
-            if (user.roles.contains("companyAdminRole")){
+            User user = User.get(uid)
+
+            if (user.roles.toString().contains("companyadmin")){
                 Company company = user.company
                 company.isvalidated = true
                 user.isvalidated = true
@@ -18,11 +19,25 @@ class BootStrap {
                 user.save()
                 return [controller:'company', action:'show']
             }
-            if (user.roles.contains("companyRole")){
+            else if (user.roles.toString().contains("company")){
                 user.isvalidated = true
                 user.save()
                 return [controller:'user', action:'show']
             }
+            else if (user.roles.toString().contains("restaurantadmin")){
+                Restaurant restaurant= user.restaurant
+                restaurant.isvalidated = true
+                user.isvalidated = true
+                restaurant.save()
+                user.save()
+                return [controller:'restaurant', action:'show']
+            }
+            else if (user.roles.toString().contains("restaurant")){
+                user.isvalidated = true
+                user.save()
+                return [controller:'restaurant', action:'show']
+            }
+
 
             // now do something…
             // Then return a map which will redirect the user to this destination
