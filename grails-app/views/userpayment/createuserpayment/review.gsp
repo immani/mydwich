@@ -27,6 +27,8 @@
         <span class="button"><g:submitButton name="cancel" class="cancel" value="${message(code: 'default.button.cancel.label', default: 'Cancel')}" /></span>
 
 </g:form>
+    <a href="http://mydwich:8080/mydwich/userpayment/createuserpayment?execution=e8s2&_eventId_accepted=accepted">testacceptedlink</a>
+    <a href="http://mydwich:8080/mydwich/userpayment/createuserpayment?execution=e8s2&_eventId_declined=declined">testdeclinedlink</a>
     <FORM METHOD="post" ACTION="https://secure.ogone.com/ncol/test/orderstandard.asp" id=form1 name=form1>
 
         <div class="dialog">
@@ -66,8 +68,8 @@
         <!-- or dynamic template page -->
 
         <!-- post-payment redirection -->
-        <INPUT type="hidden" NAME="ACCEPTURL" VALUE="">
-        <INPUT type="hidden" NAME="DECLINEURL" VALUE="">
+        <INPUT type="hidden" NAME="ACCEPTURL" VALUE="${userpaymentInstance?.acceptedurl}">
+        <INPUT type="hidden" NAME="DECLINEURL" VALUE="${userpaymentInstance?.declinedurl}">
         <INPUT type="hidden" NAME="EXCEPTIONURL" VALUE="">
         <INPUT type="hidden" NAME="CANCELURL" VALUE="">
         <INPUT type="hidden" NAME="BACKURL" VALUE="">

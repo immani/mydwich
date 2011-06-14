@@ -39,18 +39,21 @@ class Restaurant implements Serializable{
         lng(nullable: true)
    }
 
-    List listPatnershipsCompanies() {
-		return partnerships.collect{it.company}
+    List listValidatedPatnershipsCompanies() {
+		return Partnership.findAllByRestaurantAndCompanyisvalidated(this,true);
 	}
 
-    Partnership addPartnershipToCompany(Company company) {
-		Partnership partnership = Partnership.link(company, this)
+    List listRequestedPartnershipsCompanies(){
+        return Partnership.findAllByRestaurantAndCompanyisvalidated(this,false)
+    }
+
+    Partnership requestPartnershipToCompany(Company company) {
+		Partnership partnership = Partnership.requestPartnership(company, this,false,true)
 		return partnership
 	}
 
-	List removePartnershipFromCompany(Company company) {
-		Partnership.unlink(company, this)
-		return this.listPatnershipsCompanies()
+	void removePartnershipFromCompany(Company company) {
+		Partnership.removePartnership(company, this)
 	}
 
 	String toString(){ 

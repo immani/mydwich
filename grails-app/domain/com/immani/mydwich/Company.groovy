@@ -39,7 +39,11 @@ class Company implements Serializable{
 		return partnerships.collect{it.restaurant}
 	}
 
-    Partnership addPartnershipToRestaurant(Restaurant restaurant) {
+    List listRequestedPartnershipsRestaurant(){
+
+    }
+
+    Partnership requestPartnershipToRestaurant(Restaurant restaurant) {
 		Partnership partnership = Partnership.link(this, restaurant)
 		return partnership
 	}

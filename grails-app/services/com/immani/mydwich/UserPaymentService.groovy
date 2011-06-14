@@ -16,8 +16,10 @@ class UserPaymentService {
 
     def encodeAsOgoneString(Userpayment userPayment) {
         String ogoneString = "";
+        ogoneString += "ACCEPTURL=${userPayment.acceptedurl}${psidKey}"
         ogoneString += "AMOUNT=${(int)userPayment.amount*100}${psidKey}"
         ogoneString += "CURRENCY=${userPayment.currency}${psidKey}"
+        ogoneString += "DECLINEURL=${userPayment.declinedurl}${psidKey}"
         ogoneString += "LANGUAGE=${userPayment.user.language}${psidKey}"
         ogoneString += "ORDERID=${userPayment.id}${psidKey}"
         ogoneString += "PSPID=${psid}${psidKey}"

@@ -23,7 +23,7 @@ class ShiroDbRealm {
         // found, then they don't have an account and we throw an
         // exception.
         def user = User.findByUsername(username)
-        if (!user) {
+        if (!user || !user.isvalidated) {
             throw new UnknownAccountException("No account found for user [${username}]")
         }
 

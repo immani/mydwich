@@ -28,14 +28,6 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-
-                        <g:if test="${userInstance.roles.name.contains('company')}">
-                            <g:render template="companyinfo"/>
-                        </g:if>
-                        <g:if test="${userInstance.roles.name.contains('restaurant')}">
-                            <g:render template="restaurantinfo"/>
-                        </g:if>
-
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="title"><g:message code="user.oldpassword.label" default="Old Password" /></label>

@@ -1,6 +1,8 @@
 package com.immani.mydwich
 import grails.converters.*
 import org.apache.shiro.SecurityUtils
+import org.hibernate.Session
+import org.hibernate.Query
 
 class RestaurantController {
     def geocoderService
@@ -209,6 +211,45 @@ class RestaurantController {
         response.outputStream.flush()
         return;
 
+    }
+
+
+    def createNewRestaurantTemplate = {
+
+       Session currentSession = sessionFactory.currentSession;
+       Query query= currentSession.createSQLQuery("call createnewrestaurantdefaultmetadata");
+    }
+
+
+    def listValidatedPartnership = {
+        User user = session.user.merge();
+        Restaurant restaurant = user.restaurant;
+        restaurant.listValidatedPatnershipsCompanies();
+        print "test";
+    }
+
+    def listRequestPartnerships = {
+        User user = session.user.merge();
+        Restaurant restaurant = user.restaurant;
+        restaurant.listRequestedPartnershipsCompanies();
+        print "test";
+    }
+
+    def requestPartnership = {
+        User user = session.user.merge();
+        Restaurant restaurant = user.restaurant;
+        restaurant.requestPartnershipToCompany(Company.get(params.id))
+    }
+
+    // TODO Security to validate only your requested partnerships (call to restaurant list request contains )
+    def validatePartnership = {
+         Partnership.validatePartnership(Partnership.get(params.id))
+    }
+
+    def removePartnership = {
+         User user = session.user.merge();
+        Restaurant restaurant = user.restaurant;
+        restaurant.removePartnershipFromCompany(Company.get(params.id))
     }
 
 }

@@ -145,6 +145,13 @@ class UserpaymentController {
                       }
                       flow.userpaymentInstance.user = session.user
                       userPaymentService.initializeUserPayment(flow.userpaymentInstance)
+                      //flow.userpaymentInstance.acceptedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?" + params.execution[0]+ "&_eventId_accepted=accepted";
+                      //flow.userpaymentInstance.declinedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?" + params.execution[0]+ "&_eventId_declined=declined";
+
+                        flow.userpaymentInstance.acceptedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?e11s2&_eventId_accepted=accepted";
+                        flow.userpaymentInstance.declinedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?e11s2&_eventId_declined=declined";
+
+                        flow.userpaymentInstance.save(flush:true);
                       flow.userpaymentInstance.save(flush:true);
                       String shaSign = userPaymentService.encodeAsSha1String(flow.userpaymentInstance)
                       flow.userpaymentInstance.validate() ? success() : error()
@@ -153,12 +160,19 @@ class UserpaymentController {
            }
 
            review {
+
                on("back").to "userpaymentinfo"
-               on("cancel").to "confirmed"
+               on("accepted").to "accepted"
+               on("declined").to "declined"
            }
 
-           confirmed {
-             redirect(url:"http://www.blogjava.net/BlueSUN")
+            declined {
+
+            }
+
+           accepted {
+
+
            }
 
            cancel {

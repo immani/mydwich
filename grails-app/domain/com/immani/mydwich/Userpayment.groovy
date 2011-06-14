@@ -7,6 +7,8 @@ class Userpayment implements Serializable{
     String remark
     User user
     String currency;
+    String acceptedurl;
+    String declinedurl;
 
 
     static belongsTo = [User]
@@ -16,6 +18,8 @@ class Userpayment implements Serializable{
         remark(nullable: true, blank: true)
         amount(nullable: false)
         currency(nullable: false,blank:true)
+        acceptedurl(nullable: true, blank:true)
+        declinedurl(nullable: true, blank:true)
     }
 
     String toString(){

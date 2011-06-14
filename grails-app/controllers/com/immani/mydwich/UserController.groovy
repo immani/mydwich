@@ -63,7 +63,6 @@ class UserController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (userInstance.version > version) {
-
                     userInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'User')] as Object[], "Another user has updated this User while you were editing")
                     render(view: "edit", model: [userInstance: userInstance])
                     return
@@ -236,7 +235,7 @@ def changepassword = {
     if (new Sha256Hash(params.oldpassword).toHex() == user.passwordHash){
         if(params.newpassword == params.newpasswordconfirm) {
             user.passwordHash = new Sha256Hash(params.newpassword).toHex()
-            user.save(flush: true)
+            session.user = user.save(flush: true)
             redirect(action: "showuserprofile")
         }
         else{
