@@ -298,7 +298,8 @@ class BootStrap {
                 passwordHash: new Sha256Hash("nicolas").toHex(),
                 company: immani,
                 roles: [companyAdminRole],
-                language: 'nl');
+                language: 'nl',
+                isvalidated: true);
         companyadminuser.addToPermissions("*:*")
         companyadminuser.save()
         if(companyadminuser.hasErrors()){
@@ -313,7 +314,8 @@ class BootStrap {
                 passwordHash: new Sha256Hash("marie").toHex(),
                 company: immani,
                 roles: [companyRole],
-                language: 'fr');
+                language: 'fr',
+                isvalidated: true);
         companyuser.addToPermissions("*:*")
         companyuser.save()
         if(companyuser.hasErrors()){
@@ -329,14 +331,15 @@ class BootStrap {
                 passwordHash: new Sha256Hash("thierry").toHex(),
                 restaurant: lepaindesoleil,
                 roles: [restaurantAdminRole],
-                language: 'fr');
+                language: 'fr',
+                isvalidated: true);
         restaurantadminuser.addToPermissions("*:*")
         restaurantadminuser.save()
         if(restaurantadminuser.hasErrors()){
             println restaurantadminuser.errors
         }
 
-         // Creating a restaurant user
+        // Creating a restaurant user
         def restaurantuser = new User(
                 username: "olivier@immani.com",
                 firstname: "Olivier",
@@ -345,7 +348,8 @@ class BootStrap {
                 passwordHash: new Sha256Hash("olivier").toHex(),
                 restaurant: lepaindesoleil,
                 roles: [restaurantRole],
-                language: 'fr');
+                language: 'fr',
+                isvalidated: true);
         restaurantuser.addToPermissions("*:*")
         restaurantuser.save()
         if(restaurantuser.hasErrors()){
