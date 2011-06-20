@@ -34,7 +34,7 @@ class User implements Serializable {
         sex(nullable: false, blank: false, inList: ["Male", "Female"])
         company(nullable: true)
         restaurant(nullable:true)
-        isvalidated(nullable: false, blank: false)
+        isvalidated(nullable: false)
         passwordHash(nullable: false, password: true)
         //TODO: Check complexité du password en regex
     }

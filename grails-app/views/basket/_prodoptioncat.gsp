@@ -3,18 +3,18 @@
                     <g:each in="${productOptionCategories}" var="ProdOptionCat">
                         <tr>
                             <td valign="top" class="name">
-                                <label><p>${ProdOptionCat.name_en}</p></label>
+                                <label><p><mydwich:disploc instanceValue="${ProdOptionCat}" property="name" /></p></label>
                             </td>
 
                             <td valign="top" class="name">
                                 <g:if test="${ProdOptionCat.type=='radio'}">
                                     <g:each in="${ProdOptionCat.options}" var="prodOption">
-                                        <g:radio name="option.${ProdOptionCat.name_en}" value="${prodOption.id}"/>${prodOption.name_en} (${prodOption.price} €)
+                                        <g:radio name="option.${ProdOptionCat.name_en}" value="${prodOption.id}"/><mydwich:disploc instanceValue="${prodOption}" property="name" /> (${prodOption.price} €)
                                     </g:each>
                                 </g:if>
                                 <g:else>
                                     <g:each in="${ProdOptionCat.options}" var="prodOption">
-                                        <g:checkBox name="option.${ProdOptionCat.name_en}" value="${prodOption.id}" checked=""/>${prodOption.name_en} (${prodOption.price} €)
+                                        <g:checkBox name="option.${ProdOptionCat.name_en}" value="${prodOption.id}" checked=""/><mydwich:disploc instanceValue="${prodOption}" property="name" /> (${prodOption.price} €)
                                     </g:each>
 
                                 </g:else>

@@ -96,23 +96,6 @@ class CompanyController {
     }
 
 
-   /* def retrieverestaurantswithinrange = {
-        //TODO: Limit info Returned
-        User user = session.user.merge()
-        Company companyInstance = user.company
-        params.delta = Math.min(params.delta ? params.float('delta') : 0.02, 0.05)
-        //Float Delta = params.delta
-        Float CompanyLat = companyInstance.lat
-        Float CompanyLng = companyInstance.lng
-
-        def c = Restaurant.createCriteria()
-        def restaurantlist= c.list {
-            between('lat', (CompanyLat - params.delta).toFloat(), (CompanyLat + params.delta).toFloat())
-            between('lng', (CompanyLng - params.delta).toFloat(), (CompanyLng + params.delta).toFloat())
-            //            between("lng", CompanyLng + Delta, CompanyLng - Delta  )
-        }
-        render restaurantlist as JSON
-    }  */
 
       def retrieverestaurantswithinrange = {
         User user = session.user.merge()

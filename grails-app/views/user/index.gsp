@@ -23,7 +23,6 @@
     <h1>User Actions</h1>
 
     <div id="controllerList" class="dialog">
-        <h2>Company Action:</h2>
         <fieldset>
             <legend>User Profile</legend>
             <g:link controller="user" action="showuserprofile">Show Profile</g:link>

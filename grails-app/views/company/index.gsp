@@ -23,7 +23,7 @@
     <h1>Company Admin Actions</h1>
 
     <div id="controllerList" class="dialog">
-        <h2>Company Action:</h2>
+
         <fieldset>
             <legend>Company Profile</legend>
             <g:link controller="company" action="show">Show Profile</g:link>
@@ -32,6 +32,7 @@
 
         <fieldset>
             <legend>Users</legend>
+            <g:link controller="user">My Profile</g:link><br/>
             <g:link controller="user" action="list">List Users</g:link><br/>
             <g:link controller="user" action="create">New User</g:link><br/>
             <g:link controller="userpayment" action="listcompanyuserpayment">List Payments</g:link>

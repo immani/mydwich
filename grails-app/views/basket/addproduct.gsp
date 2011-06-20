@@ -7,18 +7,8 @@
                     <tbody>
 
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.name_fr.label" default="Namefr" /></td>
-                            <td valign="top" class="value">${fieldValue(bean: selproduct, field: "name_fr")}</td>
-                        </tr>
-
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.name_nl.label" default="Namenl" /></td>
-                            <td valign="top" class="value">${fieldValue(bean: selproduct, field: "name_nl")}</td>
-                        </tr>
-
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.name_en.label" default="Nameen" /></td>
-                            <td valign="top" class="value">${fieldValue(bean: selproduct, field: "name_en")}</td>
+                            <td valign="top" class="name"><g:message code="product.name.label" default="Namefr" /></td>
+                            <td valign="top" class="value"><mydwich:disploc instanceValue="${selproduct}" property="name" /></td>
                         </tr>
 
                         <tr class="prop">
@@ -27,7 +17,7 @@
                         </tr>
 
                         <tr class="prop">
-                            <td valign="top" class="name">Quantity</td>
+                            <td valign="top" class="name"><g:message code="product.qty.label" default="Price" /></td>
                             <td valign="top" class="value"><g:textField name="product.quantity" value="1" /></td>
                         </tr>
 

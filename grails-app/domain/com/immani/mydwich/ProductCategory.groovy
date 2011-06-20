@@ -17,7 +17,7 @@ class ProductCategory {
 		name_fr(nullable: false, blank: false)
 		name_nl(nullable: false, blank: false)
 		name_en(nullable: false, blank: false)
-        catorder(nullable: false, size:1..100)
+        catorder(size:1..100)
     }
 
     static mapping = {
