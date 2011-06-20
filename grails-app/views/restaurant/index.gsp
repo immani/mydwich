@@ -23,7 +23,7 @@
     <h1>Restaurant Admin Actions</h1>
 
     <div id="controllerList" class="dialog">
-        <h2>Restaurant Action:</h2>
+
         <fieldset>
             <legend>Restaurant Profile</legend>
             <g:link controller="restaurant" action="showprofilerestaurant">Show Profile</g:link>
@@ -31,6 +31,7 @@
         <br />
         <fieldset>
             <legend>Users</legend>
+            <g:link controller="user">My Profile</g:link><br/>
             <g:link controller="user" action="list">List Users</g:link><br/>
             <g:link controller="user" action="create">New User</g:link>
         </fieldset>

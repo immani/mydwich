@@ -236,9 +236,11 @@ def changepassword = {
         if(params.newpassword == params.newpasswordconfirm) {
             user.passwordHash = new Sha256Hash(params.newpassword).toHex()
             session.user = user.save(flush: true)
+            flash.message = "${message(code: 'user.password.changed.successfully')}"
             redirect(action: "showuserprofile")
         }
         else{
+            //TODO: Check for Errors generation...
             user.errors.reject('user.password.doesnotmatch',                         // Error code within the grails-app/i18n/message.properties
                     ['password', 'class User'] as Object[],                          // Groovy list cast to Object[]
                     '[Property [{0}] of class [{1}] does not match confirmation]')   // Default mapping string
