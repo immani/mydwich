@@ -3,29 +3,29 @@ package com.immani.mydwich
 class Company implements Serializable{
 
     String name
-	String address
-	String zip
-	String city
-	String country = "Belgium"
-	String vat
-	String phone
-	String fax
+    String address
+    String zip
+    String city
+    String country = "Belgium"
+    String vat
+    String phone
+    String fax
     String domain
     Float lat
     Float lng
     Boolean isvalidated = false
 
     static hasMany = [users:User,
-                      deliveryAddresses:DeliveryAddress,
-                      partnerships:Partnership]
+            deliveryAddresses:DeliveryAddress,
+            partnerships:Partnership]
 
     static constraints = {
-		name(nullable: false,blank: false)
-		address(nullable: false,blank: false)
-		zip(nullable: false,blank: false)
-		city(nullable: false,blank: false)
-		country(nullable: false,blank: false)
-		vat(nullable: false,blank: false)
+        name(nullable: false,blank: false)
+        address(nullable: false,blank: false)
+        zip(nullable: false,blank: false)
+        city(nullable: false,blank: false)
+        country(nullable: false,blank: false)
+        vat(nullable: false,blank: false)
         phone(nullable: true, blank: true)
         fax(nullable: true, blank: true)
         domain(nullable:false, blank: false, unique: true)
@@ -34,25 +34,24 @@ class Company implements Serializable{
         lng(nullable: true)
     }
 
-    List listPartnershipsRestaurants() {
-		return partnerships.collect{it.restaurant}
-	}
-
-    List listRequestedPartnershipsRestaurant(){
-
+    List listValidatedPatnerships() {
+        return Partnership.findAllByCompanyAndRestaurantisvalidated(this,true);
     }
 
-    Partnership requestPartnershipToRestaurant(Restaurant restaurant) {
-		Partnership partnership = Partnership.link(this, restaurant)
-		return partnership
-	}
+    List listRequestedPartnerships(){
+        return Partnership.findAllByCompanyAndRestaurantisvalidated(this,false);
+    }
 
-	List removePartnershipFromRestaurant(Restaurant restaurant) {
-		Partnership.unlink(this, restaurant)
-		return this.listPartnershipsRestaurants()
-	}
+    Partnership requestPartnership(Restaurant restaurant) {
+        Partnership partnership = Partnership.requestPartnership(this,restaurant,true,false)
+        return partnership
+    }
+
+    void removePartnership(Restaurant restaurant) {
+        Partnership.removePartnership(this, restaurant)
+    }
 
     String toString(){
-		return name
-	}
+        return name
+    }
 }
