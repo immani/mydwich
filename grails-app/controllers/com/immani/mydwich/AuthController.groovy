@@ -57,7 +57,7 @@ class AuthController {
             // Authentication failed, so display the appropriate message
             // on the login page.
             log.info "Authentication failure for user '${params.username}'."
-            flash.message = message(code: ex.getCause().getMessage()) + ' ' + params.username
+            flash.message = message(code: ex.getMessage()) + ' ' + params.username
 
             // Keep the username and "remember me" setting so that the
             // user doesn't have to enter them again.

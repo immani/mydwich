@@ -58,8 +58,8 @@ class RestaurantController {
                     break
                 case "menu":
                     //   params.id = restaurantInstance.id
-                //    def productscategories = restaurantInstance.productsCategories?.sort({a,b-> a.catorder.compareTo(b.catorder)})
-                //    render(view: "/product/catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
+                    //    def productscategories = restaurantInstance.productsCategories?.sort({a,b-> a.catorder.compareTo(b.catorder)})
+                    //    render(view: "/product/catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
                     redirect(controller: "product", action: "showrestaurantcatalog", id:restaurantInstance.id)
                     break
             }
@@ -205,51 +205,43 @@ class RestaurantController {
         def restaurantInstance = Restaurant.get(params.id)
         def photo = restaurantInstance.picture1
         def test = photo.name
-    //    response.setHeader("Content-disposition", "attachment; filename=${photo.name}")
-    //    response.contentType = photo.getContentType() //'image/jpeg' will do too
+        //    response.setHeader("Content-disposition", "attachment; filename=${photo.name}")
+        //    response.contentType = photo.getContentType() //'image/jpeg' will do too
         response.outputStream << photo //'myphoto.jpg' will do too
         response.outputStream.flush()
         return;
 
     }
 
-
-    def createNewRestaurantTemplate = {
-
-       Session currentSession = sessionFactory.currentSession;
-       Query query= currentSession.createSQLQuery("call createnewrestaurantdefaultmetadata");
-    }
-
-
-    def listValidatedPartnership = {
+    def listValidatedPartnerships = {
         User user = session.user.merge();
         Restaurant restaurant = user.restaurant;
-        restaurant.listValidatedPatnershipsCompanies();
-        print "test";
+        List partnershipstList = restaurant.listValidatedPatnerships();
+        return partnershipstList
     }
 
     def listRequestPartnerships = {
         User user = session.user.merge();
         Restaurant restaurant = user.restaurant;
-        restaurant.listRequestedPartnershipsCompanies();
-        print "test";
+        List partnershipstList = restaurant.listRequestedPartnerships();
+        return partnershipstList
     }
 
     def requestPartnership = {
         User user = session.user.merge();
         Restaurant restaurant = user.restaurant;
-        restaurant.requestPartnershipToCompany(Company.get(params.id))
+        Partnership partnership = restaurant.requestPartnership(Company.get(params.id))
+        return partnership
     }
 
-    // TODO Security to validate only your requested partnerships (call to restaurant list request contains )
     def validatePartnership = {
-         Partnership.validatePartnership(Partnership.get(params.id))
+        Partnership.validatePartnership(Partnership.get(params.id))
     }
 
     def removePartnership = {
-         User user = session.user.merge();
+        User user = session.user.merge();
         Restaurant restaurant = user.restaurant;
-        restaurant.removePartnershipFromCompany(Company.get(params.id))
+        restaurant.removePartnership(Company.get(params.id))
     }
 
 }
