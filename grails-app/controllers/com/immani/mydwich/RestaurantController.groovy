@@ -228,7 +228,7 @@ class RestaurantController {
         print "test";
     }
 
-    def listRequestPartnerships = {
+    def listRequestedPartnerships = {
         User user = session.user.merge();
         Restaurant restaurant = user.restaurant;
         restaurant.listRequestedPartnershipsCompanies();
