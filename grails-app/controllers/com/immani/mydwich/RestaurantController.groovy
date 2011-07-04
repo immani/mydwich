@@ -1,11 +1,9 @@
 package com.immani.mydwich
 import grails.converters.*
-import org.apache.shiro.SecurityUtils
-import org.hibernate.Session
-import org.hibernate.Query
 
 class RestaurantController {
     def geocoderService
+    def companyService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -23,7 +21,7 @@ class RestaurantController {
     def create = {
         def restaurantInstance = new Restaurant()
         restaurantInstance.properties = params
-        return [restaurantInstance: restaurantInstance]
+        [restaurantInstance: restaurantInstance]
     }
 
     def save = {
@@ -41,6 +39,7 @@ class RestaurantController {
     def getbyname = {
         //TODO: replaceall pas suffisant, prévoir espace, accent? etc...
         Restaurant restaurantInstance = Restaurant.findByName(params.name.decodeURL())
+        def pictureInstanceList = restaurantInstance.pictures
         if (!restaurantInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), params.id])}"
             redirect(action: "list")
@@ -48,13 +47,13 @@ class RestaurantController {
         else {
             switch(params.page){
                 case null:
-                    render(view: "show", model: [restaurantInstance: restaurantInstance])
+                    render(view: "show", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList ])
                     break
                 case "map":
-                    render(view: "map", model: [restaurantInstance: restaurantInstance])
+                    render(view: "map", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList])
                     break
                 case "info":
-                    render(view: "info", model: [restaurantInstance: restaurantInstance])
+                    render(view: "info", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList])
                     break
                 case "menu":
                     //   params.id = restaurantInstance.id
@@ -68,6 +67,7 @@ class RestaurantController {
 
     def show = {
         def restaurantInstance = Restaurant.get(params.id)
+        def pictureInstanceList = restaurantInstance.pictures
         if (!restaurantInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'restaurant.label', default: 'Restaurant'), params.id])}"
             redirect(action: "list")
@@ -153,12 +153,13 @@ class RestaurantController {
     def showprofilerestaurant = {
         User user = session.user.merge()
         Restaurant restaurantInstance = user.restaurant
+        def pictureInstanceList = restaurantInstance.pictures
         if (!restaurantInstance) {
             flash.message = "User doesn't belong to a Restaurant"
             render(view: "/info")
         }
         else {
-            render(view: "show", model: [restaurantInstance: restaurantInstance])
+            render(view: "show", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList ])
         }
     }
 
@@ -201,47 +202,5 @@ class RestaurantController {
         }
     }
 
-    def viewImage = {
-        def restaurantInstance = Restaurant.get(params.id)
-        def photo = restaurantInstance.picture1
-        def test = photo.name
-        //    response.setHeader("Content-disposition", "attachment; filename=${photo.name}")
-        //    response.contentType = photo.getContentType() //'image/jpeg' will do too
-        response.outputStream << photo //'myphoto.jpg' will do too
-        response.outputStream.flush()
-        return;
-
-    }
-
-    def listValidatedPartnerships = {
-        User user = session.user.merge();
-        Restaurant restaurant = user.restaurant;
-        List partnershipstList = restaurant.listValidatedPatnerships();
-        return partnershipstList
-    }
-
-    def listRequestedPartnerships = {
-        User user = session.user.merge();
-        Restaurant restaurant = user.restaurant;
-        List partnershipstList = restaurant.listRequestedPartnerships();
-        return partnershipstList
-    }
-
-    def requestPartnership = {
-        User user = session.user.merge();
-        Restaurant restaurant = user.restaurant;
-        Partnership partnership = restaurant.requestPartnership(Company.get(params.id))
-        return partnership
-    }
-
-    def validatePartnership = {
-        Partnership.validatePartnership(Partnership.get(params.id))
-    }
-
-    def removePartnership = {
-        User user = session.user.merge();
-        Restaurant restaurant = user.restaurant;
-        restaurant.removePartnership(Company.get(params.id))
-    }
 
 }

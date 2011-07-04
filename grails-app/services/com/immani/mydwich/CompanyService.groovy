@@ -1,11 +1,10 @@
 package com.immani.mydwich
 
-import groovy.sql.Sql
 import org.hibernate.Session
 import org.hibernate.Query
 
 class CompanyService {
-
+    //TODO: A quoi sert DATASOURCE
     def dataSource
     static transactional = true
 
@@ -35,6 +34,5 @@ class CompanyService {
         def restaurantList = query.addEntity(Restaurant.class).list();
         return restaurantList;
     }
-
 
 }

@@ -25,4 +25,5 @@ class DeliveryAddress implements Serializable{
     String toString(){
 		return "${name} - ${address} , ${zip} ${city}, ${country}"
 	}
+
 }

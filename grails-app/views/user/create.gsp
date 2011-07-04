@@ -84,7 +84,7 @@
                         <label for="language"><g:message code="user.language.label" default="Language" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'language', 'errors')}">
-                        <g:textField name="language" value="${userInstance?.language}" />
+                        <g:select name="language" from="${['fr', 'nl', 'en']}" value="${userInstance?.language}" />
                     </td>
                 </tr>
 
@@ -93,7 +93,7 @@
                         <label for="passwordHash"><g:message code="user.passwordHash.label" default="Password Hash" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordHash', 'errors')}">
-                        <g:textField name="passwordHash" value="${userInstance?.passwordHash}" />
+                        <g:passwordField name="passwordHash" value="" />
                     </td>
                 </tr>
 

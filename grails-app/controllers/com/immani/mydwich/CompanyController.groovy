@@ -1,7 +1,6 @@
 package com.immani.mydwich
 import grails.converters.JSON
 import org.apache.shiro.authz.AuthorizationException
-import org.hibernate.collection.PersistentSet
 
 class CompanyController {
     def geocoderService
@@ -32,7 +31,7 @@ class CompanyController {
     }
 
 
-     /**
+    /**
      * Show the company of the current user
      */
     def show = {
@@ -96,61 +95,12 @@ class CompanyController {
     }
 
 
-   /* def retrieverestaurantswithinrange = {
-        //TODO: Limit info Returned
-        User user = session.user.merge()
-        Company companyInstance = user.company
-        params.delta = Math.min(params.delta ? params.float('delta') : 0.02, 0.05)
-        //Float Delta = params.delta
-        Float CompanyLat = companyInstance.lat
-        Float CompanyLng = companyInstance.lng
-
-        def c = Restaurant.createCriteria()
-        def restaurantlist= c.list {
-            between('lat', (CompanyLat - params.delta).toFloat(), (CompanyLat + params.delta).toFloat())
-            between('lng', (CompanyLng - params.delta).toFloat(), (CompanyLng + params.delta).toFloat())
-            //            between("lng", CompanyLng + Delta, CompanyLng - Delta  )
-        }
-        render restaurantlist as JSON
-    }  */
-
-      def retrieverestaurantswithinrange = {
+    def retrieverestaurantswithinrange = {
         User user = session.user.merge()
         Company companyInstance = user.company
         List deliveryAddresses= companyInstance.deliveryAddresses.asList()
         def restaurantList = companyService.searchdeliveryrestaurant(deliveryAddresses)
         render restaurantList as JSON
-    }
-
-    def listValidatedPartnerships = {
-        User user = session.user.merge();
-        Company company = user.company;
-        List partnershipstList = company.listValidatedPatnerships();
-        return partnershipstList
-    }
-
-    def listRequestPartnerships = {
-        User user = session.user.merge();
-        Company company = user.company;
-        List partnershipstList = company.listRequestedPartnerships();
-        return partnershipstList
-    }
-
-    def requestPartnership = {
-        User user = session.user.merge();
-        Company company = user.company;
-        Partnership partnership = company.requestPartnership(Restaurant.get(params.id))
-        return partnership
-    }
-
-    def validatePartnership = {
-        Partnership.validatePartnership(Partnership.get(params.id))
-    }
-
-    def removePartnership = {
-        User user = session.user.merge();
-        Company company = user.company;
-        company.removePartnership(Restaurant.get(params.id))
     }
 
 }

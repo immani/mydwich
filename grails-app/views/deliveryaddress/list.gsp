@@ -33,6 +33,8 @@
                             <g:sortableColumn property="city" title="${message(code: 'deliveryAddress.city.label', default: 'City')}" />
                         
                             <g:sortableColumn property="country" title="${message(code: 'deliveryAddress.country.label', default: 'Country')}" />
+
+                            <th>&nbsp;</th>
                         
                         </tr>
                     </thead>
@@ -51,6 +53,8 @@
                             <td>${fieldValue(bean: deliveryAddressInstance, field: "city")}</td>
                         
                             <td>${fieldValue(bean: deliveryAddressInstance, field: "country")}</td>
+
+                            <td><g:link controller="deliveryaddress" action="retrieverestaurantswithinrange" id="${deliveryAddressInstance.id}">List restaurants nearby</g:link></td>
                         
                         </tr>
                     </g:each>

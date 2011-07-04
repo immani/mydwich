@@ -3,46 +3,52 @@ package com.immani.mydwich
 class Partnership {
 
      // Todo: how do we want to manage this relation for the delete ?
-     Company company;
-     Restaurant restaurant;
-     Boolean companyisvalidated;
-     Boolean restaurantisvalidated;
+     DeliveryAddress deliveryAddress
+     Restaurant restaurant
+     Boolean isvalidated
+     String comment
 
     static constraints = {
+        comment(nullable: true,blank: true)
     }
 
 
-    static Partnership requestPartnership(Company company, Restaurant restaurant, boolean companyisvalidated, boolean restaurantisvalidated) {
-		def partnership = Partnership.findByRestaurantAndCompany(restaurant, company)
+    static void removePartnership(Partnership partnership) {
+        partnership.delete()
+    }
+
+    static void validatePartnership(Partnership partnership){
+        partnership.isvalidated = true
+        partnership.save(flush:true)
+    }
+
+    static Partnership requestPartnership(Restaurant restaurant, DeliveryAddress deliveryAddress) {
+		def partnership = Partnership.findByRestaurantAndDeliveryAddress(restaurant, deliveryAddress)
 
         if (!partnership)
 		{
-			partnership = new Partnership();
-            partnership.companyisvalidated = companyisvalidated;
-            partnership.restaurantisvalidated = restaurantisvalidated;
+			partnership = new Partnership()
+            partnership.isvalidated = false
 			restaurant?.addToPartnerships(partnership)
-			company?.addToPartnerships(partnership)
+			deliveryAddress?.addToPartnerships(partnership)
 			partnership.save(flush:true)
 		}
 		return partnership
 	}
 
-
-	static void removePartnership(Company company, Restaurant restaurant) {
-		def partnership = Partnership.findByRestaurantAndCompany(restaurant, company)
+    /*
+	static void removePartnership(DeliveryAddress deliveryAddress, Restaurant restaurant) {
+		def partnership = Partnership.findByRestaurantAndDeliveryAddress(restaurant, deliveryAddress)
 
         if (partnership)
 		{
 			restaurant?.removeFromPartnerships(partnership)
-			company?.removeFromPartnerships(partnership)
+			deliveryAddress?.removeFromPartnerships(partnership)
 			partnership.delete()
 		}
-	}
+	}*/
 
-    static void validatePartnership(Partnership partnership){
-        partnership.companyisvalidated = true;
-        partnership.restaurantisvalidated = true;
-        partnership.save(flush:true);
-    }
+
+
 
 }

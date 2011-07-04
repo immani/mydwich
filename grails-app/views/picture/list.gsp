@@ -24,8 +24,6 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'picture.id.label', default: 'Id')}" />
                         
-                            <g:sortableColumn property="file" title="${message(code: 'picture.file.label', default: 'File')}" />
-                        
                             <g:sortableColumn property="contentType" title="${message(code: 'picture.contentType.label', default: 'Content Type')}" />
                         
                             <g:sortableColumn property="caption" title="${message(code: 'picture.caption.label', default: 'Caption')}" />
@@ -41,8 +39,6 @@
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
                             <td><g:link action="show" id="${pictureInstance.id}">${fieldValue(bean: pictureInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: pictureInstance, field: "file")}</td>
                         
                             <td>${fieldValue(bean: pictureInstance, field: "contentType")}</td>
                         

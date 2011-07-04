@@ -51,6 +51,12 @@
             <g:link controller="prodoptioncategory" action="list">List Product Option Categories</g:link>
         </fieldset>
         <br />
+        <fieldset>
+            <legend>Companies</legend>
+            <g:link controller="partnership" action="listValidatedPartnerships">List Partner Companies</g:link><br/>
+            <g:link controller="partnership" action="listRequestedPartnerships">List requested Partnerships</g:link><br/>
+            <g:link controller="partnership" action="requestPartnership">Create New Partnership</g:link>
+        </fieldset>
     </div>
 </div>
 

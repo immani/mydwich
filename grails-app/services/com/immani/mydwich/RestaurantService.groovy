@@ -1,11 +1,25 @@
 package com.immani.mydwich
+import org.hibernate.Session
+import org.hibernate.Query
 
 class RestaurantService {
 
     static transactional = true
 
-    def fillNewRestaurant(Restaurant restaurant){
+   // TODO: All the queries here can be set in hibrnate named queries
+   def searchnearbydeliveryaddress(int restaurantid, float radius){
+       Session currentSession = sessionFactory.currentSession;
+       def companylist = currentSession.createSQLQuery("select delivery_address.* from delivery_address, restaurant where restaurant.id = ${restaurantid} and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <=  ${radius}").addEntity(Restaurant.class).list()
+       return companylist
+   }
 
+
+
+
+
+
+
+    def fillNewRestaurant(Restaurant restaurant){
         // Creating product categories
 
         ProductCategory sandwich =  new ProductCategory(
@@ -98,7 +112,5 @@ class RestaurantService {
                 name_en: "Anchovies",
                 price: 0.3);
 
-
-
     }
-                }
+}

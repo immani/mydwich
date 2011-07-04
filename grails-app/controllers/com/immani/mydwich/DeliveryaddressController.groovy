@@ -2,7 +2,8 @@ package com.immani.mydwich
 import grails.converters.JSON
 
 class DeliveryaddressController {
-     def geocoderService
+    def geocoderService
+    def companyService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -146,10 +147,15 @@ class DeliveryaddressController {
         }
     }
 
+    def retrieverestaurantswithinrange = {
+        List da = [DeliveryAddress.get(params.id)]
+        def restaurantList = companyService.searchdeliveryrestaurant(da)
+        render(view: "/restaurant/list", model: [deliveryAddressInstance: da, restaurantInstanceList: restaurantList, restaurantInstanceTotal: restaurantList.size()])
+    }
 
     /**
-    * Display the list of restaurants as JSON
-    */
+     * Display the list of restaurants as JSON
+     */
     def listasjson = {
         User user = session.user.merge()
         def deliveryAddressList = user.company.deliveryAddresses

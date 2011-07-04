@@ -20,7 +20,6 @@
     <div class="dialog">
         <table>
             <tbody>
-            <img class="Photo" src="${createLink(controller:'restaurant', action:'viewImage', id:restaurantInstance.id)}" />
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="restaurant.name.label" default="Name" /></td>
@@ -101,12 +100,12 @@
             </tr>
 
             <tr class="prop">
-                <td valign="top" class="name"><g:message code="restaurant.restaurantcategories.label" default="Restaurantcategories" /></td>
+                <td valign="top" class="name"><g:message code="restaurant.categories.label" default="Restaurant Categories" /></td>
 
                 <td valign="top" style="text-align: left;" class="value">
                     <ul>
                         <g:each in="${restaurantInstance.restaurantcategories}" var="r">
-                            <li><g:link controller="restaurantcategory" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
+                            <li>${r?.encodeAsHTML()}</li>
                         </g:each>
                     </ul>
                 </td>
@@ -129,6 +128,13 @@
             </tbody>
         </table>
         <div id="map_canvas" style="width:600px; height:400px"></div>
+
+        <g:each in="${pictureInstanceList}" var="pic">
+                <a href="${resource(dir:'restimages/' +pic.restaurant.name.toLowerCase().encodeAsURL(), file:pic.filename, absolute:'true')}">
+                        <img src="${resource(dir:'restimages/' +pic.restaurant.name.toLowerCase().encodeAsURL(), file:'thumb_'+ pic.filename, absolute:'true')}" />
+                </a>
+        </g:each>
+
     </div>
     <div class="buttons">
         <g:form>

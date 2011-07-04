@@ -19,7 +19,7 @@ class HomeController {
         }
         else{
             //flash.message = "You are not authorized to perform that operation"
-            return render(view: "/index")
+            redirect(controller: "public", action: "listrestaurants")
         }
     }
 }

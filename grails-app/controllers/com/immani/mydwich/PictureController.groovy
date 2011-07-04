@@ -12,24 +12,40 @@ class PictureController {
     }
 
     def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [pictureInstanceList: Picture.list(params), pictureInstanceTotal: Picture.count()]
+        User user = session.user.merge()
+        Restaurant restaurant = user.restaurant
+        def pictureList = restaurant.pictures
+      //  params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        [pictureInstanceList: pictureList, pictureInstanceTotal: pictureList.size()]
     }
 
     def create = {
-        def pictureInstance = new Picture()
+        User user = session.user.merge()
+        def pictureInstance = new Picture(restaurant: user.restaurant)
         pictureInstance.properties = params
-        return [pictureInstance: pictureInstance]
+        [pictureInstance: pictureInstance]
     }
 
     def save = {
+        User user = session.user.merge()
+        String restaurantname = user.restaurant.name.toString().toLowerCase().encodeAsURL()
         def pictureInstance = new Picture(params)
         def f = request.getFile('file')
-        pictureInstance.filename = f.getOriginalFilename()
+        if (f.getOriginalFilename().substring(f.getOriginalFilename().indexOf('.')) == ".gif" ){
+            pictureInstance.filename = f.getOriginalFilename().substring(0 , f.getOriginalFilename().indexOf('.')) + '.jpg'
+        }
+        else{
+            pictureInstance.filename = f.getOriginalFilename()
+        }
+        //pictureInstance.filename = f.getOriginalFilename().encodeAsURL()
         pictureInstance.contentType = f.getContentType()
         pictureInstance.file = f.getBytes()
 
-        def restfolder = grailsAttributes.getApplicationContext().getResource("/restimages/").getFile().toString()
+        def restfolder = grailsAttributes.getApplicationContext().getResource("/restimages/${restaurantname}").getFile().toString()
+        if (!restfolder){
+            //TODO: Create Folder
+            restfolder = new File(grailsAttributes.getApplicationContext().getResource("/restimages/${restaurantname}/").getFile().toString())
+        }
         def watermark =  grailsAttributes.getApplicationContext().getResource("/images/burn.png").getFile().toString()
         def originalFileName
 
@@ -38,17 +54,17 @@ class PictureController {
             it.scaleApproximate(1024, 768)
             originalFileName = it.watermark(watermark, ['top':10, 'left': 10])
         }
-        .execute ('thumbnail', {
+        .execute ('thumb_' + (pictureInstance.filename.substring(0, pictureInstance.filename.indexOf('.'))) , {
             it.scaleAccurate(200, 200)
         })
-        .execute {img ->
+        /*.execute {img ->
                         img.text(Color.WHITE, new Font('Arial', Font.PLAIN, 30), {
                             it.write("text one", 10, 10)
                             it.write("text two", 100, 100)
                             it.write("text three", 200, 200)
                         })
                    }
-
+        */
         if (pictureInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'picture.label', default: 'Picture'), pictureInstance.id])}"
             redirect(action: "show", id: pictureInstance.id)
