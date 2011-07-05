@@ -22,13 +22,8 @@
         </div>
     </g:hasErrors>
 
-<g:form url="[controller:'userpayment', action:'createuserpayment']" >
-    <span class="button"><g:submitButton name="back" class="back" value="${message(code: 'default.button.back.label', default: 'Back')}" /></span>
-        <span class="button"><g:submitButton name="cancel" class="cancel" value="${message(code: 'default.button.cancel.label', default: 'Cancel')}" /></span>
+    <g:link action="create">modify</g:link>
 
-</g:form>
-    <a href="http://mydwich:8080/mydwich/userpayment/createuserpayment?execution=e8s2&_eventId_accepted=accepted">testacceptedlink</a>
-    <a href="http://mydwich:8080/mydwich/userpayment/createuserpayment?execution=e8s2&_eventId_declined=declined">testdeclinedlink</a>
     <FORM METHOD="post" ACTION="https://secure.ogone.com/ncol/test/orderstandard.asp" id=form1 name=form1>
 
         <div class="dialog">
@@ -58,7 +53,7 @@
         </div>
 
         <INPUT type="hidden" NAME="PSPID" value="${psid}">
-        <INPUT type="hidden" NAME="ORDERID" value="${userpaymentInstance?.id}">
+        <INPUT type="hidden" NAME="ORDERID" value="${userpaymentInstance?.orderId}">
         <INPUT type="hidden" NAME="AMOUNT" value="${(int) userpaymentInstance?.amount * 100}">
         <INPUT type="hidden" NAME="CURRENCY" value="${userpaymentInstance?.currency}">
         <INPUT type="hidden" NAME="LANGUAGE" value="${userpaymentInstance?.user?.language}">

@@ -1,21 +1,57 @@
 package com.immani.mydwich
 
+import org.hibernate.SessionFactory
+
 class UserpaymentController {
 
     def UserPaymentService userPaymentService;
 
+    def  sessionFactory
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
 
 
     def index = {
         redirect(action: "list", params: params)
     }
 
-
     def create = {
-        redirect(action: "createuserpayment", params: params)
+        User currentuser = session.user.merge()
+        session.userpayment = session.userpayment == null ? new Userpayment(user: currentuser): session.userpayment;
+        render(view: "create", model: [userpaymentInstance: session.userpayment])
     }
 
+    def review = {
+        // TODO: Security check no set of the user
+        session.userpayment.properties = params.properties
+        String shaSign = userPaymentService.encodeAsSha1String(session.userpayment)
+        render(view: "review",model: [userpaymentInstance: session.userpayment, psid: "immanitest",shasign: shaSign])
+    }
+
+    def accepted = {
+        //TODO: Verify the origin of the call (ogone server) and retrieve the order id by ogone and the validated value
+
+        String sha1key = userPaymentService.verifyUserPayement(params)
+
+        if (sha1key == params.SHASIGN){
+            session.userpayment.save();
+            session.removeAttribute("userpayment")
+        }else {
+            session.removeAttribute("userpayment")
+            throw new Exception("error in sha1")
+        }
+
+        redirect(action: "list")
+    }
+
+    def refused = {
+      session.removeAttribute(userpayment)
+    }
+
+    def declined = {
+      session.removeAttribute(userpayment)
+    }
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -148,10 +184,10 @@ class UserpaymentController {
                       //flow.userpaymentInstance.acceptedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?" + params.execution[0]+ "&_eventId_accepted=accepted";
                       //flow.userpaymentInstance.declinedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?" + params.execution[0]+ "&_eventId_declined=declined";
 
-                        flow.userpaymentInstance.acceptedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?e11s2&_eventId_accepted=accepted";
-                        flow.userpaymentInstance.declinedurl = "http://mydwich:8080/mydwich/userpayment/createuserpayment?e11s2&_eventId_declined=declined";
+                        flow.userpaymentInstance.acceptedurl = "http://mydwich:8080/mydwich/userpayment/accepted;"
+                        flow.userpaymentInstance.declinedurl = "http://mydwich:8080/mydwich/userpayment/declined;"
 
-                        flow.userpaymentInstance.save(flush:true);
+
                       flow.userpaymentInstance.save(flush:true);
                       String shaSign = userPaymentService.encodeAsSha1String(flow.userpaymentInstance)
                       flow.userpaymentInstance.validate() ? success() : error()

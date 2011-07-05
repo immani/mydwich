@@ -2,13 +2,13 @@ package com.immani.mydwich
 
 class Userpayment implements Serializable{
 
-
+    Integer orderId = new Random().nextInt(100000);
     Float amount
     String remark
     User user
-    String currency;
-    String acceptedurl;
-    String declinedurl;
+    String currency = "EUR";
+    transient String acceptedurl = "http://mydwich:8080/mydwich/userpayment/accepted";
+    transient String declinedurl = "http://mydwich:8080/mydwich/userpayment/declined";
 
 
     static belongsTo = [User]
@@ -21,10 +21,4 @@ class Userpayment implements Serializable{
         acceptedurl(nullable: true, blank:true)
         declinedurl(nullable: true, blank:true)
     }
-
-    String toString(){
-        return remark + ": " + amount
-	}
-
-
 }

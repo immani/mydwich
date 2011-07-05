@@ -23,20 +23,20 @@
                 <g:renderErrors bean="${userpaymentInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:form action="review" >
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="user"><g:message code="userpayment.user.label" default="User" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userpaymentInstance, field: 'user', 'errors')}">
-                                    <g:select name="user.id" from="${com.immani.mydwich.User.list()}" optionKey="id" value="${userpaymentInstance?.user?.id}"  />
+                                    ${userpaymentInstance?.user?.toString()}
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="remark"><g:message code="userpayment.remark.label" default="Remark" /></label>
