@@ -1,10 +1,7 @@
 package com.immani.mydwich
 
-import java.awt.Font
-import java.awt.Color
-
 class PictureController {
-    def burningImageService
+    def imageService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -15,7 +12,7 @@ class PictureController {
         User user = session.user.merge()
         Restaurant restaurant = user.restaurant
         def pictureList = restaurant.pictures
-      //  params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        //  params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [pictureInstanceList: pictureList, pictureInstanceTotal: pictureList.size()]
     }
 
@@ -28,43 +25,20 @@ class PictureController {
 
     def save = {
         User user = session.user.merge()
+        //Restaurant restaurant = user.restaurant
         String restaurantname = user.restaurant.name.toString().toLowerCase().encodeAsURL()
         def pictureInstance = new Picture(params)
+        pictureInstance.restaurant = user.restaurant
+
         def f = request.getFile('file')
-        if (f.getOriginalFilename().substring(f.getOriginalFilename().indexOf('.')) == ".gif" ){
-            pictureInstance.filename = f.getOriginalFilename().substring(0 , f.getOriginalFilename().indexOf('.')) + '.jpg'
+        if (f.size > 0){
+            def restfolder = grailsAttributes.getApplicationContext().getResource("/restimages/${restaurantname}").getFile()
+            if (!restfolder.exists()){
+                String rootfolder = grailsAttributes.getApplicationContext().getResource("/").getFile().toString()
+                new File(rootfolder + "/restimages/${restaurantname}").mkdir()
+            }
+            imageService.resizeandthumb(pictureInstance, f, restfolder.toString())
         }
-        else{
-            pictureInstance.filename = f.getOriginalFilename()
-        }
-        //pictureInstance.filename = f.getOriginalFilename().encodeAsURL()
-        pictureInstance.contentType = f.getContentType()
-        pictureInstance.file = f.getBytes()
-
-        def restfolder = grailsAttributes.getApplicationContext().getResource("/restimages/${restaurantname}").getFile().toString()
-        if (!restfolder){
-            //TODO: Create Folder
-            restfolder = new File(grailsAttributes.getApplicationContext().getResource("/restimages/${restaurantname}/").getFile().toString())
-        }
-        def watermark =  grailsAttributes.getApplicationContext().getResource("/images/burn.png").getFile().toString()
-        def originalFileName
-
-        burningImageService.doWith(f, restfolder)
-        .execute {
-            it.scaleApproximate(1024, 768)
-            originalFileName = it.watermark(watermark, ['top':10, 'left': 10])
-        }
-        .execute ('thumb_' + (pictureInstance.filename.substring(0, pictureInstance.filename.indexOf('.'))) , {
-            it.scaleAccurate(200, 200)
-        })
-        /*.execute {img ->
-                        img.text(Color.WHITE, new Font('Arial', Font.PLAIN, 30), {
-                            it.write("text one", 10, 10)
-                            it.write("text two", 100, 100)
-                            it.write("text three", 200, 200)
-                        })
-                   }
-        */
         if (pictureInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'picture.label', default: 'Picture'), pictureInstance.id])}"
             redirect(action: "show", id: pictureInstance.id)
@@ -127,6 +101,11 @@ class PictureController {
         def pictureInstance = Picture.get(params.id)
         if (pictureInstance) {
             try {
+                String restaurantname = pictureInstance.restaurant.name.toString().toLowerCase().encodeAsURL()
+                def imagefile = grailsAttributes.getApplicationContext().getResource("/restimages/${restaurantname}/${pictureInstance.filename}").getFile()
+                def thumbimagefile = grailsAttributes.getApplicationContext().getResource("/restimages/${restaurantname}/thumb_${pictureInstance.filename}").getFile()
+                imagefile.delete()
+                thumbimagefile.delete()
                 pictureInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'picture.label', default: 'Picture'), params.id])}"
                 redirect(action: "list")

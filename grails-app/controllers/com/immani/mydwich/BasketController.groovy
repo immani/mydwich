@@ -7,7 +7,7 @@ class BasketController {
     //TODO: Internationalization
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def basketService;
+    def basketService
 
     /**
      * @return returns the current user

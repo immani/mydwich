@@ -69,6 +69,12 @@
 
             </tbody>
         </table>
+        <g:if test="${pictureInstance != null}" >
+            <a href="${resource(dir:'restimages/' +productInstance.restaurant.name.toLowerCase().encodeAsURL() +'/products', file:pictureInstance.filename, absolute:'true')}">
+                <img src="${resource(dir:'restimages/' +productInstance.restaurant.name.toLowerCase().encodeAsURL()+'/products', file:'thumb_'+ pictureInstance.filename, absolute:'true')}" />
+            </a>
+        </g:if>
+
     </div>
     <div class="buttons">
         <g:form>

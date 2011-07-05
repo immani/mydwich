@@ -1,10 +1,5 @@
 package com.immani.mydwich
 
-import com.immani.mydwich.User
-import com.immani.mydwich.Basket
-import com.immani.mydwich.BasketLine
-import com.immani.mydwich.Product
-
 class BasketService {
 
     static transactional = true
