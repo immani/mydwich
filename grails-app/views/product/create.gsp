@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.immani.mydwich.Product" %>
 <html>
 <head>
@@ -23,7 +21,7 @@
             <g:renderErrors bean="${productInstance}" as="list" />
         </div>
     </g:hasErrors>
-    <g:form action="save" >
+    <g:uploadForm action="save" enctype="multipart/form-data">
         <div class="dialog">
             <table>
                 <tbody>
@@ -33,7 +31,7 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'restaurant', 'errors')}">
                         ${productInstance?.restaurant?.encodeAsHTML()}
-                        <g:hiddenField name="restaurant.id" value="${productInstance?.restaurant?.id}" />
+                        <g:hiddenField name="product.restaurant.id" value="${productInstance?.restaurant?.id}" />
                     </td>
                 </tr>
 
@@ -42,7 +40,7 @@
                         <label for="name_fr"><g:message code="product.name_fr.label" default="Namefr" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'name_fr', 'errors')}">
-                        <g:textField name="name_fr" value="${productInstance?.name_fr}" />
+                        <g:textField name="product.name_fr" value="${productInstance?.name_fr}" />
                     </td>
                 </tr>
 
@@ -51,7 +49,7 @@
                         <label for="name_nl"><g:message code="product.name_nl.label" default="Namenl" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'name_nl', 'errors')}">
-                        <g:textField name="name_nl" value="${productInstance?.name_nl}" />
+                        <g:textField name="product.name_nl" value="${productInstance?.name_nl}" />
                     </td>
                 </tr>
 
@@ -60,7 +58,7 @@
                         <label for="name_en"><g:message code="product.name_en.label" default="Nameen" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'name_en', 'errors')}">
-                        <g:textField name="name_en" value="${productInstance?.name_en}" />
+                        <g:textField name="product.name_en" value="${productInstance?.name_en}" />
                     </td>
                 </tr>
 
@@ -69,7 +67,7 @@
                         <label for="desc_fr"><g:message code="product.desc_fr.label" default="Descfr" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'desc_fr', 'errors')}">
-                        <g:textField name="desc_fr" value="${productInstance?.desc_fr}" />
+                        <g:textField name="product.desc_fr" value="${productInstance?.desc_fr}" />
                     </td>
                 </tr>
 
@@ -78,7 +76,7 @@
                         <label for="desc_nl"><g:message code="product.desc_nl.label" default="Descnl" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'desc_nl', 'errors')}">
-                        <g:textField name="desc_nl" value="${productInstance?.desc_nl}" />
+                        <g:textField name="product.desc_nl" value="${productInstance?.desc_nl}" />
                     </td>
                 </tr>
 
@@ -87,7 +85,7 @@
                         <label for="desc_en"><g:message code="product.desc_en.label" default="Descen" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'desc_en', 'errors')}">
-                        <g:textField name="desc_en" value="${productInstance?.desc_en}" />
+                        <g:textField name="product.desc_en" value="${productInstance?.desc_en}" />
                     </td>
                 </tr>
 
@@ -96,7 +94,7 @@
                         <label for="price"><g:message code="product.price.label" default="Price" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'price', 'errors')}">
-                        <g:textField name="price" value="${fieldValue(bean: productInstance, field: 'price')}" />
+                        <g:textField name="product.price" value="${fieldValue(bean: productInstance, field: 'price')}" />
                     </td>
                 </tr>
 
@@ -105,7 +103,7 @@
                         <label for="productCategories"><g:message code="product.productCategories.label" default="Product Categories" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'productCategories', 'errors')}">
-                        <g:select name="productCategories" from="${productInstance.restaurant.productsCategories}" multiple="yes" optionKey="id" size="5" value="${productInstance?.productCategories*.id}" />
+                        <g:select name="product.productCategories" from="${productInstance.restaurant.productsCategories}" multiple="yes" optionKey="id" size="5" value="${productInstance?.productCategories*.id}" />
                     </td>
                 </tr>
 
@@ -114,13 +112,12 @@
                         <label for="productTags"><g:message code="product.productTags.label" default="Product Tags" /></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'productTags', 'errors')}">
-                        <g:select name="productTags" from="${com.immani.mydwich.ProductTag.list()}" multiple="yes" optionKey="id" size="5" value="${productInstance?.productTags*.id}" />
+                        <g:select name="product.productTags" from="${com.immani.mydwich.ProductTag.list()}" multiple="yes" optionKey="id" size="5" value="${productInstance?.productTags*.id}" />
                     </td>
                 </tr>
 
                 <tr class="prop">
                     <td valign="top" class="name"><g:message code="product.productTags.label" default="Product Tags" /></td>
-
                     <td valign="top" style="text-align: left;" class="value">
                         <ul>
                             <g:each in="${productInstance.productTags}" var="p">
@@ -128,7 +125,33 @@
                             </g:each>
                         </ul>
                     </td>
+                </tr>
+                <!-- SPECIFIC TO THE PICTURE ATTACHED TO THE PRODUCT -->
+                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="file"><g:message code="picture.file.label" default="File" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'file', 'errors')}">
+                        <input type="file" id="file" name="picture.file" />
+                    </td>
+                </tr>
 
+                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="caption"><g:message code="picture.caption.label" default="Caption" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'caption', 'errors')}">
+                        <g:textField name="picture.caption" value="${pictureInstance?.caption}" />
+                    </td>
+                </tr>
+
+                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="description"><g:message code="picture.description.label" default="Description" /></label>
+                    </td>
+                    <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'description', 'errors')}">
+                        <g:textField name="picture.description" value="${pictureInstance?.description}" />
+                    </td>
                 </tr>
 
                 </tbody>
@@ -137,7 +160,7 @@
         <div class="buttons">
             <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
         </div>
-    </g:form>
+    </g:uploadForm>
 </div>
 </body>
 </html>

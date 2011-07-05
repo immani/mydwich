@@ -10,6 +10,7 @@ class Product implements Serializable {
     String desc_en
     BigDecimal price
     Restaurant restaurant
+    Picture picture
     List productCategories
 
     static belongsTo = [Restaurant]
@@ -24,6 +25,7 @@ class Product implements Serializable {
         desc_nl(nullable: true,  blank: true)
         desc_en(nullable: true,  blank: true)
         price(nullable:false, min:0.0, max:100.0)
+        picture(nullable:true)
     }
 
     static searchable = [only: ['name_fr', 'name_nl', 'name_en', 'desc_fr', 'desc_nl', 'desc_en']]
