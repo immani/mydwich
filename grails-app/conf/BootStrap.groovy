@@ -300,7 +300,6 @@ class BootStrap {
                 roles: [companyAdminRole],
                 language: 'nl',
                 isvalidated: true);
-        companyadminuser.addToPermissions("*:*")
         companyadminuser.save()
         if(companyadminuser.hasErrors()){
             println companyadminuser.errors
@@ -316,10 +315,24 @@ class BootStrap {
                 roles: [companyRole],
                 language: 'fr',
                 isvalidated: true);
-        companyuser.addToPermissions("*:*")
         companyuser.save()
         if(companyuser.hasErrors()){
             println companyuser.errors
+        }
+
+        def companyuser2 = new User(
+                username: "thomas@immani.com",
+                firstname: "Thomas",
+                lastname: "Wellens",
+                sex:"Male",
+                passwordHash: new Sha256Hash("thomas").toHex(),
+                company: immani,
+                roles: [companyRole],
+                language: 'fr',
+                isvalidated: true);
+        companyuser2.save()
+        if(companyuser2.hasErrors()){
+            println companyuser2.errors
         }
 
         // Creating a restaurant user
@@ -333,7 +346,6 @@ class BootStrap {
                 roles: [restaurantAdminRole],
                 language: 'fr',
                 isvalidated: true);
-        restaurantadminuser.addToPermissions("*:*")
         restaurantadminuser.save()
         if(restaurantadminuser.hasErrors()){
             println restaurantadminuser.errors
@@ -350,7 +362,6 @@ class BootStrap {
                 roles: [restaurantRole],
                 language: 'fr',
                 isvalidated: true);
-        restaurantuser.addToPermissions("*:*")
         restaurantuser.save()
         if(restaurantuser.hasErrors()){
             println restaurantuser.errors

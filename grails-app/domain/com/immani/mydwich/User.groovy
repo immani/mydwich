@@ -17,16 +17,31 @@ class User implements Serializable {
     static belongsTo = [Company, Restaurant]
 
     static hasMany = [roles: Role,
-                      permissions: String,
-                      baskets: Basket,
-                      userpayments: Userpayment]
+            permissions: String,
+            baskets: Basket,
+            userpayments: Userpayment]
 
     static mapping  = {
-      permissions lazy: false
+        permissions lazy: false
+        company lazy: false
     }
 
     static constraints = {
-        username(nullable: false, blank: false, unique: true, email: true)
+        username(nullable: false, blank: false, unique: true, email: true,
+                validator: {
+                    val, obj ->
+                    if(obj.properties['company']){
+                        Integer pos = obj.properties['username'].indexOf('@')
+                        String domain = obj.properties['username'].substring(pos + 1)
+                        if(domain == obj.properties['company'].domain){
+                            return true
+                        }
+                        else{
+                            return ['user.company.email.notmatch', domain]
+                        }
+                    }
+                    true
+                })
         firstname(nullable: false, blank: false)
         lastname(nullable: false, blank: false)
         mobile(nullable: true, blank: true)
@@ -40,6 +55,6 @@ class User implements Serializable {
     }
 
     String toString(){
-	    return username
-	}
+        return username
+    }
 }

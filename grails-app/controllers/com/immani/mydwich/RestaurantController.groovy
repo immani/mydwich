@@ -11,12 +11,10 @@ class RestaurantController {
         render(view: "index")
     }
 
-
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [restaurantInstanceList: Restaurant.list(params), restaurantInstanceTotal: Restaurant.count()]
     }
-
 
     def create = {
         def restaurantInstance = new Restaurant()

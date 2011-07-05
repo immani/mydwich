@@ -34,6 +34,17 @@
                     <g:render template="restaurantinfo"/>
                 </shiro:hasAnyRole>
 
+                <shiro:hasRole name="companyadmin">
+                    <tr class="prop">
+                        <td valign="top" class="name">
+                            <label for="company"><g:message code="user.superadmin.label" default="Super Admin" /></label>
+                        </td>
+                        <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'roles', 'errors')}">
+                            <g:checkBox name="superadmin" value="true" checked="${false}" /><g:message code="user.superadmin.rights" default="Super Admin Rights" />
+                        </td>
+                    </tr>
+                </shiro:hasRole>
+
                 <tr class="prop">
                     <td valign="top" class="name">
                         <label for="sex"><g:message code="user.sex.label" default="Sex" /></label>
@@ -96,7 +107,6 @@
                         <g:passwordField name="passwordHash" value="" />
                     </td>
                 </tr>
-
 
                 </tbody>
             </table>

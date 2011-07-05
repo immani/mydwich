@@ -1,18 +1,40 @@
 package com.immani.mydwich
-import grails.converters.*
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.crypto.hash.Sha256Hash
+import org.apache.shiro.authz.AuthorizationException
 
 class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    private boolean hasrights(){
+        User user = session.user.merge()
+        if(SecurityUtils.subject.hasRole("companyadmin") || SecurityUtils.subject.hasRole("restaurantadmin")){
+            return true
+        }
+        throw new AuthorizationException("User is not allowed to perform that operation")
+    }
+
     def index = {
         render(view: "index")
     }
+    def create = {
+        User user = session.user.merge()
+        User newuser
+        if (user.restaurant != null){
 
+            newuser = new User(restaurant: user.restaurant)
+        }
+        else if(user.company != null) {
+            newuser = new User(company: user.company, username: 'youremail@' + user.company.domain)
+        }
+        else{
+            flash.message = "You are not authorized to perform that operation"
+            return render(view: "/info")
+        }
+        render(view: "create", model: [userInstance: newuser])
+    }
 
-    // TODO: manage roles for the newly created users
     def save = {
         def userInstance = new User(params)
         User user = session.user.merge()
@@ -23,9 +45,17 @@ class UserController {
         }
         if (user.company != null){
             user.company.addToUsers(userInstance)
-            Role companyRole = Role.findByName("company")
-            userInstance.addToRoles(companyRole)
+            if(params.superadmin){
+                Role companyadminRole = Role.findByName("companyadmin")
+                userInstance.addToRoles(companyadminRole)
+            }
+            else{
+                Role companyRole = Role.findByName("company")
+                userInstance.addToRoles(companyRole)
+            }
         }
+        userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
+        userInstance.isvalidated= true
         if (userInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
             redirect(action: "show", id: userInstance.id)
@@ -69,6 +99,18 @@ class UserController {
                 }
             }
             userInstance.properties = params
+            User user = session.user.merge()
+            if (user.company != null){
+                if(params.superadmin){
+                    Role companyadminRole = Role.findByName("companyadmin")
+                    userInstance.roles = [companyadminRole]
+                }
+                else{
+                    Role companyRole = Role.findByName("company")
+                    userInstance.roles = [companyRole]
+                }
+                user.company.addToUsers(userInstance)
+            }
             if (!userInstance.hasErrors() && userInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
                 redirect(action: "show", id: userInstance.id)
@@ -102,58 +144,6 @@ class UserController {
         }
     }
 
-
-
-    //TODO: check error messages sent
-    /**
-     * Create a user for the current user restaurant
-     */
-
-    def create = {
-        User user = session.user.merge()
-        User newuser
-        if (user.restaurant != null){
-            newuser = new User(restaurant: user.restaurant)
-        }
-        else if(user.company != null) {
-            newuser = new User(company: user.company)
-        }
-        else{
-            flash.message = "You are not authorized to perform that operation"
-            return render(view: "/info")
-        }
-        render(view: "create", model: [userInstance: newuser])
-    }
-
-
-    /*
-    def createuserrestaurant = {
-        User user = session.user.merge()
-        if (user.restaurant == null){
-            flash.message = "The current user doesn't belong to a restaurant"
-            render(view: "/info")
-        }
-        else{
-            User newuser = new User(restaurant: user.restaurant)
-            render(view: "create", model: [userInstance: newuser])
-        }
-    }
-
-    def createusercompany = {
-        User user = session.user.merge()
-        if (user.company == null){
-            flash.message = "The current user doesn't belong to a company"
-            render(view: "/info")
-        }
-        else{
-            User newuser = new User(company: user.company)
-            render(view: "create", model: [userInstance: newuser])
-        }
-        */
-
-    /**
-     * List of all users belonging to the current user's restaurant
-     */
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -212,50 +202,50 @@ class UserController {
 /**
  * Show current user profile
  */
-def showuserprofile = {
-    User user = session.user.merge()
-    render(view: "show", model:[userInstance: user])
-}
+    def showuserprofile = {
+        User user = session.user.merge()
+        render(view: "show", model:[userInstance: user])
+    }
 
 /**
  * Edit current user profile
  */
-def edituserprofile = {
-    User user = session.user.merge()
-    render(view: "edit", model:[userInstance: user])
-}
+    def edituserprofile = {
+        User user = session.user.merge()
+        render(view: "edit", model:[userInstance: user])
+    }
 
-def changepasswordinit = {
-    User user = session.user.merge()
-    render(view: "changepassword", model:[userInstance: user])
-}
+    def changepasswordinit = {
+        User user = session.user.merge()
+        render(view: "changepassword", model:[userInstance: user])
+    }
 
-def changepassword = {
-    User user = session.user.merge()
-    if (new Sha256Hash(params.oldpassword).toHex() == user.passwordHash){     //check old password matches
-        if(params.newpassword == params.newpasswordconfirm) {
-            user.passwordHash = new Sha256Hash(params.newpassword).toHex()
-            session.user = user.save(flush: true)
-            flash.message = "${message(code: 'user.password.changed.successfully')}"
-            redirect(action: "showuserprofile")
+    def changepassword = {
+        User user = session.user.merge()
+        if (new Sha256Hash(params.oldpassword).toHex() == user.passwordHash){     //check old password matches
+            if(params.newpassword == params.newpasswordconfirm) {
+                user.passwordHash = new Sha256Hash(params.newpassword).toHex()
+                session.user = user.save(flush: true)
+                flash.message = "${message(code: 'user.password.changed.successfully')}"
+                redirect(action: "showuserprofile")
+            }
+            else{
+                //TODO: Check for Errors generation...
+                user.errors.reject('user.password.doesnotmatch',                         // Error code within the grails-app/i18n/message.properties
+                        ['password', 'class User'] as Object[],                          // Groovy list cast to Object[]
+                        '[Property [{0}] of class [{1}] does not match confirmation]')   // Default mapping string
+                user.errors.rejectValue('newpasswordconfirm',                                                 // Field in view to highlight using <g:hasErrors> tag
+                        'user.password.doesnotmatch')                               // i18n error code
+                render(view: "changepassword", model: [userInstance: user])
+            }
         }
         else{
-            //TODO: Check for Errors generation...
-            user.errors.reject('user.password.doesnotmatch',                         // Error code within the grails-app/i18n/message.properties
+            user.errors.reject('user.oldpassword.notcorrect',                                    // Error code within the grails-app/i18n/message.properties
                     ['password', 'class User'] as Object[],                          // Groovy list cast to Object[]
-                    '[Property [{0}] of class [{1}] does not match confirmation]')   // Default mapping string
-            user.errors.rejectValue('newpasswordconfirm',                                                 // Field in view to highlight using <g:hasErrors> tag
-                    'user.password.doesnotmatch')                               // i18n error code
+                    '[The Old Password is not correct]')   // Default mapping string
+            //    user.errors.rejectValue('oldpassword',                                                 // Field in view to highlight using <g:hasErrors> tag
+            //                'user.oldpassword.notcorrect')                               // i18n error code
             render(view: "changepassword", model: [userInstance: user])
         }
     }
-    else{
-        user.errors.reject('user.oldpassword.notcorrect',                                    // Error code within the grails-app/i18n/message.properties
-                ['password', 'class User'] as Object[],                          // Groovy list cast to Object[]
-                '[The Old Password is not correct]')   // Default mapping string
-        //    user.errors.rejectValue('oldpassword',                                                 // Field in view to highlight using <g:hasErrors> tag
-        //                'user.oldpassword.notcorrect')                               // i18n error code
-        render(view: "changepassword", model: [userInstance: user])
-    }
-}
 }
