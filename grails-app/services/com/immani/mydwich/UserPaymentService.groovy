@@ -46,6 +46,4 @@ class UserPaymentService {
        String ogoneString = this.encodeAsOgoneString(userPayment);
        return ogoneString.encodeAsSHA1();
     }
-
-
 }

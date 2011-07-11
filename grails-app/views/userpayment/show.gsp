@@ -50,6 +50,90 @@
                             
                         </tr>
                     
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.currency.label" default="Currency" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "currency")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.paymentMethod.label" default="Payment Method" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "paymentMethod")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.cardBrand.label" default="Card Brand" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "cardBrand")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.cardHolderName.label" default="Card Holder Name" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "cardHolderName")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.ogonePaymentId.label" default="Ogone Payment Id" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "ogonePaymentId")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.status.label" default="Status" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "status")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.ncerror.label" default="Ncerror" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "ncerror")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.ipAddress.label" default="Ip Address" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "ipAddress")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.acceptance.label" default="Acceptance" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "acceptance")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.acceptedurl.label" default="Acceptedurl" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "acceptedurl")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.declinedurl.label" default="Declinedurl" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "declinedurl")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="userpayment.orderId.label" default="Order Id" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: userpaymentInstance, field: "orderId")}</td>
+                            
+                        </tr>
+                    
                     </tbody>
                 </table>
             </div>
