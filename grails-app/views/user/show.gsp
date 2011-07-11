@@ -1,4 +1,3 @@
-
 <%@ page import="com.immani.mydwich.User" %>
 <html>
 <head>
@@ -21,23 +20,23 @@
         <table>
             <tbody>
 
-            <g:if test="${userInstance.roles.name.contains('company')}">
+            <g:if test="${userInstance.company != null}">
                 <g:render template="companyinfo"/>
             </g:if>
-            <g:if test="${userInstance.roles.name.contains('restaurant')}">
+            <g:if test="${userInstance.restaurant != null}">
                 <g:render template="restaurantinfo"/>
             </g:if>
 
-            <shiro:hasRole name="companyadmin">
+            <g:if test="${userInstance.isadmin}">
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="company"><g:message code="user.superadmin.label" default="Super Admin" /></label>
+                        <label for="company"><g:message code="user.isadmin.label" default="Admin" /></label>
                     </td>
                     <td valign="top" class="value">
-                        <g:checkBox disabled="true" name="superadmin" value="true" checked="${userInstance.roles.name.contains('companyadmin')}" /><g:message code="user.superadmin.rights" default="Super Admin Rights" />
+                        <g:checkBox disabled="true" name="isadmin" value="true" checked="${userInstance.isadmin}" /><g:message code="user.isadmin.rights" default="Admin Rights" />
                     </td>
                 </tr>
-            </shiro:hasRole>
+            </g:if>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="user.username.label" default="Username" /></td>
@@ -67,7 +66,7 @@
 
             </tr>
 
-            <g:if test="${session.user.merge() == userInstance}">
+            <g:if test="${session.user.id == userInstance.id}">
                 <tr class="prop">
                     <td valign="top" class="name"><g:message code="user.security.label" default="Security" /></td>
                     <td valign="top" class="value"><g:link controller="user" action="changepasswordinit"><g:message code="user.changepassword.label" default="Change Password" /></g:link> </td>

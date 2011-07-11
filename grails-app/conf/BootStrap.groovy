@@ -11,33 +11,30 @@ class BootStrap {
             log.info("User with id $uid has confirmed their email address $email")
             User user = User.get(uid)
 
-            if (user.roles.toString().contains("companyadmin")){
-                Company company = user.company
-                company.isvalidated = true
-                user.isvalidated = true
-                company.save()
-                user.save()
-                return [controller:'company', action:'show']
-            }
-            else if (user.roles.toString().contains("company")){
-                user.isvalidated = true
-                user.save()
-                return [controller:'user', action:'show']
-            }
-            else if (user.roles.toString().contains("restaurantadmin")){
-                Restaurant restaurant= user.restaurant
+            if (user.company != null) {
+                if (user.isadmin) {
+                    Company company = user.company
+                    company.isvalidated = true
+                    user.isvalidated = true
+                    company.save()
+                    user.save()
+                    return [controller: 'company', action: 'show']
+                }
+                else {
+                    user.isvalidated = true
+                    user.save()
+                    return [controller: 'user', action: 'show']
+
+
+                }
+            } else if (user.restaurant != null) {
+                Restaurant restaurant = user.restaurant
                 restaurant.isvalidated = true
                 user.isvalidated = true
                 restaurant.save()
                 user.save()
-                return [controller:'restaurant', action:'show']
+                return [controller: 'restaurant', action: 'show']
             }
-            else if (user.roles.toString().contains("restaurant")){
-                user.isvalidated = true
-                user.save()
-                return [controller:'restaurant', action:'show']
-            }
-
 
             // now do something…
             // Then return a map which will redirect the user to this destination
@@ -89,12 +86,12 @@ class BootStrap {
             returnArray['lng'] = it.lng
             returnArray
         }
-
+        /*
         Role companyAdminRole = new Role(name:"companyadmin")
         companyAdminRole.addToPermissions("*:*")
         companyAdminRole.save()
         Role companyRole = new Role(name: "company")
-        companyRole.addToPermissions("*:*")
+        //companyRole.addToPermissions("*:*")
         companyRole.save()
         Role restaurantAdminRole = new Role(name:"restaurantadmin")
         restaurantAdminRole.addToPermissions("*:*")
@@ -102,6 +99,7 @@ class BootStrap {
         Role restaurantRole = new Role(name: "restaurant")
         restaurantRole.addToPermissions("*:*")
         restaurantRole.save()
+        */
 
         //DeliveryAddresses
         DeliveryAddress pixwavre = new DeliveryAddress(
@@ -297,7 +295,7 @@ class BootStrap {
                 sex:"Male",
                 passwordHash: new Sha256Hash("nicolas").toHex(),
                 company: immani,
-                roles: [companyAdminRole],
+                isadmin: true,
                 language: 'nl',
                 isvalidated: true);
         companyadminuser.save()
@@ -312,7 +310,7 @@ class BootStrap {
                 sex:"Female",
                 passwordHash: new Sha256Hash("marie").toHex(),
                 company: immani,
-                roles: [companyRole],
+                isadmin: false,
                 language: 'fr',
                 isvalidated: true);
         companyuser.save()
@@ -327,7 +325,7 @@ class BootStrap {
                 sex:"Male",
                 passwordHash: new Sha256Hash("thomas").toHex(),
                 company: immani,
-                roles: [companyRole],
+                isadmin: false,
                 language: 'fr',
                 isvalidated: true);
         companyuser2.save()
@@ -343,7 +341,7 @@ class BootStrap {
                 sex:"Male",
                 passwordHash: new Sha256Hash("thierry").toHex(),
                 restaurant: lepaindesoleil,
-                roles: [restaurantAdminRole],
+                isadmin: true,
                 language: 'fr',
                 isvalidated: true);
         restaurantadminuser.save()
@@ -359,13 +357,14 @@ class BootStrap {
                 sex:"Male",
                 passwordHash: new Sha256Hash("olivier").toHex(),
                 restaurant: lepaindesoleil,
-                roles: [restaurantRole],
+                isadmin: false,
                 language: 'fr',
                 isvalidated: true);
         restaurantuser.save()
         if(restaurantuser.hasErrors()){
             println restaurantuser.errors
         }
+
 
         //Product Category
         def sandwich = new ProductCategory(

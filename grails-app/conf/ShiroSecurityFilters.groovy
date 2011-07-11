@@ -6,6 +6,9 @@ import org.apache.shiro.SecurityUtils
  * via access control by convention.
  */
 class ShiroSecurityFilters {
+    String loccontrollerName
+    String locactionName
+
     def filters = {
 
         notProduct(controller:'product') {
@@ -21,8 +24,59 @@ class ShiroSecurityFilters {
                 if(controllerName == "emailConfirmation") return true  //Used by plugin Email Confirmation
                 //TODO: Check if we can merge the 2 URL mapping
                 // Access control by convention.
-                accessControl()
+                loccontrollerName = controllerName
+                locactionName = actionName
+                accessControl(myAccess)
+
             }
         }
     }
+
+
+    def myAccess = {
+        // immani.com:Domain:actions:id
+        //Check how we can call the closure without having to define local variable  locactionName, loccontrollerName
+        User user = User.findByUsername(SecurityUtils.getSubject().principal.toString())
+        // Check that the user has the required permission for the target controller/action.
+        def permString = new StringBuilder()
+
+        //Schema is: companydomain Or Restaurantid:username:controllername:actionname
+        switch (loccontrollerName){
+            case ["company","deliveryaddress"]:
+                //user can manipulate it's company and only
+                permString << user.company.domain << ':*:' << loccontrollerName << ':' << (locactionName ?: "index")
+                break
+            case ["restaurant","product", "picture", "prodoptioncategory", "prodoption", "productcategory"]:
+                //user can manipulate it's restaurant and only
+                permString << user.restaurant.id << ':*:' << loccontrollerName << ':' << (locactionName ?: "index")
+                break
+
+            case "partnership":
+                if (user.company != null){
+                    permString << user.company.domain << ':*:' << loccontrollerName << ':' << (locactionName ?: "index")
+                }
+                else{
+                    permString << user.restaurant.id << ':*:' << loccontrollerName << ':' << (locactionName ?: "index")
+                }
+                break
+            case ["user"]:
+                if (user.company != null){
+                    permString << user.company.domain << ':*:' << loccontrollerName << ':' << (locactionName ?: "index") << ':' << user.username
+                }
+                else{
+                    permString << user.restaurant.id << ':*:' << loccontrollerName << ':' << (locactionName ?: "index") << ':' << user.username
+                }
+                break
+            case ["basket", "basketline", "userpayment"]:
+                permString << user.company.id << ':' << user.username << ':' << loccontrollerName << ':' << (locactionName ?: "index")
+                break
+
+            default:
+                false
+        }
+        println user.permissions
+        def test = SecurityUtils.subject.isPermitted(permString.toString())
+        return test
+    }
+
 }

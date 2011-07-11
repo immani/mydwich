@@ -7,13 +7,14 @@ class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    /*
     private boolean hasrights(){
         User user = session.user.merge()
         if(SecurityUtils.subject.hasRole("companyadmin") || SecurityUtils.subject.hasRole("restaurantadmin")){
             return true
         }
         throw new AuthorizationException("User is not allowed to perform that operation")
-    }
+    }*/
 
     def index = {
         render(view: "index")
@@ -22,7 +23,6 @@ class UserController {
         User user = session.user.merge()
         User newuser
         if (user.restaurant != null){
-
             newuser = new User(restaurant: user.restaurant)
         }
         else if(user.company != null) {
@@ -40,19 +40,9 @@ class UserController {
         User user = session.user.merge()
         if (user.restaurant != null){
             user.restaurant.addToUsers(userInstance)
-            Role restaurantRole = Role.findByName("restaurant")
-            userInstance.addToRoles(restaurantRole)
         }
         if (user.company != null){
             user.company.addToUsers(userInstance)
-            if(params.superadmin){
-                Role companyadminRole = Role.findByName("companyadmin")
-                userInstance.addToRoles(companyadminRole)
-            }
-            else{
-                Role companyRole = Role.findByName("company")
-                userInstance.addToRoles(companyRole)
-            }
         }
         userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
         userInstance.isvalidated= true
@@ -78,13 +68,14 @@ class UserController {
 
     def edit = {
         def userInstance = User.get(params.id)
-        if (!userInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
-            redirect(action: "list")
-        }
-        else {
-            return [userInstance: userInstance]
-        }
+            if (!userInstance) {
+                flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
+                redirect(action: "list")
+            }
+            else {
+                return [userInstance: userInstance]
+            }
+
     }
 
     def update = {
@@ -99,18 +90,6 @@ class UserController {
                 }
             }
             userInstance.properties = params
-            User user = session.user.merge()
-            if (user.company != null){
-                if(params.superadmin){
-                    Role companyadminRole = Role.findByName("companyadmin")
-                    userInstance.roles = [companyadminRole]
-                }
-                else{
-                    Role companyRole = Role.findByName("company")
-                    userInstance.roles = [companyRole]
-                }
-                user.company.addToUsers(userInstance)
-            }
             if (!userInstance.hasErrors() && userInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
                 redirect(action: "show", id: userInstance.id)

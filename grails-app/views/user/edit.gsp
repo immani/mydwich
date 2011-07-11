@@ -31,24 +31,24 @@
             <table>
                 <tbody>
 
-                <shiro:hasAnyRole in="['companyadmin','company']">
+                <g:if test="${userInstance.company != null}">
                     <g:render template="companyinfo"/>
-                </shiro:hasAnyRole>
+                </g:if>
 
-                <shiro:hasAnyRole in="['restaurantadmin','restaurant']">
+                <g:if test="${userInstance.restaurant != null}">
                     <g:render template="restaurantinfo"/>
-                </shiro:hasAnyRole>
+                </g:if>
 
-                <shiro:hasRole name="companyadmin">
+                <g:if test="${userInstance.isadmin}">
                     <tr class="prop">
                         <td valign="top" class="name">
-                            <label for="company"><g:message code="user.superadmin.label" default="Super Admin" /></label>
+                            <label for="company"><g:message code="user.admin.label" default="Super Admin" /></label>
                         </td>
                         <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'roles', 'errors')}">
-                            <g:checkBox name="superadmin" value="true" checked="${userInstance.roles.name.contains('companyadmin')}" /><g:message code="user.superadmin.rights" default="Super Admin Rights" />
+                            <g:checkBox name="isadmin" value="true" checked="${userInstance?.isadmin}" /><g:message code="user.admin.rights" default="Admin Rights" />
                         </td>
                     </tr>
-                </shiro:hasRole>
+                </g:if>
 
                 <tr class="prop">
                     <td valign="top" class="name">

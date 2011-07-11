@@ -26,15 +26,15 @@
             <table>
                 <tbody>
 
-                <shiro:hasAnyRole in="['companyadmin','company']">
+                <g:if test="${userInstance.company != null}">
                     <g:render template="companyinfo"/>
-                </shiro:hasAnyRole>
+                </g:if>
 
-                <shiro:hasAnyRole in="['restaurantadmin','restaurant']">
+                <g:if test="${userInstance.restaurant != null}">
                     <g:render template="restaurantinfo"/>
-                </shiro:hasAnyRole>
+                </g:if>
 
-                <shiro:hasRole name="companyadmin">
+                <g:if test="${session.user.isadmin}">
                     <tr class="prop">
                         <td valign="top" class="name">
                             <label for="company"><g:message code="user.superadmin.label" default="Super Admin" /></label>
@@ -43,7 +43,7 @@
                             <g:checkBox name="superadmin" value="true" checked="${false}" /><g:message code="user.superadmin.rights" default="Super Admin Rights" />
                         </td>
                     </tr>
-                </shiro:hasRole>
+                </g:if>
 
                 <tr class="prop">
                     <td valign="top" class="name">

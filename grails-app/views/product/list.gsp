@@ -23,11 +23,8 @@
             <tr>
 
                 <g:sortableColumn property="id" title="${message(code: 'product.id.label', default: 'Id')}" />
-
                 <mydwich:sortloccol property="name" title="${message(code: 'product.name.label', default: 'Name')}" />
-
                 <mydwich:sortloccol property="desc" title="${message(code: 'product.desc.label', default: 'Description')}" />
-
                 <g:sortableColumn property="productCategories" title="${message(code: 'product.categories.label', default: 'Categories')}" />
 
             </tr>
@@ -37,11 +34,8 @@
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
                     <td><g:link action="show" id="${productInstance.id}">${fieldValue(bean: productInstance, field: "id")}</g:link></td>
-
-                    <td> <mydwich:disploc instanceValue="${productInstance}" property="name"/>  </td>
-
-                    <td> <mydwich:disploc instanceValue="${productInstance}" property="desc"/>  </td>
-
+                    <td><mydwich:disploc instanceValue="${productInstance}" property="name"/>  </td>
+                    <td><mydwich:disploc instanceValue="${productInstance}" property="desc"/>  </td>
                     <td>${fieldValue(bean: productInstance, field: "productCategories")}</td>
 
                 </tr>

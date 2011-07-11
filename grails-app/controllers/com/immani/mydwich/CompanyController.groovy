@@ -11,25 +11,6 @@ class CompanyController {
     def index = {
         render(view: "index")
     }
-    /**
-     * @return returns the current user
-     */
-    private User currentuser(){
-        return session.user.merge()
-    }
-
-    /**
-     * Checks if a companyuser has to right to perform an action toward a company; ex: show, edit, update
-     * @param companyInstance
-     * @return
-     */
-    private boolean hasrights(Company companyInstance){
-        if(currentuser().company == companyInstance){
-            return true
-        }
-        throw new AuthorizationException("User is not allowed to perform that operation")
-    }
-
 
     /**
      * Show the company of the current user
