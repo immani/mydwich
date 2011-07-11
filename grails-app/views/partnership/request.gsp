@@ -56,15 +56,6 @@
                     </td>
                 </tr>
 
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="companyisvalidated"><g:message code="partnership.isvalidated.label" default="Validated" /></label>
-                    </td>
-                    <td valign="top" class="value ${hasErrors(bean: partnershipInstance, field: 'isvalidated', 'errors')}">
-                        ${partnershipInstance?.isvalidated?.encodeAsHTML()}
-                    </td>
-                </tr>
-
                 </tbody>
             </table>
         </div>

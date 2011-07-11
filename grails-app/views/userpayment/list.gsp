@@ -30,6 +30,10 @@
                         
                             <g:sortableColumn property="amount" title="${message(code: 'userpayment.amount.label', default: 'Amount')}" />
                         
+                            <g:sortableColumn property="currency" title="${message(code: 'userpayment.currency.label', default: 'Currency')}" />
+                        
+                            <g:sortableColumn property="paymentMethod" title="${message(code: 'userpayment.paymentMethod.label', default: 'Payment Method')}" />
+                        
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +47,10 @@
                             <td>${fieldValue(bean: userpaymentInstance, field: "remark")}</td>
                         
                             <td>${fieldValue(bean: userpaymentInstance, field: "amount")}</td>
+                        
+                            <td>${fieldValue(bean: userpaymentInstance, field: "currency")}</td>
+                        
+                            <td>${fieldValue(bean: userpaymentInstance, field: "paymentMethod")}</td>
                         
                         </tr>
                     </g:each>

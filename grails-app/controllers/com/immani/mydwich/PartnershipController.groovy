@@ -10,10 +10,7 @@ class PartnershipController {
         redirect(action: "list", params: params)
     }
 
-    def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [partnershipInstanceList: Partnership.list(params), partnershipInstanceTotal: Partnership.count()]
-    }
+
 
     def create = {
         def partnershipInstance = new Partnership()
@@ -60,7 +57,7 @@ class PartnershipController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (partnershipInstance.version > version) {
-                    
+
                     partnershipInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'partnership.label', default: 'Partnership')] as Object[], "Another user has updated this Partnership while you were editing")
                     render(view: "edit", model: [partnershipInstance: partnershipInstance])
                     return
@@ -101,6 +98,8 @@ class PartnershipController {
     } */
 
 
+
+
     //Specific to the restaurant
     def restListValidatedPartnerships = {
         Restaurant restaurant = user.restaurant
@@ -118,7 +117,7 @@ class PartnershipController {
         Restaurant restaurant = user.restaurant
         DeliveryAddress da = DeliveryAddress.get(params.daid)
         Partnership partnership = Partnership.requestPartnership(restaurant , da)
-        render(view: "requestfromrestaurant", model:[partnershipInstance: partnership])
+        render(view: "request", model:[partnershipInstance: partnership])
     }
 
     def restSubmitPartnership = {
@@ -131,7 +130,7 @@ class PartnershipController {
             redirect(uri: '/')
         }
         else {
-            render(view: "/partnership/requestfromrestaurant", model:[partnershipInstance: partnership])
+            render(view: "/partnership/request", model:[partnershipInstance: partnership])
         }
     }
 
@@ -151,10 +150,12 @@ class PartnershipController {
     }
 
     def daRequestPartnership = {
-        Restaurant restaurant = Restaurant.get((params.restid))
+        Restaurant restaurant = Restaurant.get(params.restid)
         DeliveryAddress da = DeliveryAddress.get(params.id)
-        Partnership partnership = Partnership.requestPartnership(restaurant, da)
-        render(view: "requestfromdeliveryaddress", model:[partnershipInstance: partnership])
+        Partnership partnership = new Partnership();
+        partnership.restaurant = restaurant
+        partnership.deliveryAddress = deliveryaddress
+        render(view: "request", model:[partnershipInstance: partnership])
     }
 
 
