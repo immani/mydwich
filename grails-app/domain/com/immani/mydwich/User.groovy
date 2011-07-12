@@ -17,7 +17,7 @@ class User implements Serializable {
 
     static belongsTo = [Company, Restaurant]
 
-    static hasMany = [roles: Roles,
+    static hasMany = [roles: Role,
             permissions: String,
             baskets: Basket,
             userpayments: Userpayment]

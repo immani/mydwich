@@ -11,6 +11,7 @@ class CompanyService {
     def sessionFactory
 
    // TODO: All the queries here can be set in hibrnate named queries
+   // TODO injection de la session hibernate directement dans le service
    def searchnearbyrestaurant(int deliveryAddressid, float radius){
        Session currentSession = sessionFactory.currentSession;
        def restaurantList = currentSession.createSQLQuery("select restaurant.* from delivery_address, restaurant where delivery_address.id = ${deliveryAddressid}  and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <=  ${radius}").addEntity(Restaurant.class).list()
@@ -20,7 +21,8 @@ class CompanyService {
 
    def searchdeliveryrestaurant(DeliveryAddress deliveryAddress){
        Session currentSession = sessionFactory.currentSession;
-       Query query= currentSession.createSQLQuery("select restaurant.* from delivery_address, restaurant where delivery_address.id = ${deliveryAddress.id} and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <= restaurant.deliveryrange;").addEntity(Restaurant.class).list()
+       Query query= currentSession.createSQLQuery("select restaurant.* from delivery_address, restaurant where delivery_address.id = ${deliveryAddress.id} and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <= restaurant.deliveryrange;")
+       def restaurantList = query.addEntity(Restaurant.class).list()
        return restaurantList
    }
 

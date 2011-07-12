@@ -191,6 +191,7 @@ class RestaurantController {
         }
         render(template:"searchResults", model: searchResults)
     }
+
     def trySearch(Closure callable) {
         try {
             return callable.call()
@@ -200,5 +201,13 @@ class RestaurantController {
         }
     }
 
+
+    def retrievecompanywithinrange = {
+        User user = session.user.merge()
+        Restaurant restaurantInstance= user.restaurant
+        List deliveryAddresses= companyInstance.deliveryAddresses.asList()
+        def restaurantList = companyService.searchdeliveryrestaurant(deliveryAddresses)
+        render restaurantList as JSON
+    }
 
 }

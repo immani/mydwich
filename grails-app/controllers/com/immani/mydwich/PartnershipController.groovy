@@ -1,8 +1,12 @@
 package com.immani.mydwich
 
+import org.hibernate.Query
+
 class PartnershipController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    def sessionFactory
 
     User user = session.user.merge()
     /*
@@ -98,28 +102,6 @@ class PartnershipController {
     } */
 
 
-
-
-    //Specific to the restaurant
-    def restListValidatedPartnerships = {
-        Restaurant restaurant = user.restaurant
-        List partnershipstList = Partnership.findAllByRestaurantAndIsvalidated(restaurant,true);
-        render(view: "list", model:[partnershipInstanceList: partnershipstList, partnershipInstanceTotal: partnershipstList.size()])
-    }
-
-    def restListRequestedPartnerships = {
-        Restaurant restaurant = user.restaurant
-        List partnershipstList = Partnership.findAllByRestaurantAndIsvalidated(restaurant,false)
-        render(view: "list", model:[partnershipInstanceList: partnershipstList, partnershipInstanceTotal: partnershipstList.size()])
-    }
-
-    def restRequestPartnership = {
-        Restaurant restaurant = user.restaurant
-        DeliveryAddress da = DeliveryAddress.get(params.daid)
-        Partnership partnership = Partnership.requestPartnership(restaurant , da)
-        render(view: "request", model:[partnershipInstance: partnership])
-    }
-
     def restSubmitPartnership = {
         Restaurant restaurant = user.restaurant;
         DeliveryAddress da= DeliveryAddress.get(params.daid)
@@ -135,37 +117,108 @@ class PartnershipController {
     }
 
     //Specific to the Company/Delivery Address
-    def daListValidatedPartnerships = {
-        DeliveryAddress da = DeliveryAddress.get(params.id)
-        List partnershipstList = Partnership.findAllByDeliveryAddressAndIsvalidated(da,true)
-        render(view: "list", model:[partnershipInstanceList: partnershipstList, partnershipInstanceTotal: partnershipstList.size()])
 
-    }
-
-    def daListRequestedPartnerships = {
-        DeliveryAddress da = DeliveryAddress.get(params.id)
-        List partnershipstList = Partnership.findAllByDeliveryAddressAndIsvalidated(da,false)
-        render(view: "list", model:[partnershipInstanceList: partnershipstList, partnershipInstanceTotal: partnershipstList.size()])
-
+    // Request new partnerships
+    def restRequestPartnership = {
+        Restaurant restaurant = user.restaurant
+        DeliveryAddress deliveryaddress = DeliveryAddress.get(params.daid)
+        Partnership partnership = new Partnership();
+        partnership.restaurant = restaurant
+        partnership.deliveryAddress = deliveryaddress
+        partnership.originator = "restaurant"
+        render(view: "request", model:[partnershipInstance: partnership])
     }
 
     def daRequestPartnership = {
         Restaurant restaurant = Restaurant.get(params.restid)
-        DeliveryAddress da = DeliveryAddress.get(params.id)
+        DeliveryAddress deliveryaddress = DeliveryAddress.get(params.daid)
         Partnership partnership = new Partnership();
         partnership.restaurant = restaurant
         partnership.deliveryAddress = deliveryaddress
+        partnership.originator = "company"
         render(view: "request", model:[partnershipInstance: partnership])
     }
 
+    // Save a requested partnerships
+     def savePartnership = {
+        Partnership partnership = new Partnership();
+        partnership.deliveryAddress =  DeliveryAddress.get(params.deliveryaddressid)
+        partnership.restaurant = Restaurant.get(params.restaurantid)
+        partnership.comment = params.comment
+        partnership.originator = params.originator
+        partnership.isvalidated = false
+        partnership.save()
+        redirect(uri: "/partnership/daListRequestedPartnerships");
+    }
 
-    //Common to the restaurant and Company/DeliveryAddress
-    def ValidatePartnership = {
+    // TODO add originator company criteria
+    def daListRequestedPartnerships = {
+       def currentSession = sessionFactory.currentSession
+       User user = session.user.merge()
+       List deliveryAddresses = user.company.deliveryAddresses.asList()
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where delivery_address_id in (?1) and isvalidated = false and originator='company'");
+       query.setParameterList("1", deliveryAddresses);
+       def partnershipInstanceList = query.addEntity(Partnership.class).list();
+       render(view: "listrequested", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+    }
+
+    def daListValidatedPartnerships = {
+       def currentSession = sessionFactory.currentSession
+       User user = session.user.merge()
+       List deliveryAddresses = user.company.deliveryAddresses.asList()
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where delivery_address_id in (?1) and isvalidated = true");
+       query.setParameterList("1", deliveryAddresses);
+       def partnershipInstanceList = query.addEntity(Partnership.class).list();
+       render(view: "listvalidated", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+    }
+
+    def daListWaitingPartnerships = {
+       def currentSession = sessionFactory.currentSession
+       User user = session.user.merge()
+       List deliveryAddresses = user.company.deliveryAddresses.asList()
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where delivery_address_id in (?1) and isvalidated = false and originator='restaurant'");
+       query.setParameterList("1", deliveryAddresses);
+       def partnershipInstanceList = query.addEntity(Partnership.class).list();
+       render(view: "listwaiting", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+    }
+
+     def restListRequestedPartnerships = {
+       def currentSession = sessionFactory.currentSession
+       Restaurant restaurant = user.restaurant
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where restaurant_id = (?1) and isvalidated = false and originator='restaurant'");
+       query.setParameterList("1", restaurant);
+       def partnershipInstanceList = query.addEntity(Partnership.class).list();
+       render(view: "listrequested", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+    }
+
+    def restListValidatedPartnerships = {
+       def currentSession = sessionFactory.currentSession
+       Restaurant restaurant = user.restaurant
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where restaurant_id = (?1) and isvalidated = true");
+       query.setParameterList("1", restaurant);
+       def partnershipInstanceList = query.addEntity(Partnership.class).list();
+       render(view: "listvalidated", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+    }
+
+    def restListWaitingPartnerships = {
+       def currentSession = sessionFactory.currentSession
+       Restaurant restaurant = user.restaurant
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where restaurant_id = (?1) and isvalidated = false and originator='company'");
+       query.setParameterList("1", restaurant);
+       def partnershipInstanceList = query.addEntity(Partnership.class).list();
+       render(view: "listwaiting", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+    }
+
+    def validatePartnership = {
         Partnership.validatePartnership(Partnership.get(params.id))
+        if (user.restaurant){
+            redirect(uri: "/partnership/restListValidatedPartnerships");
+        }else {
+            redirect(uri: "/partnership/daListValidatedPartnerships");
+        }
     }
 
     def RemovePartnership = {
         Partnership.removePartnership(Partnership.get(params.id))
     }
-
 }

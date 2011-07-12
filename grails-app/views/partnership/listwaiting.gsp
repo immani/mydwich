@@ -24,13 +24,15 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'partnership.id.label', default: 'Id')}" />
                         
-                            <th><g:message code="partnership.company.label" default="Company" /></th>
+                            <g:sortableColumn property="comment" title="${message(code: 'partnership.comment.label', default: 'Comment')}" />
                         
-                            <g:sortableColumn property="companyisvalidated" title="${message(code: 'partnership.companyisvalidated.label', default: 'Companyisvalidated')}" />
+                            <th><g:message code="partnership.deliveryAddress.label" default="Delivery Address" /></th>
+                        
+                            <g:sortableColumn property="isvalidated" title="${message(code: 'partnership.isvalidated.label', default: 'Isvalidated')}" />
+                        
+                            <g:sortableColumn property="originator" title="${message(code: 'partnership.originator.label', default: 'Originator')}" />
                         
                             <th><g:message code="partnership.restaurant.label" default="Restaurant" /></th>
-                        
-                            <g:sortableColumn property="restaurantisvalidated" title="${message(code: 'partnership.restaurantisvalidated.label', default: 'Restaurantisvalidated')}" />
                         
                         </tr>
                     </thead>
@@ -40,14 +42,18 @@
                         
                             <td><g:link action="show" id="${partnershipInstance.id}">${fieldValue(bean: partnershipInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: partnershipInstance, field: "company")}</td>
+                            <td>${fieldValue(bean: partnershipInstance, field: "comment")}</td>
                         
-                            <td><g:formatBoolean boolean="${partnershipInstance.companyisvalidated}" /></td>
+                            <td>${fieldValue(bean: partnershipInstance, field: "deliveryAddress")}</td>
+                        
+                            <td><g:formatBoolean boolean="${partnershipInstance.isvalidated}" /></td>
+                        
+                            <td>${fieldValue(bean: partnershipInstance, field: "originator")}</td>
                         
                             <td>${fieldValue(bean: partnershipInstance, field: "restaurant")}</td>
-                        
-                            <td><g:formatBoolean boolean="${partnershipInstance.restaurantisvalidated}" /></td>
-                        
+
+                            <td><g:link controller="partnership" action="validatePartnership" id="${partnershipInstance.id}">validate</g:link></td>
+
                         </tr>
                     </g:each>
                     </tbody>
