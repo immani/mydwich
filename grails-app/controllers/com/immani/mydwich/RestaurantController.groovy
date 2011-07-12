@@ -151,12 +151,12 @@ class RestaurantController {
     def showprofilerestaurant = {
         User user = session.user.merge()
         Restaurant restaurantInstance = user.restaurant
-        def pictureInstanceList = restaurantInstance.pictures
         if (!restaurantInstance) {
             flash.message = "User doesn't belong to a Restaurant"
             render(view: "/info")
         }
         else {
+            def pictureInstanceList = restaurantInstance.pictures
             render(view: "show", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList ])
         }
     }

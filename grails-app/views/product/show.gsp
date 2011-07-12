@@ -43,7 +43,6 @@
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="product.productCategories.label" default="Product Categories" /></td>
-
                 <td valign="top" style="text-align: left;" class="value">
                     <ul>
                         <g:each in="${productInstance.productCategories}" var="p">
@@ -51,12 +50,10 @@
                         </g:each>
                     </ul>
                 </td>
-
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="product.productTags.label" default="Product Tags" /></td>
-
                 <td valign="top" style="text-align: left;" class="value">
                     <ul>
                         <g:each in="${productInstance.productTags}" var="p">

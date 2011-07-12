@@ -16,7 +16,7 @@
         <div class="body">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+                <div class="message">${flash.message}</div>
             </g:if>
             <div class="dialog">
                 <table>
@@ -24,65 +24,50 @@
 
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="productCategory.restaurant.label" default="Restaurant" /></td>
-
                             <td valign="top" class="value">${fieldValue(bean: productCategoryInstance, field: "restaurant")}</td>
+                        </tr>
 
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="productCategory.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productCategoryInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="productCategory.name_fr.label" default="Namefr" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: productCategoryInstance, field: "name_fr")}</td>
-                            
                         </tr>
-                    
+
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="productCategory.name_nl.label" default="Namenl" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: productCategoryInstance, field: "name_nl")}</td>
-                            
                         </tr>
-                    
+
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="productCategory.name_en.label" default="Nameen" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: productCategoryInstance, field: "name_en")}</td>
-                            
                         </tr>
-                    
+
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productCategory.catorder.label" default="Category Order" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productCategoryInstance, field: "catorder")}</td>
+                        </tr>
+
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="productCategory.prodOptionCategories.label" default="Prod Option Categories" /></td>
-                            
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
-                                <g:each in="${productCategoryInstance.prodOptionCategories}" var="p">
-                                    <li><g:link controller="prodoptioncategory" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
-                                </g:each>
+                                    <g:each in="${productCategoryInstance.prodOptionCategories}" var="p">
+                                        <li><g:link controller="prodoptioncategory" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+                                    </g:each>
                                 </ul>
                             </td>
-                            
                         </tr>
-                    
+
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="productCategory.products.label" default="Products" /></td>
-                            
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
-                                <g:each in="${productCategoryInstance.products}" var="p">
-                                    <li><g:link controller="product" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
-                                </g:each>
+                                    <g:each in="${productCategoryInstance.products}" var="p">
+                                        <li><g:link controller="product" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+                                    </g:each>
                                 </ul>
                             </td>
-                            
                         </tr>
-                    
                     </tbody>
                 </table>
             </div>

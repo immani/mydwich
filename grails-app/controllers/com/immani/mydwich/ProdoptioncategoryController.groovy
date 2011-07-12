@@ -9,7 +9,6 @@ class ProdoptioncategoryController {
     }
 
 
-
     def save = {
         def prodOptionCategoryInstance = new ProdOptionCategory(params)
         if (prodOptionCategoryInstance.save(flush: true)) {
@@ -39,7 +38,9 @@ class ProdoptioncategoryController {
             redirect(action: "list")
         }
         else {
-            return [prodOptionCategoryInstance: prodOptionCategoryInstance]
+            User user = session.user.merge()
+            def prodCategoryList = ProductCategory.findAllByRestaurant(user.restaurant)
+            return [prodOptionCategoryInstance: prodOptionCategoryInstance, prodCategoryList: prodCategoryList ]
         }
     }
 
@@ -49,7 +50,7 @@ class ProdoptioncategoryController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (prodOptionCategoryInstance.version > version) {
-                    
+
                     prodOptionCategoryInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'prodOptionCategory.label', default: 'ProdOptionCategory')] as Object[], "Another user has updated this ProdOptionCategory while you were editing")
                     render(view: "edit", model: [prodOptionCategoryInstance: prodOptionCategoryInstance])
                     return
@@ -92,7 +93,8 @@ class ProdoptioncategoryController {
     def create = {
         User user = session.user.merge()
         ProdOptionCategory prodOptionCategoryInstance= new ProdOptionCategory(restaurant: user.restaurant)
-        render(view: "create", model:[prodOptionCategoryInstance: prodOptionCategoryInstance])
+        def prodCategoryList = ProductCategory.findAllByRestaurant(user.restaurant)
+        render(view: "create", model:[prodOptionCategoryInstance: prodOptionCategoryInstance, prodCategoryList: prodCategoryList ])
     }
 
     def List = {

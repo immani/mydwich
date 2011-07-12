@@ -32,8 +32,6 @@
                         
                             <g:sortableColumn property="language" title="${message(code: 'user.language.label', default: 'Language')}" />
 
-                            <g:sortableColumn property="roles" title="${message(code: 'user.roles.label', default: 'Roles')}" />
-                        
                         </tr>
                     </thead>
                     <tbody>
@@ -50,8 +48,6 @@
                         
                             <td>${fieldValue(bean: userInstance, field: "language")}</td>
 
-                            <td>${fieldValue(bean: userInstance, field: "roles")}</td>
-                        
                         </tr>
                     </g:each>
                     </tbody>

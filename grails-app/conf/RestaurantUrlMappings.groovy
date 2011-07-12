@@ -28,7 +28,7 @@ class RestaurantUrlMappings {
 
         }
 
-        "/product/$action?/$id?"{
+        "/restaurant/product/$action?/$id?"{
             constraints {
                 // apply constraints here
             }

@@ -6,6 +6,7 @@ class BasketLine implements Serializable {
     Float price
     String comment
     Product product
+    Basket basket
 
     static belongsTo = Basket
 

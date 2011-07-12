@@ -7,15 +7,6 @@ class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    /*
-    private boolean hasrights(){
-        User user = session.user.merge()
-        if(SecurityUtils.subject.hasRole("companyadmin") || SecurityUtils.subject.hasRole("restaurantadmin")){
-            return true
-        }
-        throw new AuthorizationException("User is not allowed to perform that operation")
-    }*/
-
     def index = {
         render(view: "index")
     }
@@ -141,42 +132,6 @@ class UserController {
         [userInstanceList: userlist, userInstanceTotal: userlist.size()]
     }
 
-    /*
-    def listusersrestaurant = {
-        User user = session.user.merge()
-        if (user.restaurant == null){
-            flash.message = "The current user doesn't belong to a restaurant"
-            render(view: "/info")
-        }
-        else{
-            params.max = Math.min(params.max ? params.int('max') : 10, 100)
-            def userlist = User.findAllByRestaurant(user.restaurant, params)
-            render(view: "list", model: [userInstanceList: userlist, userInstanceTotal: userlist.size()])
-        }
-    }
-
-    /**
-     * Create a user for the current user's company
-     */
-
-
-/**
- * List all the users belonging to the current user company
- */
-/*
-    def listuserscompany = {
-        User user = session.user.merge()
-        if (user.company == null){
-            flash.message = "The current user doesn't belong to a company"
-            render(view: "/info")
-        }
-        else{
-            params.max = Math.min(params.max ? params.int('max') : 10, 100)
-            def userlist = User.findAllByCompany(user.company, params)
-            render(view: "list", model: [userInstanceList: userlist, userInstanceTotal: userlist.size()])
-        }
-    }
-*/
 
 /**
  * Show current user profile

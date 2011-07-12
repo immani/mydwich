@@ -66,13 +66,22 @@
                                     <g:textField name="name_en" value="${productCategoryInstance?.name_en}" />
                                 </td>
                             </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="name_en"><g:message code="productCategory.catorder.label" default="Category Order" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productCategoryInstance, field: 'catorder', 'errors')}">
+                                    <g:textField name="catorder" value="${productCategoryInstance?.catorder}" />
+                                </td>
+                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="prodOptionCategories"><g:message code="productCategory.prodOptionCategories.label" default="Prod Option Categories" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productCategoryInstance, field: 'prodOptionCategories', 'errors')}">
-                                    <g:select name="prodOptionCategories" from="${com.immani.mydwich.ProdOptionCategory.list()}" multiple="yes" optionKey="id" size="5" value="${productCategoryInstance?.prodOptionCategories*.id}" />
+                                    <g:select name="prodOptionCategories" from="${prodOptionCategoryList}" multiple="yes" optionKey="id" size="5" value="${productCategoryInstance?.prodOptionCategories*.id}" />
                                 </td>
                             </tr>
 

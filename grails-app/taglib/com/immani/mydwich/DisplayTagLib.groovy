@@ -27,6 +27,29 @@ class DisplayTagLib {
         out << instanceValue."$property";
     }
 
+    def disarrayploc = { attrs, body ->
+
+        def instanceValue = attrs.instanceValue
+        def property = attrs.property
+
+        if (instanceValue == null) throw new IllegalArgumentException("[instanceValue] attribute must not be null for <mydwich:disarrayploc>!")
+        if (!property) throw new IllegalArgumentException("[property] attribute must be specified to for <mydwich:disparrayloc>!")
+
+        def locale = RCU.getLocale(request)
+
+        if (!supportedLocale.contains(locale.language)){
+            locale = defaultLocale;
+        }
+        if (instanceValue.size() == 0){
+        out << ""
+        }
+        else{
+                property = property + "_" + locale.language;
+        out << instanceValue."$property".join(', ');
+        }
+
+    }
+
 
 
     def sortloccol = { attrs ->

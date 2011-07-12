@@ -17,7 +17,7 @@ class User implements Serializable {
 
     static belongsTo = [Company, Restaurant]
 
-    static hasMany = [roles: Roles,
+    static hasMany = [roles: Role,
             permissions: String,
             baskets: Basket,
             userpayments: Userpayment]
@@ -62,16 +62,19 @@ class User implements Serializable {
     def beforeInsert = {
         if(this.company != null){
             if(this.isadmin){
-                this.addToPermissions("${this.company.domain}:*:company,da,partnership:*")
+                this.addToPermissions("${this.company.domain}:*:company,deliveraddress,picture,partnership:*")
+                this.addToPermissions("${this.company.domain}:*:basket,basketline:list,show")
             }
             else{
                 //Non admin user can view all company infos except , but not edit
-                this.addToPermissions("${this.company.domain}:*:company,da,partnership,user:list,show,index")
+                this.addToPermissions("${this.company.domain}:*:company,deliveraddress,picture,partnership,user:list,show,index")
             }
-            //Company user can edit all infos for his user profile
+            //Company user can edit all infos for his user profile, basket, basketline
+            //We put *:* at the end cause all the other Controllers are not limited by username so no need to restrict the permissions
             this.addToPermissions("${this.company.domain}:${this.username}:*:*")
         }
         else{
+            //For the moment we do not define a restaurant admin, therefore everything which is linked to the restaurant can be accessed...
             this.addToPermissions("${this.restaurant.id}:*:*:*")
         }
     }

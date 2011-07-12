@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.immani.mydwich.ProductCategory" %>
 <html>
     <head>
@@ -16,12 +14,12 @@
         <div class="body">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+                <div class="message">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${productCategoryInstance}">
-            <div class="errors">
-                <g:renderErrors bean="${productCategoryInstance}" as="list" />
-            </div>
+                <div class="errors">
+                    <g:renderErrors bean="${productCategoryInstance}" as="list" />
+                </div>
             </g:hasErrors>
             <g:form action="save" >
                 <div class="dialog">
@@ -45,7 +43,7 @@
                                     <g:textField name="name_fr" value="${productCategoryInstance?.name_fr}" />
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="name_nl"><g:message code="productCategory.name_nl.label" default="Namenl" /></label>
@@ -54,7 +52,7 @@
                                     <g:textField name="name_nl" value="${productCategoryInstance?.name_nl}" />
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="name_en"><g:message code="productCategory.name_en.label" default="Nameen" /></label>
@@ -63,7 +61,25 @@
                                     <g:textField name="name_en" value="${productCategoryInstance?.name_en}" />
                                 </td>
                             </tr>
-                        
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="name_en"><g:message code="productCategory.catorder.label" default="Category Order" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productCategoryInstance, field: 'catorder', 'errors')}">
+                                    <g:textField name="catorder" value="${productCategoryInstance?.catorder}" />
+                                </td>
+                            </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="prodOptionCategories"><g:message code="productCategory.prodOptionCategories.label" default="Prod Option Categories" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productCategoryInstance, field: 'prodOptionCategories', 'errors')}">
+                                    <g:select name="prodOptionCategories" from="${prodOptionCategoryList}" multiple="yes" optionKey="id" size="5" value="${productCategoryInstance?.prodOptionCategories*.id}" />
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>

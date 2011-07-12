@@ -37,7 +37,9 @@ class ProductcategoryController {
             redirect(action: "list")
         }
         else {
-            return [productCategoryInstance: productCategoryInstance]
+            User user = session.user.merge()
+            def prodOptionCategoryList = ProdOptionCategory.findAllByRestaurant(user.restaurant)
+            return [productCategoryInstance: productCategoryInstance,  prodOptionCategoryList:prodOptionCategoryList]
         }
     }
 
@@ -89,9 +91,12 @@ class ProductcategoryController {
 
 
     def create = {
+        //TODO: For NG look to do it the clean way
         User user = session.user.merge()
-        ProductCategory productCategoryInstance= new ProductCategory(restaurant: user.restaurant)
-        render(view: "create", model:[productCategoryInstance: productCategoryInstance])
+        def prodcatlist = ProductCategory.findAllByRestaurant(user.restaurant)
+        def prodOptionCategoryList = ProdOptionCategory.findAllByRestaurant(user.restaurant)
+        ProductCategory productCategoryInstance= new ProductCategory(restaurant: user.restaurant, catorder: prodcatlist.size() + 1 )
+        render(view: "create", model:[productCategoryInstance: productCategoryInstance, prodOptionCategoryList:prodOptionCategoryList])
     }
 
     def List = {

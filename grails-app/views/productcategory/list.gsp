@@ -1,4 +1,3 @@
-
 <%@ page import="com.immani.mydwich.ProductCategory" %>
 <html>
     <head>
@@ -15,29 +14,31 @@
         <div class="body">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+                <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
                 <table>
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'productCategory.id.label', default: 'Id')}" />
-                        
-                            <mydwich:sortloccol property="name" title="${message(code: 'productCategory.name.label', default: 'Namefr')}" />
-                        
+                            <th>&nbsp;</th>
+                            <g:sortableColumn property="name_fr" title="${message(code: 'productCategory.name_fr.label', default: 'Name Fr')}" />
+                            <g:sortableColumn property="name_nl" title="${message(code: 'productCategory.name_en.label', default: 'Name Nl')}" />
+                            <g:sortableColumn property="name_en" title="${message(code: 'productCategory.name_nl.label', default: 'Name En')}" />
+                            <g:sortableColumn property="catorder" title="${message(code: 'productCategory.catorder.label', default: 'Category Order')}" />
+                            <td><g:message code="productCategory.prodOptionCategories.label" default="Prod Option Categories" /></td>
                         </tr>
                     </thead>
                     <tbody>
-                    <g:each in="${productCategoryInstanceList}" status="i" var="productCategoryInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${productCategoryInstance.id}">${fieldValue(bean: productCategoryInstance, field: "id")}</g:link></td>
-
-                            <td> <mydwich:disploc instanceValue="${productCategoryInstance}" property="name"/>  </td>
-
-                        </tr>
-                    </g:each>
+                        <g:each in="${productCategoryInstanceList}" status="i" var="productCategoryInstance">
+                            <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                                <td><g:link action="show" id="${productCategoryInstance.id}">${message(code: 'productCategory.show.label', default: 'Show')}</g:link></td>
+                                <td>${fieldValue(bean: productCategoryInstance, field: "name_fr")}</td>
+                                <td>${fieldValue(bean: productCategoryInstance, field: "name_nl")}</td>
+                                <td>${fieldValue(bean: productCategoryInstance, field: "name_en")}</td>
+                                <td>${fieldValue(bean: productCategoryInstance, field: "catorder")}</td>
+                                <td><mydwich:disarrayploc instanceValue="${productCategoryInstance?.prodOptionCategories}" property="name"/></td>
+                            </tr>
+                        </g:each>
                     </tbody>
                 </table>
             </div>
