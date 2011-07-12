@@ -23,7 +23,7 @@
             <g:renderErrors bean="${partnershipInstance}" as="list" />
         </div>
     </g:hasErrors>
-    <g:form action="submitPartnership" >
+    <g:form action="savePartnership" >
         <div class="dialog">
             <table>
                 <tbody>
@@ -34,16 +34,17 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: partnershipInstance, field: 'restaurant', 'errors')}">
                         ${partnershipInstance?.restaurant?.encodeAsHTML()}
+                         <g:hiddenField name="restaurantid" value="${partnershipInstance?.restaurant?.id}"/>
                     </td>
                 </tr>
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="company"><g:message code="partnership.company.label" default="Company" /></label>
+                        <label for="deliveryAddress"><g:message code="partnership.deliveryAddress.label" default="deliveryAddress" /></label>
                     </td>
-                    <td valign="top" class="value ${hasErrors(bean: partnershipInstance, field: 'company', 'errors')}">
-                        ${partnershipInstance?.company?.encodeAsHTML()}
-                        <g:hiddenField name="companyid" value="${partnershipInstance?.company?.id}"/>
+                    <td valign="top" class="value ${hasErrors(bean: partnershipInstance, field: 'deliveryAddress', 'errors')}">
+                        ${partnershipInstance?.deliveryAddress?.encodeAsHTML()}
+                        <g:hiddenField name="deliveryaddressid" value="${partnershipInstance?.deliveryAddress?.id}"/>
                     </td>
                 </tr>
 
@@ -55,6 +56,8 @@
                         <g:textField name="comment" value="${partnershipInstance?.comment?.encodeAsHTML()}" />
                     </td>
                 </tr>
+
+                 <g:hiddenField name="originator" value="${partnershipInstance?.originator}"/>
 
                 </tbody>
             </table>

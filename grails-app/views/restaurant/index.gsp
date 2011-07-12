@@ -53,9 +53,10 @@
         <br />
         <fieldset>
             <legend>Companies</legend>
-            <g:link controller="partnership" action="listValidatedPartnerships">List Partner Companies</g:link><br/>
-            <g:link controller="partnership" action="listRequestedPartnerships">List requested Partnerships</g:link><br/>
-            <g:link controller="partnership" action="requestPartnership">Create New Partnership</g:link>
+            <g:link controller="partnership" action="restListValidatedPartnerships">List validated Partnerships</g:link><br/>
+            <g:link controller="partnership" action="restListRequestedPartnerships">List requested Partnerships</g:link><br/>
+            <g:link controller="partnership" action="restListWaitingPartnerships">List waiting Partnerships</g:link><br/>
+            <g:link controller="partnership" action="restRequestPartnership">Create New Partnership</g:link>
         </fieldset>
     </div>
 </div>

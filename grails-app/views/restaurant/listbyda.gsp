@@ -59,6 +59,7 @@
 
                             <td><g:link controller="product" action="showrestaurantcatalog" id="${restaurantInstance.id}">View Catalog</g:link></td>
 
+                            <td><g:link controller="partnership" action="daRequestPartnership" params="[daid: deliveryAddressInstance.id, restid: restaurantInstance.id]">Request Partnership</g:link></td>
                         </tr>
                     </g:each>
                     </tbody>

@@ -53,8 +53,9 @@
         <br />
         <fieldset>
             <legend>Restaurants</legend>
-            <g:link controller="partnership" action="listValidatedPartnerships">List Partner Restaurants</g:link><br/>
-            <g:link controller="partnership" action="listRequestedPartnerships">List requested Partnerships</g:link><br/>
+            <g:link controller="partnership" action="daListValidatedPartnerships">List Validated Restaurants</g:link><br/>
+            <g:link controller="partnership" action="daListRequestedPartnerships">List requested Partnerships</g:link><br/>
+            <g:link controller="partnership" action="daListWaitingPartnerships">List waiting Partnerships</g:link><br/>
             <g:link controller="deliveryaddress" action="list">Request New Partnership</g:link>
         </fieldset>
     </div>

@@ -54,8 +54,8 @@
                         
                             <td>${fieldValue(bean: deliveryAddressInstance, field: "country")}</td>
 
-                            <td><g:link controller="deliveryaddress" action="retrieverestaurantswithinrange" id="${deliveryAddressInstance.id}">List restaurants nearby</g:link></td>
-                        
+                            <td><g:link controller="deliveryaddress" action="retrieverestaurantswithindarange" id="${deliveryAddressInstance.id}">List restaurants nearby</g:link></td>
+
                         </tr>
                     </g:each>
                     </tbody>
