@@ -109,6 +109,9 @@ class BootStrap {
                 city: "Wavre",
                 country: "Belgium"
         )
+        def results = geocoderService.geocode(pixwavre.address, pixwavre.zip, pixwavre.city, pixwavre.country )
+        pixwavre.lat = results.lat
+        pixwavre.lng = results.lng
 
         DeliveryAddress pixgent = new DeliveryAddress(
                 name: "PIX-Gent",
@@ -117,6 +120,9 @@ class BootStrap {
                 city: "Gent",
                 country: "Belgium"
         )
+        results = geocoderService.geocode(pixgent.address, pixgent.zip, pixgent.city, pixgent.country )
+        pixgent.lat = results.lat
+        pixgent.lng = results.lng
 
         DeliveryAddress immanibxl = new DeliveryAddress(
                 name: "Immani Bruxelles",
@@ -125,7 +131,7 @@ class BootStrap {
                 city: "Bruxelles",
                 country: "Belgium"
         )
-        def results = geocoderService.geocode(immanibxl.address, immanibxl.zip, immanibxl.city, immanibxl.country )
+        results = geocoderService.geocode(immanibxl.address, immanibxl.zip, immanibxl.city, immanibxl.country )
         immanibxl.lat = results.lat
         immanibxl.lng = results.lng
 
@@ -285,8 +291,17 @@ class BootStrap {
             println rest.errors
         }
 
-        //User creation
+        //Partnership
+        Partnership partnership = new Partnership(
+                deliveryAddress: immanibxl,
+                restaurant: lepaindesoleil,
+                isvalidated: true,
+                originator: "company",
+                comment: "svp moi vouloir commander chez vous"
+        )
+        partnership.save()
 
+        //User creation
         // Creating a company user
         def companyadminuser = new User(
                 username: "nicolas@immani.com",
