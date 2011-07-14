@@ -38,6 +38,7 @@
         <fieldset>
             <legend>Orders</legend>
             <g:link controller="basket" action="listuserorders">List Orders</g:link><br/>
+            <g:link controller="anonymous_Restaurant" action="listpartnerrestaurant">Create New Order</g:link><br/>
         </fieldset>
         <br />
     </div>

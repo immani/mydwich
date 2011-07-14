@@ -13,7 +13,7 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
 
-            <div id="searchBox"> Instant Search: <g:remoteField name="searchBox" update="restaurantlist" paramName="q" url="[controller:'restaurant', action:'search']" before="checksearchquery(this.value)" /></div>
+            <div id="searchBox"> Instant Search: <g:remoteField name="searchBox" update="restaurantlist" paramName="q" url="[controller:'anonymous_Restaurant', action:'search']" before="checksearchquery(this.value)" /></div>
 
         </div>
         <div class="body">
@@ -57,7 +57,7 @@
                         
                             <td>${fieldValue(bean: restaurantInstance, field: "country")}</td>
 
-                            <td><g:link controller="product" action="showrestaurantcatalog" id="${restaurantInstance.id}">View Catalog</g:link></td>
+                            <td><g:link controller="anonymous_Product" action="showrestaurantcatalog" id="${restaurantInstance.id}">View Catalog</g:link></td>
 
                             <td><g:link controller="partnership" action="daRequestPartnership" params="[daid: deliveryAddressInstance.id, restid: restaurantInstance.id]">Request Partnership</g:link></td>
                         </tr>

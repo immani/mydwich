@@ -10,7 +10,9 @@ class DeliveryAddress implements Serializable{
     Float lat
     Float lng
 
-   static belongsTo = [company:Company]
+    static belongsTo = [company:Company]
+
+    static hasMany = [partnerships:Partnership]
 
     static constraints = {
 		name(nullable: false, blank: false)

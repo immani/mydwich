@@ -23,7 +23,7 @@
                     <tbody>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="prodOptionCategory.restaurant.label" default="Restaurant" /></td>
-                            <td valign="top" class="value"><g:link controller="restaurant" action="show" id="${prodOptionCategoryInstance?.restaurant?.id}">${prodOptionCategoryInstance?.restaurant?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link controller="anonymous_Restaurant" action="show" id="${prodOptionCategoryInstance?.restaurant?.id}">${prodOptionCategoryInstance?.restaurant?.encodeAsHTML()}</g:link></td>
                         </tr>
 
                         <tr class="prop">

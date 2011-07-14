@@ -8,6 +8,7 @@ class ProdoptionController {
         redirect(action: "listprodoptionrestaurant", params: params)
     }
 
+    /*
     def list = {
         User user = session.user.merge()
         if (user.restaurant == null){
@@ -21,14 +22,13 @@ class ProdoptionController {
             def prodoptlist = prodOptionCategories.productCategories
             render(view:"list", model:[prodOptionInstanceList: prodoptlist, prodOptionInstanceTotal: prodoptlist.size()])
         }
-    }
+    }*/
 
     def listforprodoptioncategory = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         ProdOptionCategory prodoptioncategory =ProdOptionCategory.get(params.prodoptcatid)
         def prodoptlist = prodoptioncategory.options
         render(view:"list", model:[prodoptioncategoryInstance: prodoptioncategory, prodOptionInstanceList: prodoptlist, prodOptionInstanceTotal: prodoptlist.size()])
-
     }
 
 

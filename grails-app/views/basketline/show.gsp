@@ -66,7 +66,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="basketLine.product.label" default="Product" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="product" action="show" id="${basketLineInstance?.product?.id}">${basketLineInstance?.product?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link controller="anonymous_Product" action="show" id="${basketLineInstance?.product?.id}">${basketLineInstance?.product?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     

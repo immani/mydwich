@@ -2,7 +2,7 @@ class CompanyUrlMappings {
 
 	static mappings = {
 
-        "/company/$action?/$id?"{
+        "/admin/company/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -10,7 +10,7 @@ class CompanyUrlMappings {
             action = $action
         }
 
-        "/company/deliveryaddress/$action?/$id?"{
+        "/admin/company/deliveryaddress/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -18,7 +18,7 @@ class CompanyUrlMappings {
             action = $action
         }
 
-        "/company/partnership/$action?/$id?"{
+        "/admin/company/partnership/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -26,7 +26,7 @@ class CompanyUrlMappings {
             action = $action
         }
 
-        "/company/deliveryaddress/$action?/$id?"{
+        "/admin/company/deliveryaddress/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -34,7 +34,7 @@ class CompanyUrlMappings {
             action = $action
         }
 
-        "/company/user/basket/$action?/$id?"{
+        "/admin/company/user/basket/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -42,7 +42,7 @@ class CompanyUrlMappings {
             action = $action
         }
 
-        "/company/user/payment/$action?/$id?"{
+        "/admin/company/user/payment/$action?/$id?"{
             constraints {
                 // apply constraints here
             }

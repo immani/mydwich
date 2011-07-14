@@ -16,6 +16,15 @@ class RestaurantController {
         [restaurantInstanceList: Restaurant.list(params), restaurantInstanceTotal: Restaurant.count()]
     }
 
+    def listpartnerrestaurant = {
+        User user = session.user.merge()
+        if (user.company){
+            DeliveryAddress da = params.da ? DeliveryAddress.get(params.da) : user.defaultda
+            def restaurantInstanceList = da.partnerships.restaurant
+            render(view: "listpartners", model: [dalist: user.company.deliveryAddresses , da: da,restaurantInstanceList: restaurantInstanceList, restaurantInstanceTotal: restaurantInstanceList.size()])
+        }
+    }
+
     def create = {
         def restaurantInstance = new Restaurant()
         restaurantInstance.properties = params
@@ -57,7 +66,7 @@ class RestaurantController {
                     //   params.id = restaurantInstance.id
                     //    def productscategories = restaurantInstance.productsCategories?.sort({a,b-> a.catorder.compareTo(b.catorder)})
                     //    render(view: "/product/catalog", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurantInstance, productcategoriesInstanceTotal: productscategories.size()])
-                    redirect(controller: "product", action: "showrestaurantcatalog", id:restaurantInstance.id)
+                    redirect(controller: "anonymous_Product", action: "showrestaurantcatalog", id:restaurantInstance.id)
                     break
             }
         }

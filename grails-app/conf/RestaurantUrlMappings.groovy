@@ -2,7 +2,7 @@ class RestaurantUrlMappings {
 
 	static mappings = {
 
-        "/restaurant/$action?/$id?"{
+        "/admin/restaurant/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -10,7 +10,7 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/restaurant/menu/$id"{
+        "/admin/restaurant/menu/$id"{
             constraints {
                 // apply constraints here
             }
@@ -19,16 +19,8 @@ class RestaurantUrlMappings {
 
         }
 
-        "/showrestaurant/$name/$page?"{
-            constraints {
-                // apply constraints here
-            }
-            controller="restaurant"
-            action = "getbyname"
 
-        }
-
-        "/restaurant/product/$action?/$id?"{
+        "/admin/restaurant/product/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -36,7 +28,7 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/restaurant/product_category/$action?/$id?"{
+        "/admin/restaurant/product_category/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -44,7 +36,7 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/restaurant/product_option_category/$action?/$id?"{
+        "/admin/restaurant/product_option_category/$action?/$id?"{
             constraints {
                 // apply constraints here
             }
@@ -52,7 +44,7 @@ class RestaurantUrlMappings {
             action = $action
         }
 
-        "/restaurant/product_option/$action?/$id?"{
+        "/admin/restaurant/product_option/$action?/$id?"{
             constraints {
                 // apply constraints here
             }

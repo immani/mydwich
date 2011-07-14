@@ -62,7 +62,7 @@ class BasketadminController {
         backtorestaurantcatalog {
             action {
                 flash.message = "back to restaurant"
-                redirect(controller:"product", action:"showrestaurantcatalog", params:[message:flash.message])
+                redirect(controller: "anonymous_Product", action:"showrestaurantcatalog", params:[message:flash.message])
             }
         }
     }

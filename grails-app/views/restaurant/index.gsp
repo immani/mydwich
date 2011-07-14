@@ -26,7 +26,7 @@
 
         <fieldset>
             <legend>Restaurant Profile</legend>
-            <g:link controller="restaurant" action="showprofilerestaurant">Show Profile</g:link>
+            <g:link controller="anonymous_Restaurant" action="showprofilerestaurant">Show Profile</g:link>
         </fieldset>
         <br />
         <fieldset>
@@ -43,7 +43,7 @@
         <br />
         <fieldset>
             <legend>Products</legend>
-            <g:link controller="product" action="list">List Products</g:link><br/>
+            <g:link controller="anonymous_Product" action="list">List Products</g:link><br/>
         </fieldset>
         <br />
         <fieldset>
