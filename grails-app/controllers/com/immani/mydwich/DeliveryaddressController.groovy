@@ -153,6 +153,8 @@ class DeliveryaddressController {
         render(view: "/restaurant/listbyda", model: [deliveryAddressInstance: da, restaurantInstanceList: restaurantList, restaurantInstanceTotal: restaurantList.size()])
     }
 
+
+    // List restaurant in range of a delivery address
     def retrieverestaurantswithindarange = {
         DeliveryAddress deliveryAddress = DeliveryAddress.get(params.id)
         def restaurantList = companyService.searchdeliveryrestaurant(deliveryAddress)

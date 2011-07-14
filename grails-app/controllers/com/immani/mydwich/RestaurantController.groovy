@@ -202,12 +202,10 @@ class RestaurantController {
     }
 
 
-    def retrievecompanywithinrange = {
+    def retrievedeliveryaddresswithinrange = {
         User user = session.user.merge()
         Restaurant restaurantInstance= user.restaurant
-        List deliveryAddresses= companyInstance.deliveryAddresses.asList()
-        def restaurantList = companyService.searchdeliveryrestaurant(deliveryAddresses)
-        render restaurantList as JSON
+        def deliveryAddressList = companyService.searchdeliveryaddress(restaurantInstance)
+        render(view: "listdeliveryaddress", model: [deliveryAddressInstanceList: deliveryAddressList, deliveryAddressInstanceTotal: deliveryAddressList.size()])
     }
-
 }

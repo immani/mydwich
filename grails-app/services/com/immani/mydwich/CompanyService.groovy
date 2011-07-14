@@ -18,7 +18,15 @@ class CompanyService {
        return restaurantList
    }
 
+    //TODO : Exclude partnerships already made
+    def searchdeliveryaddress(Restaurant restaurant){
+       Session currentSession = sessionFactory.currentSession;
+       Query query= currentSession.createSQLQuery("select delivery_address.* from delivery_address, restaurant where restaurant.id = ${restaurant.id} and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <= restaurant.deliveryrange;")
+       def deliveryAddressList = query.addEntity(DeliveryAddress.class).list()
+       return deliveryAddressList
+    }
 
+   //TODO: Exclude partnerships already made
    def searchdeliveryrestaurant(DeliveryAddress deliveryAddress){
        Session currentSession = sessionFactory.currentSession;
        Query query= currentSession.createSQLQuery("select restaurant.* from delivery_address, restaurant where delivery_address.id = ${deliveryAddress.id} and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <= restaurant.deliveryrange;")
@@ -26,15 +34,11 @@ class CompanyService {
        return restaurantList
    }
 
-
     def searchdeliveryrestaurant(List<DeliveryAddress> deliveryAddresses){
         def currentSession = sessionFactory.currentSession
-
         Query query = currentSession.createSQLQuery("select restaurant.* from delivery_address, restaurant where delivery_address.id in (?1) and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <= restaurant.deliveryrange;");
         query.setParameterList("1", deliveryAddresses);
-
         def restaurantList = query.addEntity(Restaurant.class).list();
         return restaurantList;
     }
-
 }

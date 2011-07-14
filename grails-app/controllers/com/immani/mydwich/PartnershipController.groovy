@@ -102,26 +102,14 @@ class PartnershipController {
     } */
 
 
-    def restSubmitPartnership = {
-        Restaurant restaurant = user.restaurant;
-        DeliveryAddress da= DeliveryAddress.get(params.daid)
-        Partnership partnershipInstance = Partnership.requestPartnership(restaurant, da)
 
-        if (partnershipInstance.save(flush: true)) {
-            //TODO:Mail à la company + message au restaurant ....
-            redirect(uri: '/')
-        }
-        else {
-            render(view: "/partnership/request", model:[partnershipInstance: partnership])
-        }
-    }
 
     //Specific to the Company/Delivery Address
 
     // Request new partnerships
     def restRequestPartnership = {
         Restaurant restaurant = user.restaurant
-        DeliveryAddress deliveryaddress = DeliveryAddress.get(params.daid)
+        DeliveryAddress deliveryaddress = DeliveryAddress.get(params.id)
         Partnership partnership = new Partnership();
         partnership.restaurant = restaurant
         partnership.deliveryAddress = deliveryaddress
@@ -141,14 +129,17 @@ class PartnershipController {
 
     // Save a requested partnerships
      def savePartnership = {
-        Partnership partnership = new Partnership();
-        partnership.deliveryAddress =  DeliveryAddress.get(params.deliveryaddressid)
-        partnership.restaurant = Restaurant.get(params.restaurantid)
-        partnership.comment = params.comment
-        partnership.originator = params.originator
-        partnership.isvalidated = false
-        partnership.save()
-        redirect(uri: "/partnership/daListRequestedPartnerships");
+        def deliveryAddress =  DeliveryAddress.get(params.deliveryaddressid)
+        def restaurant = Restaurant.get(params.restaurantid)
+        def comment = params.comment
+        def originator = params.originator
+        Partnership.requestPartnership(restaurant, deliveryAddress, originator, comment )
+
+        if (user.restaurant){
+            redirect(uri: "/partnership/restListRequestedPartnerships");
+        }else {
+            redirect(uri: "/partnership/daListRequestedPartnerships");
+        }
     }
 
     // TODO add originator company criteria
