@@ -14,6 +14,7 @@ class User implements Serializable {
 
     Company company
     Restaurant restaurant
+    DeliveryAddress defaultda
 
     static belongsTo = [Company, Restaurant]
 
@@ -21,6 +22,7 @@ class User implements Serializable {
             permissions: String,
             baskets: Basket,
             userpayments: Userpayment]
+
 
     static mapping  = {
         permissions lazy: false
@@ -52,6 +54,7 @@ class User implements Serializable {
         restaurant(nullable:true)
         isvalidated(nullable: false)
         passwordHash(nullable: false, password: true)
+        defaultda(nullable: true)
         //TODO: Check complexité du password en regex
     }
 
@@ -62,7 +65,7 @@ class User implements Serializable {
     def beforeInsert = {
         if(this.company != null){
             if(this.isadmin){
-                this.addToPermissions("${this.company.domain}:*:company,deliveraddress,picture,partnership:*")
+                this.addToPermissions("${this.company.domain}:*:company,deliveryaddress,picture,partnership:*")
                 this.addToPermissions("${this.company.domain}:*:basket,basketline:list,show")
             }
             else{

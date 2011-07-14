@@ -135,6 +135,17 @@ class BootStrap {
         immanibxl.lat = results.lat
         immanibxl.lng = results.lng
 
+        DeliveryAddress immaniwavre = new DeliveryAddress(
+                name: "Immani Wavre",
+                address: "100 Chaussée de Huy",
+                zip: "1300",
+                city: "Wavre",
+                country: "Belgium"
+        )
+        results = geocoderService.geocode(immaniwavre.address, immaniwavre.zip, immaniwavre.city, immaniwavre.country )
+        immaniwavre.lat = results.lat
+        immaniwavre.lng = results.lng
+
         //Companies
         Company immani = new Company(
                 name: "Immani",
@@ -148,6 +159,7 @@ class BootStrap {
                 fax: "0123456789",
         )
         immani.addToDeliveryAddresses(immanibxl)
+        immani.addToDeliveryAddresses(immaniwavre)
         results = geocoderService.geocode(immani.address, immani.zip, immani.city, immani.country )
         immani.lat = results.lat
         immani.lng = results.lng
@@ -301,6 +313,15 @@ class BootStrap {
         )
         partnership.save()
 
+        Partnership partnership2 = new Partnership(
+                deliveryAddress: immaniwavre,
+                restaurant: aduepassi,
+                isvalidated: true,
+                originator: "restaurant",
+                comment: "venez manger chez nous :-)"
+        )
+        partnership2.save()
+
         //User creation
         // Creating a company user
         def companyadminuser = new User(
@@ -342,6 +363,7 @@ class BootStrap {
                 company: immani,
                 isadmin: false,
                 language: 'fr',
+                defaultda: immanibxl,
                 isvalidated: true);
         companyuser2.save()
         if(companyuser2.hasErrors()){
@@ -358,6 +380,7 @@ class BootStrap {
                 restaurant: lepaindesoleil,
                 isadmin: true,
                 language: 'fr',
+                defaultda: immanibxl,
                 isvalidated: true);
         restaurantadminuser.save()
         if(restaurantadminuser.hasErrors()){

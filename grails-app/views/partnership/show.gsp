@@ -12,7 +12,7 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="validate" controller="restaurant" action="validatePartnership"><g:message code="default.validatepartnership.label" /></g:link></span>
+            <span class="menuButton"><g:link class="validate" controller="anonymous_Restaurant" action="validatePartnership"><g:message code="default.validatepartnership.label" /></g:link></span>
             <span class="menuButton"><g:link class="validate" controller="company" action="validatePartnership"><g:message code="default.validatepartnership.label" /></g:link></span>
         </div>
         <div class="body">
@@ -48,7 +48,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="partnership.restaurant.label" default="Restaurant" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="restaurant" action="show" id="${partnershipInstance?.restaurant?.id}">${partnershipInstance?.restaurant?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link controller="anonymous_Restaurant" action="show" id="${partnershipInstance?.restaurant?.id}">${partnershipInstance?.restaurant?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     

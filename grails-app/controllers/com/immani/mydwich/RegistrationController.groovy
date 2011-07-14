@@ -158,7 +158,7 @@ class RegistrationController {
         }
 
         end {
-            redirect(controller: "restaurant")
+            redirect(controller: "anonymous_Restaurant")
         }
 
         cancel {

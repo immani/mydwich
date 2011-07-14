@@ -47,9 +47,7 @@ class DisplayTagLib {
                 property = property + "_" + locale.language;
         out << instanceValue."$property".join(', ');
         }
-
     }
-
 
 
     def sortloccol = { attrs ->

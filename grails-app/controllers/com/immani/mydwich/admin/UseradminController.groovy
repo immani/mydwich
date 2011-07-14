@@ -293,7 +293,7 @@ class UseradminController {
         }
 
         end {
-            redirect(controller: "restaurant", action:"list")
+            redirect(controller: "anonymous_Restaurant", action:"list")
         }
 
         cancel {

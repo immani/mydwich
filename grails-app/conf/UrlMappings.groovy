@@ -1,5 +1,30 @@
 class UrlMappings {
     static mappings = {
+        /*
+         "/anonymous/$controller/$action?/$id?"{
+            controller="anonymous/$controller"
+            action = $action
+        }*/
+
+        "/product/$action?/$id?"{
+           controller="anonymous_Product"
+           action = $action
+        }
+
+        "/restaurant/$action?/$id?"{
+           controller="anonymous_Restaurant"
+           action = $action
+        }
+
+         "/showrestaurant/$name/$page?"{
+            constraints {
+                // apply constraints here
+            }
+            controller="anonymous_Restaurant"
+            action = "getbyname"
+
+        }
+
 
         "/$controller/$action?/$id?"{
             constraints {
@@ -7,7 +32,7 @@ class UrlMappings {
             }
         }
 
-	     "500"(view:'/error')
+	    "500"(view:'/error')
 
 	    "/"{
             controller="home"

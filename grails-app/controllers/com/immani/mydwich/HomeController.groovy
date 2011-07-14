@@ -18,7 +18,7 @@ class HomeController {
             }
         }
         else if(user.restaurant != null){
-            redirect(controller: "restaurant")
+            redirect(controller: "anonymous_Restaurant")
         }
 
         /*

@@ -12,14 +12,22 @@ class ShiroSecurityFilters {
     //TODO: Check if we can retrieve these variables in myAccess without setting them...
 
     def filters = {
-
-        notProduct(controller:'product') {
+        /*
+        notProduct(controller: 'anonymous_Product') {
             return true
         }
+
+        notRestaurant(controller: 'anonymous_Restaurant') {
+            return true
+        }
+        */
+
         all(uri: "/**") {
             before = {
                 // Ignore direct views (e.g. the default main index page).
                 if (!controllerName) return true
+                if(controllerName == "anonymous_Product") return true
+                if(controllerName == "anonymous_Restaurant") return true
                 if(controllerName == "home") return true
                 if(controllerName == "public") return true
                 if(controllerName == "registration") return true
@@ -34,7 +42,6 @@ class ShiroSecurityFilters {
             }
         }
     }
-
 
     def myAccess = {
         // immani.com:Domain:actions:id
@@ -58,7 +65,7 @@ class ShiroSecurityFilters {
             case "deliveryaddress":
                 //user can manipulate it's company and only
                 DeliveryAddress da = DeliveryAddress.get(locinstanceid)
-                permString << da.company.domain << ':' << da.toString() << ':' << loccontrollerName << ':' << (locactionName ?: "index")
+                permString << da.company.domain << ':' << da.id << ':' << loccontrollerName << ':' << (locactionName ?: "index")
                 break
 
             case "restaurant":
@@ -135,7 +142,7 @@ class ShiroSecurityFilters {
                 false
         }
         println "permString: " + permString.toString()
-        println "Permission: " + user.permissions
+        println "Permission: " + user.permissions.join('##')
         return SecurityUtils.subject.isPermitted(permString.toString())
 
     }

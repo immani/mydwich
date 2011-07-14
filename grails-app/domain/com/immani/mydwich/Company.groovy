@@ -16,8 +16,7 @@ class Company implements Serializable{
     Boolean isvalidated = false
 
     static hasMany = [users:User,
-            deliveryAddresses:DeliveryAddress,
-            partnerships:Partnership]
+            deliveryAddresses:DeliveryAddress]
 
     static constraints = {
         name(nullable: false,blank: false)
@@ -37,4 +36,6 @@ class Company implements Serializable{
     String toString(){
         return name
     }
+
+
 }
