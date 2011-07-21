@@ -34,4 +34,38 @@ class Userpayment implements Serializable{
         ncerror(nullable: false,blank:false)
         ipAddress(nullable: false,blank:false)
     }
+
+      // TODO: Externalize the password en login infos for both methods
+      def encodeAsOgoneSHAS1tring() {
+        String psid = "immanitest";
+        String psidKey = "spritespritesprite8";
+        String ogoneString = "";
+        ogoneString += "ACCEPTURL=${this.acceptedurl}${psidKey}"
+        ogoneString += "AMOUNT=${(int)this.amount*100}${psidKey}"
+        ogoneString += "CURRENCY=${this.currency}${psidKey}"
+        ogoneString += "DECLINEURL=${this.declinedurl}${psidKey}"
+        ogoneString += "LANGUAGE=${this.user.language}${psidKey}"
+        ogoneString += "ORDERID=${this.orderId}${psidKey}"
+        ogoneString += "PSPID=${psid}${psidKey}"
+        return ogoneString.encodeAsSHA1()
+    }
+
+    def static encodeAsOgoneSHAS1tring(params){
+        String psidresponsekey = "spritespritesprite9"
+        String ogoneString = "";
+        ogoneString += "ACCEPTANCE=${params.ACCEPTANCE}${psidresponsekey}"
+        ogoneString += "AMOUNT=${params.amount}${psidresponsekey}"
+        ogoneString += "BRAND=${params.BRAND}${psidresponsekey}"
+        if (params.CN){
+             ogoneString += "CN=${params.CN}${psidresponsekey}"
+        }
+        ogoneString += "CURRENCY=${params.currency}${psidresponsekey}"
+        ogoneString += "IP=${params.IP}${psidresponsekey}"
+        ogoneString += "NCERROR=${params.NCERROR}${psidresponsekey}"
+        ogoneString += "ORDERID=${params.orderID}${psidresponsekey}"
+        ogoneString += "PAYID=${params.PAYID}${psidresponsekey}"
+        ogoneString += "PM=${params.PM}${psidresponsekey}"
+        ogoneString += "STATUS=${params.STATUS}${psidresponsekey}"
+        return ogoneString.encodeAsSHA1().toUpperCase();
+    }
 }

@@ -4,8 +4,6 @@ import org.hibernate.SessionFactory
 
 class UserpaymentController {
 
-    def UserPaymentService userPaymentService;
-
     def  sessionFactory
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -20,18 +18,18 @@ class UserpaymentController {
         render(view: "create", model: [userpaymentInstance: session.userpayment])
     }
 
+    // TODO: Security check no set of the user
     def review = {
-        // TODO: Security check no set of the user
         session.userpayment.properties = params.properties
-        String shaSign = userPaymentService.encodeAsSha1String(session.userpayment)
+        String shaSign = session.userpayment.encodeAsOgoneSHAS1tring()
         render(view: "review",model: [userpaymentInstance: session.userpayment, psid: "immanitest",shasign: shaSign])
     }
 
+
+    // TODO: This can be set in a before insert
     def accepted = {
 
-        String sha1key = userPaymentService.verifyUserPayement(params)
-
-        if (sha1key == params.SHASIGN){
+        if (params.SHASIGN == Userpayment.encodeAsOgoneSHAS1tring(params)){
             Userpayment userpayment = session.userpayment;
             userpayment.acceptance = params.ACCEPTANCE
             userpayment.paymentMethod = params.PM
