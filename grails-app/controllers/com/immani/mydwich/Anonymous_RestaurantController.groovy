@@ -7,7 +7,7 @@ import grails.converters.JSON
 
 class Anonymous_RestaurantController {
     def index = {
-        render(view: "index")
+        render(view: "/restaurant/index")
     }
 
     def list = {

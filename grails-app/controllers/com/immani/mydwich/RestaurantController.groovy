@@ -3,7 +3,6 @@ import grails.converters.*
 
 class RestaurantController {
     def geocoderService
-    def companyService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -213,8 +212,7 @@ class RestaurantController {
 
     def retrievedeliveryaddresswithinrange = {
         User user = session.user.merge()
-        Restaurant restaurantInstance= user.restaurant
-        def deliveryAddressList = companyService.searchdeliveryaddress(restaurantInstance)
+        def deliveryAddressList = user.restaurant.retrieveNearbyDeliveryAddresses();
         render(view: "listdeliveryaddress", model: [deliveryAddressInstanceList: deliveryAddressList, deliveryAddressInstanceTotal: deliveryAddressList.size()])
     }
 }

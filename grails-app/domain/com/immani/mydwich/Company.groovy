@@ -1,6 +1,10 @@
 package com.immani.mydwich
 
+import org.hibernate.Query
+
 class Company implements Serializable{
+
+    def sessionFactory
 
     String name
     String address
@@ -36,6 +40,36 @@ class Company implements Serializable{
     String toString(){
         return name
     }
+
+    //TODO: Exclude partnerships already made
+    def retrieveNearbyRestaurants(){
+        def currentSession = sessionFactory.currentSession
+        Query query = currentSession.createSQLQuery("select restaurant.* from delivery_address, restaurant where delivery_address.id in (?1) and distance(delivery_address.lat, delivery_address.lng, restaurant.lat, restaurant.lng) <= restaurant.deliveryrange;");
+        query.setParameterList("1", this.deliveryAddresses);
+        return query.addEntity(Restaurant.class).list();
+    }
+
+    def retrieveRequestedPartnerships(){
+       def currentSession = sessionFactory.currentSession
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where delivery_address_id in (?1) and isvalidated = false and originator='company'");
+       query.setParameterList("1", deliveryAddresses);
+       return query.addEntity(Partnership.class).list();
+    }
+
+    def retrieveWaitingPartnerships(){
+       def currentSession = sessionFactory.currentSession
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where delivery_address_id in (?1) and isvalidated = false and originator='restaurant'");
+       query.setParameterList("1", deliveryAddresses);
+       return query.addEntity(Partnership.class).list();
+    }
+
+    def retrieveValidatedPartnerships(){
+       def currentSession = sessionFactory.currentSession
+       Query query = currentSession.createSQLQuery("select partnership.* from partnership where delivery_address_id in (?1) and isvalidated = true");
+       query.setParameterList("1", deliveryAddresses);
+       return query.addEntity(Partnership.class).list();
+    }
+
 
 
 }

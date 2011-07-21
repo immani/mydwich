@@ -147,17 +147,12 @@ class DeliveryaddressController {
         }
     }
 
-    def retrieverestaurantswithinrange = {
-        List da = [DeliveryAddress.get(params.id)]
-        def restaurantList = companyService.searchdeliveryrestaurant(da)
-        render(view: "/restaurant/listbyda", model: [deliveryAddressInstance: da, restaurantInstanceList: restaurantList, restaurantInstanceTotal: restaurantList.size()])
-    }
 
 
     // List restaurant in range of a delivery address
     def retrieverestaurantswithindarange = {
         DeliveryAddress deliveryAddress = DeliveryAddress.get(params.id)
-        def restaurantList = companyService.searchdeliveryrestaurant(deliveryAddress)
+        def restaurantList = deliveryAddress.retrieveNearbyRestaurants();
         render(view: "/restaurant/listbyda", model: [deliveryAddressInstance: deliveryAddress, restaurantInstanceList: restaurantList, restaurantInstanceTotal: restaurantList.size()])
     }
 

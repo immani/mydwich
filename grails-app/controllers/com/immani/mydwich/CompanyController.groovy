@@ -4,7 +4,7 @@ import org.apache.shiro.authz.AuthorizationException
 
 class CompanyController {
     def geocoderService
-    def companyService
+
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -78,12 +78,7 @@ class CompanyController {
 
     def retrieverestaurantswithinrange = {
         User user = session.user.merge()
-        Company companyInstance = user.company
-        List deliveryAddresses= companyInstance.deliveryAddresses.asList()
-        def restaurantList = companyService.searchdeliveryrestaurant(deliveryAddresses)
-        render restaurantList as JSON
+        render user.company.retrieveNearbyRestaurants() as JSON
     }
-
-
 
 }
