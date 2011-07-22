@@ -25,20 +25,22 @@
     <div id="controllerList" class="dialog">
         <fieldset>
             <legend>User Profile</legend>
-            <g:link controller="user" action="showuserprofile">Show Profile</g:link>
+            <g:link controller="user" action="showuserprofile">Show Profile</g:link><br/>
+            <g:link controller="user" action="list"><g:message code="user.list.label" /></g:link>
         </fieldset>
         <br />
 
         <fieldset>
             <legend>Payments</legend>
-            <g:link controller="userpayment" action="listuserpayment">List Payments</g:link><br/>
+            <g:link controller="user_company" action="listuserpayment">List Payments</g:link><br/>
+            <g:link controller="user_company" action="createuserpayment">Credit your account</g:link><br/>
         </fieldset>
         <br />
 
         <fieldset>
             <legend>Orders</legend>
-            <g:link controller="basket" action="listuserorders">List Orders</g:link><br/>
-            <g:link controller="anonymous_Restaurant" action="listpartnerrestaurant">Create New Order</g:link><br/>
+            <g:link controller="user_company" action="listorders">List Orders</g:link><br/>
+            <g:link controller="user_company" action="listpartnerrestaurant">Create New Order</g:link><br/>
         </fieldset>
         <br />
     </div>

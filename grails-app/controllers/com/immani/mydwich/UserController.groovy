@@ -1,14 +1,13 @@
 package com.immani.mydwich
-import org.apache.shiro.SecurityUtils
+
 import org.apache.shiro.crypto.hash.Sha256Hash
-import org.apache.shiro.authz.AuthorizationException
 
 class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
-        render(view: "index")
+        render(view: "/user_company/index")
     }
     def create = {
         User user = session.user.merge()

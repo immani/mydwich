@@ -19,15 +19,16 @@
             </g:if>
             <div class="list" id="restaurantlist">
                 <g:if test="${dalist.size()>1}">
-                    <g:form controller="anonymous_Restaurant" action="listpartnerrestaurant">
+                    <g:form controller="user_company" action="listpartnerrestaurant">
                         Delivery Address: <g:select name="da" from="${dalist}" optionKey="id" value="${da?.id}" onchange="submit()" />
                     </g:form>
-
                 </g:if>
+                <br/>
                 <table>
                     <thead>
                         <tr>
                             <th><g:message code="restaurant.name.label" default="Name"/></th>
+                            <th><g:message code="restaurant.desc.label" default="Description"/></th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -37,7 +38,7 @@
                             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                                 <td>${fieldValue(bean: restaurantInstance, field: "name")}</td>
                                 <td><mydwich:disploc instanceValue="${restaurantInstance}" property="desc"/></td>
-                                <td><g:link controller="public" action="showrestaurantcatalog" id="${restaurantInstance.id}">View Catalog</g:link></td>
+                                <td><g:link controller="user_company" action="showrestaurantcatalog" id="${restaurantInstance.id}">View Catalog</g:link></td>
                             </tr>
                         </g:each>
                     </tbody>

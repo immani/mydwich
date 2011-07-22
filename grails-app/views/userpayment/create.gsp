@@ -23,7 +23,7 @@
                 <g:renderErrors bean="${userpaymentInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="review" >
+            <g:form controller="userpayment" action="review" >
                 <div class="dialog">
                     <table>
                         <tbody>

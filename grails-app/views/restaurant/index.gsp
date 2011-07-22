@@ -43,7 +43,7 @@
         <br />
         <fieldset>
             <legend>Products</legend>
-            <g:link controller="anonymous_Product" action="list">List Products</g:link><br/>
+            <g:link controller="product" action="list">List Products</g:link><br/>
         </fieldset>
         <br />
         <fieldset>

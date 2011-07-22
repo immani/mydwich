@@ -7,18 +7,18 @@ class HomeController {
     def index = {
         User user = User.findByUsername(SecurityUtils.getSubject().principal.toString())
         if (user == null) {
-            return redirect(controller: "public", action: "listrestaurants")
+            return redirect(controller: "anonymous_Restaurant", action: "list")
         }
         if (user.company != null){
             if (user.isadmin){
                 redirect(controller: "company")
             }
             else{
-                redirect(controller: "user")
+                redirect(controller: "user_company")
             }
         }
         else if(user.restaurant != null){
-            redirect(controller: "anonymous_Restaurant")
+            redirect(controller: "restaurant")
         }
 
         /*

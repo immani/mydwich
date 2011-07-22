@@ -16,15 +16,6 @@ class RestaurantController {
         [restaurantInstanceList: Restaurant.list(params), restaurantInstanceTotal: Restaurant.count()]
     }
 
-    def listpartnerrestaurant = {
-        User user = session.user.merge()
-        if (user.company){
-            DeliveryAddress da = params.da ? DeliveryAddress.get(params.da) : user.defaultda
-            def restaurantInstanceList = da.partnerships.restaurant
-            render(view: "listpartners", model: [dalist: user.company.deliveryAddresses , da: da,restaurantInstanceList: restaurantInstanceList, restaurantInstanceTotal: restaurantInstanceList.size()])
-        }
-    }
-
     def create = {
         def restaurantInstance = new Restaurant()
         restaurantInstance.properties = params

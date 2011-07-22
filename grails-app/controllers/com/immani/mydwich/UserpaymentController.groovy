@@ -81,16 +81,6 @@ class UserpaymentController {
      /**
      * List of the payments of the current user
      */
-    def listuserpayment = {
-        User user = session.user.merge()
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        def userpaymentlist = Userpayment.findAllByUser(user, params)
-        render(view: "list", model: [userpaymentInstanceList: userpaymentlist, userpaymentInstanceTotal: userpaymentlist.size()])
-    }
-
-     /**
-     * List of the payments of the current user
-     */
     def listcompanyuserpayment = {
         User user = session.user.merge()
         Company company = user.company

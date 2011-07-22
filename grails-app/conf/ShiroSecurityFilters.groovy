@@ -26,10 +26,10 @@ class ShiroSecurityFilters {
             before = {
                 // Ignore direct views (e.g. the default main index page).
                 if (!controllerName) return true
+                if(controllerName == "user_company") return true
                 if(controllerName == "anonymous_Product") return true
                 if(controllerName == "anonymous_Restaurant") return true
                 if(controllerName == "home") return true
-                if(controllerName == "public") return true
                 if(controllerName == "registration") return true
                 if(controllerName == "emailConfirmation") return true  //Used by plugin Email Confirmation
 
@@ -56,6 +56,8 @@ class ShiroSecurityFilters {
 
         //Schema is: companydomain Or Restaurantid:username:controllername:actionname
         switch (loccontrollerName){
+
+
             case "company":
                 //user can manipulate it's company and only
                 Company company = Company.get(locinstanceid)

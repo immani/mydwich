@@ -84,6 +84,4 @@ class CompanyController {
         render restaurantList as JSON
     }
 
-
-
 }

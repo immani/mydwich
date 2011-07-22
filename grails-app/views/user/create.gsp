@@ -9,7 +9,6 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
@@ -47,15 +46,6 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="sex"><g:message code="user.sex.label" default="Sex" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'sex', 'errors')}">
-                                    <g:select name="sex" from="${['Male','Female']}" valueMessagePrefix="user.sex" value="${userInstance?.sex}" />
-                                </td>
-                            </tr>
-
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                     <label for="username"><g:message code="user.username.label" default="Username" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'username', 'errors')}">
@@ -78,6 +68,15 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'lastname', 'errors')}">
                                     <g:textField name="lastname" value="${userInstance?.lastname}" />
+                                </td>
+                            </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="sex"><g:message code="user.sex.label" default="Sex" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'sex', 'errors')}">
+                                    <g:select name="sex" from="${['Male','Female']}" valueMessagePrefix="user.sex" value="${userInstance?.sex}" />
                                 </td>
                             </tr>
 

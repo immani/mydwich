@@ -12,16 +12,7 @@ class Anonymous_RestaurantController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        render(view:"/restaurant/list", model: [restaurantInstanceList: Restaurant.list(params), restaurantInstanceTotal: Restaurant.count()])
-    }
-
-    def listpartnerrestaurant = {
-        User user = session.user.merge()
-        if (user.company){
-            DeliveryAddress da = params.da ? DeliveryAddress.get(params.da) : user.defaultda
-            def restaurantInstanceList = da.partnerships.restaurant
-            render(view: "/restaurant/listpartners", model: [dalist: user.company.deliveryAddresses , da: da,restaurantInstanceList: restaurantInstanceList, restaurantInstanceTotal: restaurantInstanceList.size()])
-        }
+        render(view:"/anonymous_restaurant/list", model: [restaurantInstanceList: Restaurant.list(params), restaurantInstanceTotal: Restaurant.count()])
     }
 
     def getbyname = {
@@ -78,23 +69,6 @@ class Anonymous_RestaurantController {
         render result as JSON
     }
 
-    /**
-     * Display the profile of a restaurant for the current restaurant user
-     */
-    def showprofilerestaurant = {
-        User user = session.user.merge()
-        Restaurant restaurantInstance = user.restaurant
-        if (!restaurantInstance) {
-            flash.message = "User doesn't belong to a Restaurant"
-            render(view: "/info")
-        }
-        else {
-            def pictureInstanceList = restaurantInstance.pictures
-            render(view: "show", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList ])
-        }
-    }
-
-
 
     def search = {
         def q = params.q ?: null
@@ -120,6 +94,5 @@ class Anonymous_RestaurantController {
             return []
         }
     }
-
 
 }
