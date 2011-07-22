@@ -56,7 +56,7 @@
             <g:link controller="partnership" action="restListValidatedPartnerships">List validated Partnerships</g:link><br/>
             <g:link controller="partnership" action="restListRequestedPartnerships">List requested Partnerships</g:link><br/>
             <g:link controller="partnership" action="restListWaitingPartnerships">List waiting Partnerships</g:link><br/>
-            <g:link controller="partnership" action="restRequestPartnership">Create New Partnership</g:link>
+            <g:link controller="restaurant" action="retrievedeliveryaddresswithinrange">Create New Partnership</g:link>
         </fieldset>
     </div>
 </div>

@@ -37,7 +37,7 @@ class ShiroSecurityFilters {
                 loccontrollerName = controllerName
                 locactionName = actionName
                 locinstanceid = params.id
-                accessControl(myAccess)
+                //accessControl(myAccess)
 
             }
         }
