@@ -29,6 +29,8 @@ class UserpaymentController {
     // TODO: This can be set in a before insert
     def accepted = {
 
+        User user = session.user.merge()
+
         if (params.SHASIGN == Userpayment.encodeAsOgoneSHAS1tring(params)){
             Userpayment userpayment = session.userpayment;
             userpayment.acceptance = params.ACCEPTANCE
@@ -41,6 +43,8 @@ class UserpaymentController {
             userpayment.ipAddress = params.IP
             userpayment.validate()
             session.userpayment.save();
+            user.account.deposit(userpayment.amount)
+            user.save(flush:true)
             session.removeAttribute("userpayment")
 
         }else {

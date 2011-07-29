@@ -325,6 +325,7 @@ class BootStrap {
         //User creation
         // Creating a company user
         def companyadminuser = new User(
+                account: new Account(),
                 username: "nicolas@immani.com",
                 firstname: "Nicolas",
                 lastname: "Germeau",
@@ -335,11 +336,16 @@ class BootStrap {
                 language: 'nl',
                 isvalidated: true);
         companyadminuser.save()
+
         if(companyadminuser.hasErrors()){
             println companyadminuser.errors
         }
+        Account account = new Account();
+        account.setBalance(112.67)
+        account.balance = 67
 
         def companyuser = new User(
+                account: account,
                 username: "marie@immani.com",
                 firstname: "Marie",
                 lastname: "Deronchène",
@@ -355,6 +361,7 @@ class BootStrap {
         }
 
         def companyuser2 = new User(
+                 account: new Account(),
                 username: "thomas@immani.com",
                 firstname: "Thomas",
                 lastname: "Wellens",

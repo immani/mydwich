@@ -23,6 +23,8 @@ class User implements Serializable {
             baskets: Basket,
             userpayments: Userpayment]
 
+    // This should be initialized by default and not be the responsability of caller (only if user company)
+    static hasOne = [account:Account]
 
     static mapping  = {
         permissions lazy: false
@@ -55,6 +57,8 @@ class User implements Serializable {
         isvalidated(nullable: false)
         passwordHash(nullable: false, password: true)
         defaultda(nullable: true)
+        account(nullable:true)
+
         //TODO: Check complexité du password en regex
     }
 
@@ -86,4 +90,5 @@ class User implements Serializable {
     def beforeUpdate = {
         beforeInsert()
     }
+
 }

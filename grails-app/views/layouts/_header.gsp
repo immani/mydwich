@@ -7,6 +7,9 @@
     --%>
     <p><g:link class="header-main" controller="home">Home</g:link>
     <p class="header-sub">When's your next dwich?</p>
+    <shiro:isLoggedIn>
+         <p>Account: ${fieldValue(bean: session.user.account, field: "balance")}  </p>
+    </shiro:isLoggedIn>
     <g:link controller="${controllerName}" action="${actionName}" params="[lang:'fr']">Fr</g:link>
     <g:link controller="${controllerName}" action="${actionName}" params="[lang:'nl']">Nl</g:link>
     <g:link controller="${controllerName}" action="${actionName}" params="[lang:'en']">En</g:link>

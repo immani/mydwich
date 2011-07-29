@@ -46,7 +46,6 @@ class AuthController {
             
             // Setting up the logged user in the httpsession
             session.user = User.findByUsername(SecurityUtils.getSubject().principal)
-
             //session.setAttribute("user",User.findByUsername(currentUser.principal))
             loadPreferences();
 
