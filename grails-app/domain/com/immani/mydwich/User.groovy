@@ -55,6 +55,7 @@ class User implements Serializable {
         isvalidated(nullable: false)
         passwordHash(nullable: false, password: true)
         defaultda(nullable: true)
+        isadmin(nullable: true)
         //TODO: Check complexité du password en regex
     }
 

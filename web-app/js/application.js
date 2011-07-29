@@ -223,6 +223,44 @@ function displayrestaurantsnear(lat, lng, options){
     return map;
 }
 
+function displaydeliveryaddressnear(lat, lng, options){
+    options = options || {};
+    options.map = options.map || undefined;
+    options.mapid = options.mapid || 'map_canvas'
+    options.zoom = options.zoom || 10
+    if (options.map == undefined){
+        var latlng = new google.maps.LatLng(lat, lng )
+        var myOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById(options.mapid), myOptions);
+    }
+    $.getJSON(apppath + 'restaurant/retrievedeliveryaddresswithinrange?json=true', function(data) {
+        $.each(data, function(i) {
+            var contentString = '<h1 class="firstHeading">' + data[i].name + '</h1><p>' + data[i].address +', ' + data[i].zip + '</p>' + data[i].city + ', ' + data[i].country;
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            var latlng = new google.maps.LatLng(data[i].lat , data[i].lng );
+
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: options.map,
+                title: data[i].name,
+                icon: apppath + '/images/deliveryaddress.png'
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(options.map,marker);
+            })
+        });
+    })
+    return map;
+}
+
 $(document).ready(function() {
     $("#spinner").bind("ajaxSend", function() {
         $(this).fadeIn();

@@ -1,4 +1,3 @@
-
 <%@ page import="com.immani.mydwich.Partnership" %>
 <html>
     <head>

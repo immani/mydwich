@@ -140,6 +140,22 @@ class ProductController {
         render(view: "list", model: [productInstanceList: productlist, productInstanceTotal: productlist.size()])
     }
 
+        def listbycategory = {
+        User user = session.user.merge()
+        Restaurant restaurant = user.restaurant
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def productscategories = restaurant.productsCategories.sort({a,b-> a.catorder.compareTo(b.catorder)})
+        render(view: "listbycategory", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurant])
+    }
+
+    def listfull = {
+        User user = session.user.merge()
+        Restaurant restaurant = user.restaurant
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def productscategories = restaurant.productsCategories.sort({a,b-> a.catorder.compareTo(b.catorder)})
+        render(view: "listfull", model: [productcategoriesInstanceList: productscategories, restaurantInstance: restaurant])
+    }
+
     def create = {
         def user = session.user.merge()
         def newproduct= new Product(restaurant: user.restaurant)
