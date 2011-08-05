@@ -20,6 +20,19 @@ class BasketLine implements Serializable {
     }
 
     String toString(){
-		return product.toString();
-	}
+        return product.toString();
+    }
+
+    public getPrice(){
+        //TODO: Integrate into Constructor
+        if(prodOptions.size()>0){
+            this.price = quantity * product.price + prodOptions?.price.collect{it*quantity}.sum()
+        }
+        else{
+            this.price = quantity * product.price
+        }
+
+        return this.price
+    }
+
 }

@@ -192,10 +192,20 @@ class User_companyController {
         if (basketInstance){
             Integer m = (params.id).toInteger()
             BasketLine bl = basketInstance?.basketLines[m]
-            basketInstance?.basketLines?.remove(bl)
+        //    basketInstance?.basketLines?.remove(bl)
+            basketInstance.removeBasketLine(bl)
             redirect(action:"showcurrentbasket")
         }
+    }
 
+    def changelineqty = {
+        Basket basketInstance = session.basket
+        if (basketInstance){
+            Integer m = (params.id).toInteger()
+            Integer qty = (params.qty).toInteger()
+            BasketLine bl = basketInstance?.basketLines[m]
+            redirect(action:"showcurrentbasket")
+        }
     }
 
     /**

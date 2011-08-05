@@ -31,9 +31,9 @@ function displayproductdialog(url){
                 height: 500,
                 width: 600,
                 buttons: [{
-                        text: "Ok",
-                        click: function() { $(this).dialog("close"); }
-                    }]
+                    text: "Ok",
+                    click: function() { $(this).dialog("close"); }
+                }]
             });
         }
     })
@@ -47,6 +47,19 @@ function refreshbasket(){
             $("#nav").html(html)
         }
     })
+}
+
+function editqty(bli, qty){
+    var newqty=prompt("Please indicate the new desired quantity",qty);
+    if (newqty!=null && newqty!=""){
+        $.ajax({
+            url: apppath + "user/changelineqty",
+            cache: false,
+            success: function(html){
+                $("#qty"+ bli).html(qty)
+            }
+        })
+    }
 }
 
 function loadcatalog(restaurantid, options){

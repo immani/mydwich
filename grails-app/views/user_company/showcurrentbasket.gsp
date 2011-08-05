@@ -32,7 +32,7 @@
                         <g:each in="${basketLines}" status="i" var="basketLineInstance">
                             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-                                <td>${fieldValue(bean: basketLineInstance, field: "quantity")}</td>
+                                <td id="qty${i}" onclick="editqty(${i}, ${basketLineInstance.quantity})" >${fieldValue(bean: basketLineInstance, field: "quantity")}</td>
                                 <td><mydwich:disploc instanceValue="${basketLineInstance.product}" property="name" /></td>
                                 <td>${fieldValue(bean: basketLineInstance.product, field: "price")} €</td>
                                 <td>${fieldValue(bean: basketLineInstance, field: "price")} €</td>
