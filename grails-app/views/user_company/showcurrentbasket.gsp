@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <g:sortableColumn property="quantity" title="${message(code: 'basketLine.quantity.label', default: 'Quantity')}" />
+                            <th>Edit</th>
                             <g:sortableColumn property="product.label" title="${message(code: 'basketLine.product.label', default: 'Product')}" />
                             <g:sortableColumn property="product.price" title="${message(code: 'basketLine.product.unitprice', default: 'Unit Price')}" />
                             <g:sortableColumn property="price" title="${message(code: 'basketLine.price.label', default: 'Price')}" />
@@ -33,6 +34,7 @@
                             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
                                 <td>${fieldValue(bean: basketLineInstance, field: "quantity")}</td>
+                                <td><g:link controller="user_company" action="editlineqty" id="${i}">remove</g:link></td>
                                 <td><mydwich:disploc instanceValue="${basketLineInstance.product}" property="name" /></td>
                                 <td>${fieldValue(bean: basketLineInstance.product, field: "price")} €</td>
                                 <td>${fieldValue(bean: basketLineInstance, field: "price")} €</td>
