@@ -1,12 +1,12 @@
 <%@ page import="com.immani.mydwich.ProdOption" %>
 <%@ page import="com.immani.mydwich.ProdOptionCategory" %>
                     <g:each in="${productOptionCategories}" var="ProdOptionCat">
-                        <tr>
+                        <tr class="prop">
                             <td valign="top" class="name">
-                                <label><p><mydwich:disploc instanceValue="${ProdOptionCat}" property="name" /></p></label>
+                                <mydwich:disploc instanceValue="${ProdOptionCat}" property="name" />
                             </td>
 
-                            <td valign="top" class="name">
+                            <td valign="top" class="value">
                                 <g:if test="${ProdOptionCat.type=='radio'}">
                                     <g:each in="${ProdOptionCat.options}" var="prodOption">
                                         <g:radio name="option.${ProdOptionCat.name_en}" value="${prodOption.id}"/><mydwich:disploc instanceValue="${prodOption}" property="name" /> (${prodOption.price} €)

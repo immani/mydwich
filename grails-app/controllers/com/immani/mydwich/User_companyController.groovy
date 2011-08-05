@@ -11,7 +11,7 @@ class User_companyController {
         render(view: "/userpayment/create", model: [userpaymentInstance: session.userpayment])
     }
 
-     /**
+    /**
      * List of the payments of the current user
      */
     def listuserpayment = {
@@ -100,8 +100,8 @@ class User_companyController {
         render(view: "addproduct", model: [productOptionCategories: productOptionCategories, selproduct: selproduct])
     }
 
-     def search = {
-         //TODO: idéalement le search devrait utiliser comme Template _productlist au lieu de _productsearch mais pb des catégories...
+    def search = {
+        //TODO: idéalement le search devrait utiliser comme Template _productlist au lieu de _productsearch mais pb des catégories...
         def q = params.q ?: null
         def searchResults
         if(q) {
@@ -123,7 +123,6 @@ class User_companyController {
             return []
         }
     }
-
 
 
 
@@ -177,8 +176,8 @@ class User_companyController {
     def showcurrentbasket = {
         Basket basketInstance = session.basket
         if (basketInstance){
-                    def basketLines = basketInstance?.basketLines
-                    render(view: "showcurrentbasket" , model: [basketInstance: basketInstance, basketLines: basketLines])
+            def basketLines = basketInstance?.basketLines
+            render(view: "showcurrentbasket" , model: [basketInstance: basketInstance, basketLines: basketLines])
         }
         else{
             flash.message = "${message(code: 'basket.current.not.exist')}"
@@ -192,10 +191,23 @@ class User_companyController {
         if (basketInstance){
             Integer m = (params.id).toInteger()
             BasketLine bl = basketInstance?.basketLines[m]
-            basketInstance?.basketLines?.remove(bl)
+            //    basketInstance?.basketLines?.remove(bl)
+            basketInstance.removeBasketLine(bl)
             redirect(action:"showcurrentbasket")
         }
+    }
 
+    def changelineqty = {
+        Basket basketInstance = session.basket
+        if (basketInstance){
+            Integer m = params.id.substring(3).toInteger()
+            Integer qty = (params.value).toInteger()
+            BasketLine bl = basketInstance?.basketLines[m]
+            bl.quantity = qty
+            def basketLines = basketInstance?.basketLines
+            render(template: "basket" , model: [basketInstance: basketInstance, basketLines: basketLines])
+            //    render("{qty: ${bl.quantity}, lineprice: ${bl.price }, totalnbofarticles: ${basketInstance.totalnbofarticles} ,total: ${basketInstance.totalprice}")
+        }
     }
 
     /**

@@ -26,13 +26,22 @@ class Basket implements Serializable{
 		return basketLines.toListString();
 	}
 
-    def addProduct(Product product, Integer quantity, Collection options, String comment) {
-        float productprice = product.price*quantity
-        this.addToBasketLines(new BasketLine(product: product, quantity: quantity, prodOptions: options, comment: comment, price: productprice ));
-        //basketLines.sort()
-        this.totalprice += productprice
-        this.totalnbofarticles += quantity
+    Float getTotalprice(){
+        basketLines.collect {it.price}.sum()
+    }
+
+    Integer getTotalnbofarticles(){
+        basketLines.collect {it.quantity}.sum()
+    }
+
+    def addProduct(Product product, Integer quantity, List options, String comment) {
+        BasketLine bl = new BasketLine(product: product, quantity: quantity, prodOptions: options, comment: comment )
+        this.addToBasketLines(bl);
         return this
+    }
+
+    def removeBasketLine(BasketLine bl) {
+        basketLines -= bl
     }
 
 }

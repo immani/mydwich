@@ -31,8 +31,8 @@
                                             <td><mydwich:disploc instanceValue="${productInstance}" property="desc" /></td>
                                             <td>${fieldValue(bean: productInstance, field: "price")} €</td>
                                             <td>
-                                                <g:link controller="user_company" action="selectproductoptions" id="${productInstance.id}"
-                                                        onclick="displayproductbuydialog(this.href.toString()); return false;">Add</g:link>
+                                                <g:link class="action_additem" controller="user_company" action="selectproductoptions" id="${productInstance.id}"
+                                                        onclick="displayproductbuydialog(this.href.toString()); return false;">&nbsp;</g:link>
                                             </td>
                                         </tr>
                                     </g:each>
