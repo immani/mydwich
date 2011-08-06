@@ -67,7 +67,7 @@
             <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
         </g:form>
     </div>
-    <div id="map_canvas" style="width:600px; height:400px"></div>
+    <div id="map_canvas" style="width:950px; height:400px"></div>
 </div>
 <script type="text/javascript">
     var contentString = '<div><h1 class="firstHeading">${deliveryAddressInstance.name}</h1><br />' +
