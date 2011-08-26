@@ -25,26 +25,6 @@ class UserController {
         render(view: "create", model: [userInstance: newuser])
     }
 
-    def save = {
-        def userInstance = new User(params)
-        User user = session.user.merge()
-        if (user.restaurant != null){
-            user.restaurant.addToUsers(userInstance)
-        }
-        if (user.company != null){
-            user.company.addToUsers(userInstance)
-        }
-        userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
-        userInstance.isvalidated= true
-        if (userInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
-            redirect(action: "show", id: userInstance.id)
-        }
-        else {
-            render(view: "create", model: [userInstance: userInstance])
-        }
-    }
-
     def show = {
         def userInstance = User.get(params.id)
         if (!userInstance) {
@@ -68,6 +48,28 @@ class UserController {
 
     }
 
+    def save = {
+        def userInstance = new User(params)
+        User user = session.user.merge()
+        if (user.restaurant != null){
+            user.restaurant.addToUsers(userInstance)
+        }
+        if (user.company != null){
+            user.company.addToUsers(userInstance)
+            DeliveryAddress da = DeliveryAddress.get(params.defaultdaid)
+            userInstance.defaultda = da
+        }
+        userInstance.passwordHash = new Sha256Hash(params.passwordHash).toHex()
+        userInstance.isvalidated= true
+        if (userInstance.save(flush: true)) {
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
+            redirect(action: "show", id: userInstance.id)
+        }
+        else {
+            render(view: "create", model: [userInstance: userInstance])
+        }
+    }
+
     def update = {
         def userInstance = User.get(params.id)
         if (userInstance) {
@@ -79,8 +81,11 @@ class UserController {
                     return
                 }
             }
+
             userInstance.properties = params
-            if (!userInstance.hasErrors() && userInstance.save(flush: true)) {
+            userInstance.defaultda = DeliveryAddress.get(params.defaultda);
+            userInstance.save(flush: true)
+            if (userInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
                 redirect(action: "show", id: userInstance.id)
             }

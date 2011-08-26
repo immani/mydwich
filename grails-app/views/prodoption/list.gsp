@@ -9,8 +9,7 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" controller="prodoptioncategory" action="show" id="${prodoptioncategoryInstance?.id}">Show Category: '${prodoptioncategoryInstance?.toString()}'</g:link></span>
-            <span class="menuButton"><g:link class="list" controller="prodoptioncategory" action="list">List Product Options</g:link></span>
+            <span class="menuButton"><g:link class="list" controller="prodoptioncategory" action="show" id="${prodoptioncategoryInstance?.id}">Back to Category: <mydwich:disploc instanceValue="${prodoptioncategoryInstance}" property="name" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create" params="[prodoptioncategory: prodoptioncategoryInstance.id]"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">

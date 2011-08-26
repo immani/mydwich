@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.immani.mydwich.Picture" %>
 <html>
     <head>
@@ -17,12 +15,12 @@
         <div class="body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+                <div class="message">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${pictureInstance}">
-            <div class="errors">
-                <g:renderErrors bean="${pictureInstance}" as="list" />
-            </div>
+                <div class="errors">
+                    <g:renderErrors bean="${pictureInstance}" as="list" />
+                </div>
             </g:hasErrors>
             <g:form method="post"  enctype="multipart/form-data">
                 <g:hiddenField name="id" value="${pictureInstance?.id}" />
@@ -30,61 +28,62 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="file"><g:message code="picture.file.label" default="File" /></label>
+                                    <label for="restaurant"><g:message code="restaurant.label" default="Restaurant" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'file', 'errors')}">
-                                    <input type="file" id="file" name="file" />
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'restaurant', 'errors')}">
+                                    ${pictureInstance?.restaurant?.encodeAsHTML()}
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="contentType"><g:message code="picture.contentType.label" default="Content Type" /></label>
+                                    <label for="contentType"><g:message code="picture.contentType.label" default="Content Type" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'contentType', 'errors')}">
-                                    <g:select name="contentType" from="${pictureInstance.constraints.contentType.inList}" value="${pictureInstance?.contentType}" valueMessagePrefix="picture.contentType"  />
+                                    ${fieldValue(bean: pictureInstance, field: "contentType")}
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="caption"><g:message code="picture.caption.label" default="Caption" /></label>
+                                    <label for="caption"><g:message code="picture.caption.label" default="Caption" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'caption', 'errors')}">
                                     <g:textField name="caption" value="${pictureInstance?.caption}" />
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="description"><g:message code="picture.description.label" default="Description" /></label>
+                                    <label for="description"><g:message code="picture.description.label" default="Description" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'description', 'errors')}">
                                     <g:textField name="description" value="${pictureInstance?.description}" />
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="filename"><g:message code="picture.filename.label" default="Filename" /></label>
+                                    <label for="filename"><g:message code="picture.filename.label" default="Filename" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'filename', 'errors')}">
-                                    <g:textField name="filename" value="${pictureInstance?.filename}" />
+                                    ${fieldValue(bean: pictureInstance, field: "filename")}
                                 </td>
                             </tr>
-                        
+
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="url"><g:message code="picture.url.label" default="Url" /></label>
+                                    <label for="file"><g:message code="picture.file.label" default="File" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'url', 'errors')}">
-                                    <g:textField name="url" value="${pictureInstance?.url}" />
+                                <td valign="top" class="value ${hasErrors(bean: pictureInstance, field: 'file', 'errors')}">
+                                    <input type="file" id="file" name="file" /><br />
+                                    <g:message code="picture.replace.warning.message" args="[entityName]" />
                                 </td>
                             </tr>
-                        
+
                         </tbody>
                     </table>
                 </div>

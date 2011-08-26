@@ -1,8 +1,4 @@
 package com.immani.mydwich
-
-import com.immani.mydwich.DeliveryAddress
-import com.immani.mydwich.Restaurant
-import com.immani.mydwich.User
 import grails.converters.JSON
 
 class Anonymous_RestaurantController {
@@ -26,13 +22,13 @@ class Anonymous_RestaurantController {
         else {
             switch(params.page){
                 case null:
-                    render(view: "/restaurant/public", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList ])
+                    render(view: "/anonymous_restaurant/public", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList ])
                     break
                 case "map":
-                    render(view: "/restaurant/map", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList])
+                    render(view: "/anonymous_restaurant/map", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList])
                     break
                 case "info":
-                    render(view: "/restaurant/info", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList])
+                    render(view: "/anonymous_restaurant/info", model: [restaurantInstance: restaurantInstance, pictureInstanceList: pictureInstanceList])
                     break
                 case "menu":
                     //   params.id = restaurantInstance.id
@@ -94,5 +90,4 @@ class Anonymous_RestaurantController {
             return []
         }
     }
-
 }

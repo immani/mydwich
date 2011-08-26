@@ -21,6 +21,7 @@ class Picture {
     }
 
     //TODO: Check if we can enrich the Domain
+    //Pb we can't access teh application context from the domain
    /*
     def beforeDelete = {
     ApplicationContext applicationContext

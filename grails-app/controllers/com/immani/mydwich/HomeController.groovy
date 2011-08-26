@@ -5,7 +5,8 @@ import org.apache.shiro.SecurityUtils
 class HomeController {
     //TODO: To be completed
     def index = {
-        User user = User.findByUsername(SecurityUtils.getSubject().principal.toString())
+        User user = session.user
+        //User user = User.findByUsername(SecurityUtils.getSubject().principal.toString())
         if (user == null) {
             return redirect(controller: "anonymous_Restaurant", action: "list")
         }

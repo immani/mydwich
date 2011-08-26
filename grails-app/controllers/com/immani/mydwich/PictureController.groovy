@@ -5,22 +5,21 @@ class PictureController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
-        redirect(action: "list", params: params)
+        redirect(action: "listrestaurantpictures", params: params)
     }
 
-    def list = {
+    def listrestaurantpictures = {
         User user = session.user.merge()
         Restaurant restaurant = user.restaurant
         def pictureList = restaurant.pictures
-        //  params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [pictureInstanceList: pictureList, pictureInstanceTotal: pictureList.size()]
+        render(view: "list", model: [pictureInstanceList: pictureList, pictureInstanceTotal: pictureList.size()])
     }
 
-    def create = {
+    def createrestaurantpicture = {
         User user = session.user.merge()
         def pictureInstance = new Picture(restaurant: user.restaurant)
         pictureInstance.properties = params
-        [pictureInstance: pictureInstance]
+        render(view:"create", model:[pictureInstance: pictureInstance])
     }
 
     def save = {

@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.immani.mydwich.User" %>
 <html>
     <head>
@@ -37,17 +35,16 @@
                                 <g:render template="restaurantinfo"/>
                             </g:if>
 
-                            <g:if test="${userInstance.isadmin}">
+                            <g:if test="${userInstance.company && session.user.isadmin}">
                                 <tr class="prop">
                                     <td valign="top" class="name">
-                                        <label for="company"><g:message code="user.admin.label" default="Super Admin" /></label>
+                                        <label for="company"><g:message code="user.superadmin.label" default="Super Admin" /></label>
                                     </td>
                                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'roles', 'errors')}">
-                                        <g:checkBox name="isadmin" value="true" checked="${userInstance?.isadmin}" /><g:message code="user.admin.rights" default="Admin Rights" />
+                                        <g:checkBox name="isadmin" value="true" checked="${false}" /><g:message code="user.admin.rights" default="Admin Rights" />
                                     </td>
                                 </tr>
                             </g:if>
-
 
                             <tr class="prop">
                                 <td valign="top" class="name">
@@ -102,6 +99,17 @@
                                     <g:select name="language" from="${['fr', 'nl', 'en']}" value="${userInstance?.language}" />
                                 </td>
                             </tr>
+
+                            <g:if test="${userInstance.company}">
+                                <tr class="prop">
+                                    <td valign="top" class="name">
+                                        <label for="defaultda"><g:message code="user.defaultda.label" default="Default Delivery Address" /></label>
+                                    </td>
+                                    <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'defaultda', 'errors')}">
+                                        <g:select name="defaultda" from="${userInstance.company.deliveryAddresses}" optionKey="id" value="${userInstance?.defaultda?.id}" />
+                                    </td>
+                                </tr>
+                            </g:if>
 
                         </tbody>
                     </table>

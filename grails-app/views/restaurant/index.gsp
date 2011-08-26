@@ -26,12 +26,13 @@
 
         <fieldset>
             <legend>Restaurant Profile</legend>
-            <g:link controller="anonymous_Restaurant" action="showprofilerestaurant">Show Profile</g:link>
+            <g:link controller="restaurant" action="showprofilerestaurant">Show Restaurant Profile</g:link><br/>
+            <g:link controller="picture" action="listrestaurantpictures">Show Restaurant Pictures</g:link>
         </fieldset>
         <br />
         <fieldset>
             <legend>Users</legend>
-            <g:link controller="user">My Profile</g:link><br/>
+            <g:link controller="user" action="showuserprofile">My Profile</g:link><br/>
             <g:link controller="user" action="list">List Users</g:link><br/>
             <g:link controller="user" action="create">New User</g:link>
         </fieldset>
@@ -43,7 +44,9 @@
         <br />
         <fieldset>
             <legend>Products</legend>
-            <g:link controller="product" action="list">List Products</g:link><br/>
+            <g:link controller="product" action="list">List</g:link><br/>
+            <g:link controller="product" action="listfull">List Full</g:link><br/>
+            <g:link controller="product" action="listbycategory">List by Category</g:link>
         </fieldset>
         <br />
         <fieldset>
@@ -56,7 +59,7 @@
             <g:link controller="partnership" action="restListValidatedPartnerships">List validated Partnerships</g:link><br/>
             <g:link controller="partnership" action="restListRequestedPartnerships">List requested Partnerships</g:link><br/>
             <g:link controller="partnership" action="restListWaitingPartnerships">List waiting Partnerships</g:link><br/>
-            <g:link controller="restaurant" action="retrievedeliveryaddresswithinrange">Create New Partnership</g:link>
+            <g:link controller="restaurant" action="listdeliveryaddressinrange">Create New Partnership</g:link>
         </fieldset>
     </div>
 </div>

@@ -1,7 +1,5 @@
 package com.immani.mydwich
 
-import org.hibernate.Query
-
 class PartnershipController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -38,40 +36,40 @@ class PartnershipController {
         Partnership.requestPartnership(restaurant, deliveryAddress, originator, comment )
 
         if (user.restaurant){
-            redirect(uri: "/partnership/restListRequestedPartnerships");
+            redirect(action: "restListRequestedPartnerships" )
         }else {
-            redirect(uri: "/partnership/daListRequestedPartnerships");
+            redirect(action: "daListRequestedPartnerships");
         }
     }
 
     def daListRequestedPartnerships = {
        def partnershipInstanceList = user.company.retrieveRequestedPartnerships();
-       render(view: "listrequested", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+       render(view: "list", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
     }
 
     def daListValidatedPartnerships = {
        def partnershipInstanceList = user.company.retrieveValidatedPartnerships();
-       render(view: "listvalidated", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+       render(view: "list", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
     }
 
     def daListWaitingPartnerships = {
        def partnershipInstanceList = user.company.retrieveWaitingPartnerships();
-       render(view: "listwaiting", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+       render(view: "list", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
     }
 
      def restListRequestedPartnerships = {
        def partnershipInstanceList =  user.restaurant.retrieveRequestedPartnerships();
-       render(view: "listrequested", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+       render(view: "list", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
     }
 
     def restListValidatedPartnerships = {
        def partnershipInstanceList =  user.restaurant.retrieveValidatedPartnerships();
-       render(view: "listvalidated", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+       render(view: "list", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
     }
 
     def restListWaitingPartnerships = {
        def partnershipInstanceList = user.restaurant.retrieveWaitingPartnerships()
-       render(view: "listwaiting", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
+       render(view: "list", model:[partnershipInstanceList: partnershipInstanceList, partnershipInstanceTotal: partnershipInstanceList.size()])
     }
 
     def validatePartnership = {

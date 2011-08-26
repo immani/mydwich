@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.immani.mydwich.Restaurant" %>
 <html>
 <head>
@@ -127,15 +125,6 @@
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: restaurantInstance, field: 'desc_en', 'errors')}">
                         <g:textField name="desc_en" value="${restaurantInstance?.desc_en}" />
-                    </td>
-                </tr>
-
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="restaurantcategories"><g:message code="restaurant.photo.label" default="Restaurant Picture" /></label>
-                    </td>
-                    <td valign="top">
-                        <input type="file" name="picture1">
                     </td>
                 </tr>
 

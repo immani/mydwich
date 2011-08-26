@@ -40,7 +40,9 @@
                                 <td>
                                     ${fieldValue(bean: basketLineInstance, field: "comment")} <br/>
                                     <g:each in="${basketLineInstance.prodOptions}" status="j" var="prodOption">
-                                        <mydwich:disploc instanceValue="${prodOption}" property="name" /> (${prodOption.price} €),
+                                        <g:if test="${prodOption}">
+                                            <mydwich:disploc instanceValue="${prodOption}" property="name" /> (${prodOption.price} €),
+                                        </g:if>
                                     </g:each>
                                 </td>
                             </tr>

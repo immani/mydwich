@@ -11,6 +11,7 @@ class User implements Serializable {
     String language
     Boolean isvalidated = false
     Boolean isadmin
+    Double balance = 0
 
     Company company
     Restaurant restaurant
@@ -22,9 +23,6 @@ class User implements Serializable {
             permissions: String,
             baskets: Basket,
             userpayments: Userpayment]
-
-    // This should be initialized by default and not be the responsability of caller (only if user company)
-    static hasOne = [account:Account]
 
     static mapping  = {
         permissions lazy: false
@@ -57,7 +55,6 @@ class User implements Serializable {
         isvalidated(nullable: false)
         passwordHash(nullable: false, password: true)
         defaultda(nullable: true)
-        account(nullable:true)
 
         //TODO: Check complexité du password en regex
     }
@@ -65,6 +62,25 @@ class User implements Serializable {
     String toString(){
         return username
     }
+
+
+
+    public synchronized void deposit(double amount) {
+        this.balance += amount;
+    }
+
+
+    public synchronized void withdraw(double amount) throws RuntimeException {
+
+        if (amount > balance) {
+            throw new RuntimeException("Negative balance");
+        }
+        balance -= amount;
+    }
+
+    // Block any direct set of the balance
+    public void setBalance(Double balance){}
+
 
     def beforeInsert = {
         if(this.company != null){
@@ -90,5 +106,4 @@ class User implements Serializable {
     def beforeUpdate = {
         beforeInsert()
     }
-
 }

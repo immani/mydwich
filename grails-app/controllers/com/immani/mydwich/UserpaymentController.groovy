@@ -1,6 +1,7 @@
 package com.immani.mydwich
 
 import org.hibernate.SessionFactory
+import org.hibernate.LockMode
 
 class UserpaymentController {
 
@@ -15,6 +16,7 @@ class UserpaymentController {
     def create = {
         User currentuser = session.user.merge()
         session.userpayment = session.userpayment == null ? new Userpayment(user: currentuser): session.userpayment;
+        session.userpayment = new Userpayment(user: currentuser);
         render(view: "create", model: [userpaymentInstance: session.userpayment])
     }
 
@@ -42,9 +44,9 @@ class UserpaymentController {
             userpayment.ncerror = params.NCERROR
             userpayment.ipAddress = params.IP
             userpayment.validate()
-            session.userpayment.save();
-            user.account.deposit(userpayment.amount)
-            user.save(flush:true)
+            user.userpayments.add(session.userpayment)
+            user.deposit(userpayment.amount)
+            session.user = user.save(flush:true)
             session.removeAttribute("userpayment")
 
         }else {

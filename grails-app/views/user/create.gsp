@@ -33,13 +33,13 @@
                                 <g:render template="restaurantinfo"/>
                             </g:if>
 
-                            <g:if test="${session.user.isadmin}">
+                            <g:if test="${userInstance.company && session.user.isadmin}">
                                 <tr class="prop">
                                     <td valign="top" class="name">
                                         <label for="company"><g:message code="user.superadmin.label" default="Super Admin" /></label>
                                     </td>
                                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'roles', 'errors')}">
-                                        <g:checkBox name="superadmin" value="true" checked="${false}" /><g:message code="user.superadmin.rights" default="Super Admin Rights" />
+                                        <g:checkBox name="isadmin" value="true" checked="${false}" /><g:message code="user.admin.rights" default="Admin Rights" />
                                     </td>
                                 </tr>
                             </g:if>
@@ -113,7 +113,7 @@
                                         <label for="defaultda"><g:message code="user.defaultda.label" default="Default Delivery Address" /></label>
                                     </td>
                                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'defaultda', 'errors')}">
-                                        <g:select name="defaultda" from="${userInstance.company.deliveryAddresses}" optionKey="id" value="${userInstance?.defaultda?.id}" />
+                                        <g:select name="defaultdaid" from="${userInstance.company.deliveryAddresses}" optionKey="id" value="${userInstance?.defaultda?.id}" />
                                     </td>
                                 </tr>
                             </g:if>
