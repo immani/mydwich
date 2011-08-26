@@ -1,28 +1,3 @@
-html, body{
-        padding: 0px;
-        margin: 0px;
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 12px;
-		color: #FFFFFF;
-		font-weight: bold;
-        background:#fff url(../images/bg_image.gif) repeat-x top left;
-}
-
-#fbContainer {
-	overflow: auto;
-}
-#fbFooter {
-	height: 75px;
-	background-color: #9d8180;
-	background-repeat: repeat-x;
-	border-top: 1px solid #fff;
-}
-
-#altmsg { 
-	padding: 20px;
-}
-
-
 html * {
     margin: 0;
     /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
@@ -37,13 +12,12 @@ html * {
 }
 
 body {
-	
+    background: #fff;
     color: #333;
     font: 11px verdana, arial, helvetica, sans-serif;
 }
-
 #grailsLogo {
-	padding: 0px 0px 10px 0px;
+	padding:20px;
 }
 
 a:link, a:visited, a:hover {
@@ -56,25 +30,16 @@ h1 {
     color: #48802c;
     font-weight: normal;
     font-size: 16px;
-    margin: .8em 0 .8em 0;
+    margin: .8em 0 .3em 0;
 }
 
 ul {
     padding-left: 15px;
 }
-input[type="text"] {
-	width:650px;
-}
-select{
-	width:663px;
-}
+
 input, select, textarea {
-    background-color: #EFEFEF;
-    border: 1px solid #fff;
-	-moz-box-shadow: 2px 2px 2px #E1E1E1;
-	-webkit-box-shadow: 2px 2px 2px #E1E1E1;
-	box-shadow: 2px 2px 2px #E1E1E1;
-	border-radius: 3px;
+    background-color: #fcfcfc;
+    border: 1px solid #ccc;
     font: 11px verdana, arial, helvetica, sans-serif;
     margin: 2px 0;
     padding: 2px 4px;
@@ -93,14 +58,18 @@ input:focus, select:focus, textarea:focus {
 }
 
 .body {
+    float: left;
     margin: 0 15px 10px 15px;
 }
 
 /* NAVIGATION MENU */
 
-.nav {   
-    margin-top: 10px;
-	padding: 7px 0px;
+.nav {
+    background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #ccc;
+    border-style: solid none solid none;
+    margin-top: 5px;
+    padding: 7px 12px;
 }
 
 .menuButton {
@@ -113,17 +82,17 @@ input:focus, select:focus, textarea:focus {
 }
 .menuButton a.home {
     background: url(../images/skin/house.png) center left no-repeat;
-    color: #666;
+    color: #333;
     padding-left: 25px;
 }
 .menuButton a.list {
     background: url(../images/skin/database_table.png) center left no-repeat;
-   color: #666;
+    color: #333;
     padding-left: 25px;
 }
 .menuButton a.create {
     background: url(../images/skin/database_add.png) center left no-repeat;
-    color: #666;
+    color: #333;
     padding-left: 25px;
 }
 
@@ -168,9 +137,7 @@ td.errors textarea {
 
 table {
     border: 1px solid #ccc;
-    width: 100%;
-	border-radius: 10px;
-	box-shadow: #e6e6e6 2px 2px 2px;
+    width: 100%
 }
 tr {
     border: 0;
@@ -260,17 +227,13 @@ th.desc a {
     padding: 5px;
 }
 .prop .name {
-    text-align: right;
-	line-height:25px;
-	font-weight:bold;
-	color: #09F;
-    width: 23%;
+    text-align: left;
+    width: 15%;
     white-space: nowrap;
 }
 .prop .value {
     text-align: left;
-    width: 77%;
-	line-height:25px;
+    width: 85%;
 }
 
 /* ACTION BUTTONS */
@@ -282,9 +245,7 @@ th.desc a {
     font-size: 10px;
     margin-top: 5px;
     overflow: hidden;
-    padding: 5px 60px;
-    border-radius: 10px;
-	box-shadow: #e6e6e6 2px 2px 2px;
+    padding: 0;
 }
 
 .buttons input {
@@ -309,12 +270,10 @@ th.desc a {
 .buttons input.save {
     background: transparent url(../images/skin/database_save.png) 5px 50% no-repeat;
     padding-left: 28px;
-}.button {
-	float: right;
 }
 /* myDwich Customization */
 #header {
-   
+    background: #48802c;
     padding: 1em 1em 1em 1em;
     margin-bottom: 1em;
 }
@@ -328,13 +287,13 @@ a.header-main:link, a.header-main:visited {
     font-size: 1.25em;
     font-style: italic;
 }
-#fbFooter {
-    font-size: 12px;
+#footer {
+    font-size: 0.75em;
     font-style: italic;
-    padding: 0px 10px;
+    padding: 2em 1em 2em 1em;
+    margin-bottom: 1em;
+    margin-top: 1em;
     clear: both;
-	height:200px;
-	background:url(../images/bg_footer.gif) repeat-x top left;
 }
 
 #loginHeader {
@@ -367,18 +326,18 @@ a.header-main:link, a.header-main:visited {
 }
 
 .homePagePanel .panelBody {
-    background: url(../images/leftnav_midstretch.png) repeat-y scroll center top transparent;
+    background: url('../images/leftnav_midstretch.png') repeat-y scroll center top transparent;
     margin:0px;
     padding:15px;
 }
 .homePagePanel .panelBtm {
-    background: url(../images/leftnav_btm.png) no-repeat top;
+    background: url('../images/leftnav_btm.png') no-repeat top;
     height:20px;
     margin:0px;
 }
 
 .homePagePanel .panelTop {
-    background: url(../images/leftnav_top.png) no-repeat top;
+    background: url('../images/leftnav_top.png') no-repeat top;
     height:11px;
     margin:0px;
 }
@@ -495,51 +454,3 @@ h2 {
 	ol#controls li a:focus, #prevBtn a:focus, #nextBtn a:focus{outline:none;}
 
 /* // Easy Slider */
-
-/* slide for liquid design */
-
-#fbHeader {
-
-	height:205px;
-}
-#wrapper {
-	width:980px;
-	margin-left: auto;
-	margin-right: auto;
-}
-#fbContainer {
-	overflow: auto;
-	/*background:#FFF url(bg_content.png) repeat top left;*/
-}
-#fbFooter {
-	height: 50px;
-	border-top: 2px solid #CCC;
-}
-#footer_container, #header_container {
-	width:980px;
-	padding-top:10px;
-	margin-left: auto;
-	margin-right:auto;
-}
-#altmsg { 
-	padding: 20px;
-}
-#language_box {
-	float:right;
-}
-form {
-	background-color:#fff;
-	opacity:0.7;
-}
-input.input_name, input.input_mail, input.input_phone {
-	padding-right: 3px;
-}
-input.input_name {
-	background: transparent url(../images/first_name.png) no-repeat top right;
-}
-input.input_mail {
-	background: transparent url(../images/email.png) no-repeat top right;
-}
-input.input_phone {
-	background: transparent url(../images/phone.png) no-repeat top right;
-}

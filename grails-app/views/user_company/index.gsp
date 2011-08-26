@@ -25,25 +25,26 @@
     <div id="controllerList" class="dialog">
         <fieldset>
             <legend>User Profile</legend>
-            <g:link controller="user" action="showuserprofile">Show Profile</g:link><br/>
-            <g:link controller="user" action="list"><g:message code="user.list.label" /></g:link>
+            <a href="/mydwich/user/profile/showuserprofile" class="user_action show_profile">Show Profile</a>
+            <a href="/mydwich/user/profile/list" class="user_action user_list">User List</a>
         </fieldset>
         <br />
 
         <fieldset>
             <legend>Payments</legend>
-            <g:link controller="user_company" action="listuserpayment">List Payments</g:link><br/>
-            <g:link controller="user_company" action="createuserpayment">Credit your account</g:link><br/>
+            <a href="/mydwich/user/listuserpayment" class="user_action payments_list">List Payments</a>
+            <a href="/mydwich/user/createuserpayment" class="user_action credit_account">Credit your account</a>
         </fieldset>
         <br />
 
         <fieldset>
             <legend>Orders</legend>
-            <g:link controller="user_company" action="listorders">List Orders</g:link><br/>
-            <g:link controller="user_company" action="listpartnerrestaurant">Create New Order</g:link><br/>
+            <a href="/mydwich/user/listorders" class="user_action orders_list">List Orders</a>
+            <a href="/mydwich/user/listpartnerrestaurant" class="user_action new_order">Create New Order</a>
         </fieldset>
         <br />
     </div>
+</div>
 </div>
 </body>
 </html>

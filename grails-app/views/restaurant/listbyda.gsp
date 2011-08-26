@@ -68,7 +68,7 @@
             <div class="paginateButtons">
                 <g:paginate total="${restaurantInstanceTotal}" />
             </div>
-            <div id="map_canvas" style="width:600px; height:500px"></div>
+            <div id="map_canvas" style="width:1000px; height:500px"></div>
         </div>
     <script type="text/javascript">displayrestaurantsonmap(${restaurantInstanceList[0].lat}, ${restaurantInstanceList[0].lng})</script>
     </body>

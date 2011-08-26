@@ -1,5 +1,5 @@
 function info(msg){
-    $('#info').html(msg).show('slide', 'slow').delay(2000).hide('slide', 'slow')
+    $('#info').html(msg).show('slide', 'slow').delay(2000).hide('puff', 'slow')
     // $( "#effect" ).show( selectedEffect, options, 500, callback );
 }
 
@@ -12,8 +12,8 @@ function displayproductbuydialog(url){
                 autoOpen: true,
                 modal: true,
                 title: 'Select Product Options',
-                height: 800,
-                width: 600
+                height: 500,
+                width: 900
             });
         }
     })
@@ -29,11 +29,11 @@ function displayproductdialog(url){
                 modal: true,
                 title: 'Product',
                 height: 500,
-                width: 600,
+                width: 900,
                 buttons: [{
-                        text: "Ok",
-                        click: function() { $(this).dialog("close"); }
-                    }]
+                    text: "Ok",
+                    click: function() { $(this).dialog("close"); }
+                }]
             });
         }
     })
@@ -47,6 +47,23 @@ function refreshbasket(){
             $("#nav").html(html)
         }
     })
+}
+
+function makeqtyeditable(){
+    $('.editable').editable(function(value, settings) {
+        $.ajax({
+            url: apppath + 'user/changelineqty?id=' + this.id +'&value='+ value,
+            cache: false,
+            success: function(html){
+                $("#basketcontent").html(html);
+                makeqtyeditable()
+            }
+        })
+    }, {
+        indicator : 'Saving...',
+        tooltip   : 'Click to edit...'
+    })
+
 }
 
 function loadcatalog(restaurantid, options){
